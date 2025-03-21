@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+select,
+input,
+textarea {
+  border: 1px solid #c2c2c2;
+  outline-color: #c586a5;
+  border-radius: 4px;
+}
+
+.active {
+  background-color: #15224c;
+  border-color: #15224c;
+  color: white;
+}
+
+@font-face {
+  font-family: IRANYekan-Regular;
+  src: local("IRANYekan-Regular"),
+    url(./fonts/IRANYekanX-Regular.woff) format("woff");
+  src: local("IRANYekan-Regular"),
+    url(./fonts/IRANYekanX-Regular.woff2) format("woff2");
+  src: local("IRANYekan-Regular"),
+    url(./fonts/IRANYekanX-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: IRANYekan-Bold;
+  src: local("IRANYekan-Bold"), url(./fonts/IRANYekanX-Bold.woff) format("woff");
+  src: local("IRANYekan-Bold"),
+    url(./fonts/IRANYekanX-Bold.woff2) format("woff2");
+  src: local("IRANYekan-Bold"),
+    url(./fonts/IRANYekanX-Bold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: IRANYekanFaNum;
+  src: local("IRANYekanFaNum"),
+    url(./fonts/IRANYekanXFaNum-Regular.ttf) format("ttf");
+}
+
+#root {
+  font-family: IRANYekan-Regular;
+  direction: rtl;
+}

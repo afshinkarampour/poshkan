@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+a.active {
+  color: #f01b87;
+}
+
+/* ::-webkit-scrollbar {
+  display: none;
+} */
+
+@media (max-width: 640px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+  a.active {
+    background-color: #15224c;
+    color: white;
+  }
+}
+
+@font-face {
+  font-family: IRANYekan-Regular;
+  src: local("IRANYekan-Regular"),
+    url(./fonts/IRANYekanX-Regular.woff) format("woff");
+  src: local("IRANYekan-Regular"),
+    url(./fonts/IRANYekanX-Regular.woff2) format("woff2");
+  src: local("IRANYekan-Regular"),
+    url(./fonts/IRANYekanX-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: IRANYekan-Bold;
+  src: local("IRANYekan-Bold"), url(./fonts/IRANYekanX-Bold.woff) format("woff");
+  src: local("IRANYekan-Bold"),
+    url(./fonts/IRANYekanX-Bold.woff2) format("woff2");
+  src: local("IRANYekan-Bold"),
+    url(./fonts/IRANYekanX-Bold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: IRANYekanFaNum;
+  src: local("IRANYekanFaNum"),
+    url(./fonts/IRANYekanXFaNum-Regular.ttf) format("ttf");
+}
+
+#root {
+  font-family: IRANYekan-Regular, IRANYekanFaNum;
+  direction: rtl;
+  max-width: 100%;
+}
+
+html,
+body {
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+}
