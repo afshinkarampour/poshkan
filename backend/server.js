@@ -69,6 +69,6 @@ app.get("/", (req, res) => {
   res.send("API Working");
 });
 
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
   console.log("Server Started on PORT : " + port);
 });
