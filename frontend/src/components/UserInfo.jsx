@@ -8,7 +8,7 @@ import { MdSyncLock } from "react-icons/md";
 import { BsSignpostSplit } from "react-icons/bs";
 import { ShopContext } from "../context/ShopContext";
 import { toast } from "react-toastify";
-import axiosInstance from "../services/axiosinstance";
+import axiosInstance from "../services/axiosInstance";
 
 const UserInfo = () => {
   const { backendUrl, userInfo } = useContext(ShopContext);

@@ -1,3 +1,4 @@
+//کارتهای زیردسته در صفحه اصلی
 import React from "react";
 import SubCategoriesCart from "./SubCategoriesCart";
 import Title from "./Title";

@@ -7,7 +7,7 @@ import { BsSignpostSplit } from "react-icons/bs";
 import { FaMountainCity } from "react-icons/fa6";
 import { RiUserFill } from "react-icons/ri";
 import { ShopContext } from "../context/ShopContext";
-import axiosInstance from "../services/axiosinstance";
+import axiosInstance from "../services/axiosInstance";
 
 const OrderReciverInfo = () => {
   const { backendUrl, userInfo, navigate } = useContext(ShopContext);

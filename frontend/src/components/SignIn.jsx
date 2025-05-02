@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { toast } from "react-toastify";
-import axiosInstance from "../services/axiosinstance";
+import axiosInstance from "../services/axiosInstance";
 import ReCAPTCHA from "react-google-recaptcha";
 
 //در این فایل قسمت هایی که به کامنت تبدیل شده، برای کپچا می‌باشد

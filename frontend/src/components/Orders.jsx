@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import Title from "./Title";
 import axios from "axios";
-import axiosInstance from "../services/axiosinstance";
+import axiosInstance from "../services/axiosInstance";
 
 const Orders = () => {
   const { backendUrl, token, currency } = useContext(ShopContext);
