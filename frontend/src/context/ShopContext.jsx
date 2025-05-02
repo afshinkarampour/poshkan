@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import axiosInstance from "../services/axiosinstance";
+import axiosInstance from "../services/axiosInstance";
 
 // import { products as dummyProducts } from "../assets/assets";
 
