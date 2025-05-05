@@ -20,7 +20,11 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 // تنظیم هدر CORS
-const allowedOrigins = ["http://localhost:5174", "http://localhost:5173"];
+const allowedOrigins = [
+  "http://localhost:5174",
+  "http://localhost:5173",
+  "https://poshkan.ir",
+];
 const corsOptions = {
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -40,16 +44,16 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 // تنظیم CORS برای همه درخواست‌ها
-app.options("*", (req, res) => {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "http://localhost:5174",
-    "http://localhost:5173"
-  );
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.sendStatus(200);
-});
+// app.options("*", (req, res) => {
+//   res.header(
+//     "Access-Control-Allow-Origin",
+//     "http://localhost:5174",
+//     "http://localhost:5173"
+//   );
+//   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//   res.sendStatus(200);
+// });
 
 app.use(cookieParser());
 
