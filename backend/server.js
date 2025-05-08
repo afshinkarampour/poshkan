@@ -65,6 +65,9 @@ app.use("/api/copon", coponRouter);
 // ارائه فایل‌های استاتیک از پوشه "uploads"
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+// سرو کردن فایل‌های ایستا از پوشه public
+app.use(express.static(path.join(__dirname, "public")));
+
 app.get("/", (req, res) => {
   res.send("API Working");
 });
