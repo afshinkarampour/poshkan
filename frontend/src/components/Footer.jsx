@@ -38,7 +38,19 @@ const Footer = () => {
           <ul className="flex flex-col gap-1 text-gray-600"></ul>
         </div>
         <div>
-        <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=608445&Code=WithKEsnlIqb6LgUn7pcIzwNEXMumHhp'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=608445&Code=WithKEsnlIqb6LgUn7pcIzwNEXMumHhp' alt='' style='cursor:pointer' code='WithKEsnlIqb6LgUn7pcIzwNEXMumHhp'></a>
+          <a
+            referrerpolicy="origin"
+            target="_blank"
+            href="https://trustseal.enamad.ir/?id=608445&Code=WithKEsnlIqb6LgUn7pcIzwNEXMumHhp"
+          >
+            <img
+              referrerpolicy="origin"
+              src="https://trustseal.enamad.ir/logo.aspx?id=608445&Code=WithKEsnlIqb6LgUn7pcIzwNEXMumHhp"
+              alt=""
+              style="cursor:pointer"
+              code="WithKEsnlIqb6LgUn7pcIzwNEXMumHhp"
+            />
+          </a>
         </div>
       </div>
       <div className="px-0">
