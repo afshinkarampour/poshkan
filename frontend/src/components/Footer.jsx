@@ -47,7 +47,7 @@ const Footer = () => {
               referrerpolicy="origin"
               src="https://trustseal.enamad.ir/logo.aspx?id=608445&Code=WithKEsnlIqb6LgUn7pcIzwNEXMumHhp"
               alt=""
-              style="cursor:pointer"
+              style={{ cursor: "pointer" }}
               code="WithKEsnlIqb6LgUn7pcIzwNEXMumHhp"
             />
           </a>
