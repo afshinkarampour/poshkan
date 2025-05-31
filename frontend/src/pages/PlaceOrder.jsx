@@ -4,9 +4,10 @@ import { assets } from "../assets/assets";
 import { ShopContext } from "../context/ShopContext";
 import { MdOutlineDiscount } from "react-icons/md";
 import DatePicker, { DateObject } from "react-multi-date-picker";
+import { requestPayment } from "../services/paymentService";
+import axiosInstance from "../services/axiosInstance";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import axiosInstance from "../services/axiosInstance";
 
 const PlaceOrder = () => {
   const {
@@ -29,6 +30,7 @@ const PlaceOrder = () => {
   const [code, setCode] = useState("");
   const [today, setToday] = useState(new DateObject());
   const [codeDiscountPrice, setCodeDiscountPrice] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const verifyCodeInput = () => {
     let newErrors = {};
@@ -98,6 +100,67 @@ const PlaceOrder = () => {
         totalPrice = totalAmountWithDiscount + delivery_fee;
       }
       return totalPrice;
+    }
+  };
+
+  // اضافه کردن این تابع برای اعتبارسنجی
+  const validateBeforePayment = () => {
+    if (!userInfo?.phoneNumber || !userInfo?.address) {
+      toast.error("لطفا اطلاعات تماس و آدرس را تکمیل کنید");
+      return false;
+    }
+
+    if (calculateTotalPrice() <= 0) {
+      toast.error("مبلغ پرداخت معتبر نیست");
+      return false;
+    }
+
+    return true;
+  };
+
+  const onPaymentHandle = async () => {
+    if (!validateBeforePayment()) return;
+
+    try {
+      setLoading(true);
+      toast.dismiss(); // بستن تمام toastهای قبلی
+
+      const amount = calculateTotalPrice() * 10; //تبدیل به ریال
+
+      if (amount < 1000) {
+        toast.error("حداقل مبلغ پرداخت ۱۰۰۰ ريال می‌باشد");
+        return;
+      }
+
+      const description = `پرداخت برای سفارش ${userInfo.name} ${userInfo.family} - ${userInfo.phoneNumber}`;
+
+      const userData = {
+        name: userInfo.name,
+        family: userInfo.family,
+        phoneNumber: userInfo.phoneNumber,
+        email: userInfo.email || "",
+        address: userInfo.address,
+      };
+
+      toast.info("در حال اتصال به درگاه پرداخت...", { autoClose: false });
+
+      const response = await requestPayment(amount, description, userData);
+      window.location.href = response.paymentUrl;
+    } catch (error) {
+      console.error("Payment error:", error);
+
+      if (error.errors) {
+        error.errors.forEach((err) => toast.error(err.message));
+      } else {
+        toast.error(error.message || "خطا در اتصال به درگاه پرداخت");
+      }
+
+      if (error.status === 401) {
+        navigate("/login");
+      }
+    } finally {
+      setLoading(false);
+      toast.dismiss();
     }
   };
 
@@ -289,8 +352,12 @@ const PlaceOrder = () => {
         </div>
       </div>
       <div className="flex justify-center gap-28 mt-2 my-2 text-sm px-5 lg:w-1/2 lg:mx-auto">
-        <button className="px-10 py-2 rounded-md bg-[#15224c] text-white">
-          پرداخت
+        <button
+          onClick={onPaymentHandle}
+          disabled={loading}
+          className="px-10 py-2 rounded-md bg-[#15224c] text-white disabled:opacity-50"
+        >
+          {loading ? "در حال اتصال به درگاه..." : "پرداخت"}
         </button>
         <button
           type="button"

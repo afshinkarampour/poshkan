@@ -6,6 +6,7 @@ import productRouter from "./routes/productRoute.js";
 import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
 import coponRouter from "./routes/coponRoute.js";
+import paymentRouter from "./routes/paymentRoute.js";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import path from "path";
@@ -61,6 +62,7 @@ app.use("/api/product", productRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/order", orderRouter);
 app.use("/api/copon", coponRouter);
+app.use("/api/payment", paymentRouter);
 
 // ارائه فایل‌های استاتیک از پوشه "uploads"
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
