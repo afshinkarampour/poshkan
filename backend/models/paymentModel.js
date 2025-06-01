@@ -8,7 +8,12 @@ const paymentSchema = new mongoose.Schema({
   date: { type: String, required: true },
   authority: { type: String, unique: true },
   refId: { type: String },
-  userInfo: {
+  verifiedAt: { type: Date },
+  verificationError: {
+    code: { type: Number },
+    message: { type: String },
+  },
+  userData: {
     name: { type: String, required: true },
     family: { type: String, required: true },
     phoneNumber: { type: String, required: true },

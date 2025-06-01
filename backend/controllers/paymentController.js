@@ -93,7 +93,7 @@ const requestPayment = async (req, res) => {
       description,
       date: new Date().toISOString(),
       paymentState: false,
-      userInfo: {
+      userData: {
         name: userData.name,
         family: userData.family,
         phoneNumber: userData.phoneNumber,
