@@ -138,7 +138,6 @@ const PlaceOrder = () => {
         name: userInfo.name,
         family: userInfo.family,
         phoneNumber: userInfo.phoneNumber,
-        email: userInfo.email,
         address: userInfo.address,
       };
 
