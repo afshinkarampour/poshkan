@@ -138,8 +138,8 @@ const PlaceOrder = () => {
         name: userInfo.name,
         family: userInfo.family,
         phoneNumber: userInfo.phoneNumber,
-        email: userInfo.email || "",
-        address: userInfo.address || "",
+        email: userInfo.email,
+        address: userInfo.address,
       };
 
       toast.info("در حال اتصال به درگاه پرداخت...", { autoClose: false });
