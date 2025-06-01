@@ -17,7 +17,6 @@ const paymentSchema = new mongoose.Schema({
     name: { type: String, required: true },
     family: { type: String, required: true },
     phoneNumber: { type: String, required: true },
-    email: { type: String },
     address: { type: String },
   },
 });

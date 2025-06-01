@@ -36,9 +36,6 @@ const paymentRequestSchema = Joi.object({
         "string.pattern.base": "شماره تلفن معتبر نیست",
         "any.required": "شماره تلفن الزامی است",
       }),
-    email: Joi.string().email().optional().messages({
-      "string.email": "ایمیل معتبر نیست",
-    }),
     address: Joi.string().optional(),
   })
     .required()
@@ -97,7 +94,6 @@ const requestPayment = async (req, res) => {
         name: userData.name,
         family: userData.family,
         phoneNumber: userData.phoneNumber,
-        email: userData.email || null,
         address: userData.address || null,
       },
     });
@@ -283,7 +279,7 @@ const getPaymentStatus = async (req, res) => {
       amount: payment.amount,
       description: payment.description,
       date: payment.date,
-      userInfo: payment.userInfo,
+      userData: payment.userData,
     };
 
     // اگر پرداخت تایید شده باشد
