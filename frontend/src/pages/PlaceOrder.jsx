@@ -125,10 +125,17 @@ const PlaceOrder = () => {
       setLoading(true);
       toast.dismiss(); // بستن تمام toastهای قبلی
 
-      const amount = calculateTotalPrice() * 10; //تبدیل به ریال
+      const amount = Number(calculateTotalPrice()) * 10; //تبدیل به ریال
 
       if (amount < 1000) {
         toast.error("حداقل مبلغ پرداخت ۱۰۰۰ ريال می‌باشد");
+        return;
+      }
+
+      // اعتبارسنجی نهایی
+      if (isNaN(amount)) {
+        console.error("مبلغ محاسبه شده نامعتبر است:", totalPrice);
+        toast.error("خطا در محاسبه مبلغ پرداخت");
         return;
       }
 
