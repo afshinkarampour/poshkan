@@ -82,7 +82,7 @@ const requestPayment = async (req, res) => {
     }
 
     const { amount, description, userData } = value;
-
+    console.log(amount, description, userData);
     // 1. ارسال درخواست به زرین‌پال
     const response = await axios.post(
       `${ZARINPAL_BASE_URL}PaymentRequest.json`,
