@@ -59,7 +59,7 @@ const paymentSchema = new mongoose.Schema(
       phoneNumber: {
         type: String,
         required: true,
-        match: /^09[0-9]{9}$/, // اعتبارسنجی شماره تلفن
+        // match: /^09[0-9]{9}$/, // اعتبارسنجی شماره تلفن
         index: true,
       },
       address: {

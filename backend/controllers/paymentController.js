@@ -30,10 +30,10 @@ const paymentRequestSchema = Joi.object({
       "any.required": "نام خانوادگی کاربر الزامی است",
     }),
     phoneNumber: Joi.string()
-      .pattern(/^09[0-9]{9}$/)
+      // .pattern(/^09[0-9]{9}$/)
       .required()
       .messages({
-        "string.pattern.base": "شماره تلفن معتبر نیست",
+        // "string.pattern.base": "شماره تلفن معتبر نیست",
         "any.required": "شماره تلفن الزامی است",
       }),
     address: Joi.string().optional(),
