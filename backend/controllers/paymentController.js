@@ -3,7 +3,7 @@ import Joi from "joi";
 import Payment from "../models/paymentModel.js";
 
 const ZARINPAL_BASE_URL =
-  process.env.ZARINPAL_SANDBOX === "true"
+  process.env.ZARINPAL_SANDBOX === true
     ? "https://sandbox.zarinpal.com/pg/rest/WebGate/"
     : "https://api.zarinpal.com/pg/rest/WebGate/";
 
@@ -132,7 +132,7 @@ const requestPayment = async (req, res) => {
     res.json({
       success: true,
       paymentUrl: `https://${
-        process.env.ZARINPAL_SANDBOX === "true" ? "sandbox" : "www"
+        process.env.ZARINPAL_SANDBOX === true ? "sandbox" : "www"
       }.zarinpal.com/pg/StartPay/${response.data.Authority}`,
       authority: response.data.Authority,
       paymentId: payment._id,
