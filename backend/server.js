@@ -30,8 +30,15 @@ const allowedOrigins = [
 const corsOptions = {
   origin: allowedOrigins,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "X-Requested-With", // این خط حیاتی است
+    "Accept",
+    "x-requested-with", // حالت case-insensitive
+  ],
   credentials: true,
+  optionsSuccessStatus: 200,
 };
 
 connectDB();

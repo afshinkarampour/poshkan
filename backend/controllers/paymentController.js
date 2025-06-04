@@ -85,7 +85,7 @@ const requestPayment = async (req, res) => {
       `${ZARINPAL_BASE_URL}/request.json`,
       {
         merchant_id: process.env.ZARINPAL_MERCHANT_ID,
-        amount: amount * 10, // تبدیل تومان به ریال
+        amount: amount,
         callback_url: process.env.ZARINPAL_CALLBACK_URL,
         description: description.substring(0, 255),
         currency: "IRT",
