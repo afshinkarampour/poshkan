@@ -105,23 +105,24 @@ const requestPayment = async (req, res) => {
 
     const result = response.data;
 
-    if (result.errors || !result.data) {
-      console.error("خطا در پاسخ زرین‌پال:", {
-        status: response.status,
-        data: result,
-      });
-      return res.status(502).json({
+    // بررسی خطا - نسخه اصلاح شده
+    if (result.errors && result.errors.length > 0) {
+      console.error("خطا در پاسخ زرین‌پال:", result.errors);
+      return res.status(400).json({
         success: false,
-        message: "پاسخ نامعتبر از زرین‌پال",
-        error: result.errors || { message: "Invalid response structure" },
+        message: "خطا در اتصال به درگاه پرداخت",
+        errorCode: result.errors[0]?.code,
+        errorMessage: result.errors[0]?.message,
       });
     }
 
-    if (result.data.code !== 100) {
+    // بررسی موفقیت آمیز بودن تراکنش
+    if (!result.data || result.data.code !== 100) {
+      console.error("پاسخ نامعتبر از زرین‌پال:", result.data);
       return res.status(400).json({
         success: false,
-        message: result.data.message || "درخواست پرداخت توسط زرین‌پال رد شد",
-        code: result.data.code,
+        message: result.data?.message || "درخواست پرداخت توسط زرین‌پال رد شد",
+        code: result.data?.code,
       });
     }
 
