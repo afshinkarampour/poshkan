@@ -17,6 +17,7 @@ import SpecialProducts from "./pages/SpecialProducts";
 import Dashboard from "./pages/Dashboard";
 import OrderReciverInfo from "./pages/OrderReciverInfo";
 import TypedProducts from "./pages/TypedProducts";
+import PaymentVerify from "./pages/PaymentVerify";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Ads from "./components/Ads";
@@ -45,6 +46,7 @@ const App = () => {
         <Route path="/user-info-order" element={<OrderReciverInfo />} />
         <Route path="/special-products" element={<SpecialProducts />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/verify" element={<PaymentVerify />} />
       </Routes>
       {/* </div> */}
       <Footer />
