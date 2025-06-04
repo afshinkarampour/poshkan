@@ -146,6 +146,7 @@ const PlaceOrder = () => {
         family: userInfo.family,
         phoneNumber: userInfo.phoneNumber,
         address: userInfo.address,
+        email: userInfo.email || "no-reply@poshkan.ir",
       };
 
       toast.info("در حال اتصال به درگاه پرداخت...", { autoClose: false });
