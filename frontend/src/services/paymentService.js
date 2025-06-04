@@ -23,6 +23,7 @@ export const requestPayment = async (amount, description, userData) => {
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest",
         },
+        transformRequest: [(data) => JSON.stringify(data)],
         withCredentials: true,
       }
     );

@@ -38,6 +38,28 @@ connectDB();
 
 //middlewares
 app.use(express.json());
+
+// بعد از app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // برای پارس کردن فرم-دیتا
+
+// میدلور اصلاح بدی
+app.use((req, res, next) => {
+  if (req.method === "POST" && req.is("application/json")) {
+    let data = "";
+    req.on("data", (chunk) => (data += chunk));
+    req.on("end", () => {
+      try {
+        req.body = JSON.parse(data);
+        next();
+      } catch (e) {
+        return res.status(400).json({ error: "Invalid JSON" });
+      }
+    });
+  } else {
+    next();
+  }
+});
+
 app.use(cors(corsOptions));
 
 // تنظیم CORS برای همه درخواست‌ها
