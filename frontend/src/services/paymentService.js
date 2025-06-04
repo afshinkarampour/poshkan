@@ -11,11 +11,21 @@ export const requestPayment = async (amount, description, userData) => {
   //   };
   // }
   try {
-    const response = await axios.post(`${API_URL}/request`, {
-      amount,
-      description: description.substring(0, 255),
-      userData,
-    });
+    const response = await axios.post(
+      `${API_URL}/request`,
+      {
+        amount,
+        description: description.substring(0, 255),
+        userData,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "X-Requested-With": "XMLHttpRequest",
+        },
+        withCredentials: true,
+      }
+    );
     return response.data;
   } catch (error) {
     console.error("Payment request error:", error);
