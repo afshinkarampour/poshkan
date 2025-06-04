@@ -38,6 +38,7 @@ const paymentRequestSchema = Joi.object({
         "any.required": "شماره تلفن الزامی است",
       }),
     address: Joi.string().optional(),
+    email: Joi.string().email().optional(),
   })
     .required()
     .messages({
