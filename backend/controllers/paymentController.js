@@ -3,10 +3,10 @@ import Joi from "joi";
 import Payment from "../models/paymentModel.js";
 
 // آدرس جدید بر اساس v4
-const ZARINPAL_BASE_URL =
-  process.env.ZARINPAL_SANDBOX === "true"
-    ? "https://sandbox.zarinpal.com/pg/v4/payment"
-    : "https://api.zarinpal.com/pg/v4/payment";
+const ZARINPAL_BASE_URL = "https://api.zarinpal.com/pg/v4/payment";
+// process.env.ZARINPAL_SANDBOX === "true"
+//   ? "https://sandbox.zarinpal.com/pg/v4/payment"
+//   : "https://api.zarinpal.com/pg/v4/payment";
 
 // اعتبارسنجی درخواست پرداخت
 const paymentRequestSchema = Joi.object({
