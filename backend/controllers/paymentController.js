@@ -2,11 +2,11 @@ import axios from "axios";
 import Joi from "joi";
 import Payment from "../models/paymentModel.js";
 
-// آدرس جدید بر اساس v4
-const ZARINPAL_BASE_URL = "https://api.zarinpal.com/pg/v4/payment";
-// process.env.ZARINPAL_SANDBOX === "true"
-//   ? "https://sandbox.zarinpal.com/pg/v4/payment"
-//   : "https://api.zarinpal.com/pg/v4/payment";
+// تنظیم آدرس API زرین‌پال
+const ZARINPAL_BASE_URL =
+  process.env.ZARINPAL_SANDBOX === "true"
+    ? "https://sandbox.zarinpal.com/pg/v4/payment"
+    : "https://api.zarinpal.com/pg/v4/payment";
 
 // اعتبارسنجی درخواست پرداخت
 const paymentRequestSchema = Joi.object({
@@ -30,13 +30,9 @@ const paymentRequestSchema = Joi.object({
       "string.base": "نام خانوادگی باید متن باشد",
       "any.required": "نام خانوادگی کاربر الزامی است",
     }),
-    phoneNumber: Joi.string()
-      // .pattern(/^09[0-9]{9}$/)
-      .required()
-      .messages({
-        // "string.pattern.base": "شماره تلفن معتبر نیست",
-        "any.required": "شماره تلفن الزامی است",
-      }),
+    phoneNumber: Joi.string().required().messages({
+      "any.required": "شماره تلفن الزامی است",
+    }),
     address: Joi.string().optional(),
     email: Joi.string().email().optional(),
   })
@@ -53,9 +49,8 @@ const paymentVerifySchema = Joi.object({
     "string.base": "Authority باید متن باشد",
     "any.required": "Authority الزامی است",
   }),
-  Status: Joi.string().valid("OK", "NOK").required().messages({
+  Status: Joi.string().valid("OK", "NOK").default("OK").messages({
     "any.only": "Status باید OK یا NOK باشد",
-    "any.required": "Status الزامی است",
   }),
 });
 
@@ -90,16 +85,17 @@ const requestPayment = async (req, res) => {
       `${ZARINPAL_BASE_URL}/request.json`,
       {
         merchant_id: process.env.ZARINPAL_MERCHANT_ID,
-        amount,
+        amount: amount * 10, // تبدیل تومان به ریال
         callback_url: process.env.ZARINPAL_CALLBACK_URL,
         description: description.substring(0, 255),
+        currency: "IRT",
         metadata: {
           mobile: userData.phoneNumber,
           email: userData.email || "no-reply@poshkan.ir",
         },
       },
       {
-        timeout: 10000,
+        timeout: 30000,
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
@@ -109,26 +105,27 @@ const requestPayment = async (req, res) => {
 
     const result = response.data;
 
-    if (result.errors) {
-      console.error("خطا در پاسخ زرین‌پال:", result.errors);
-      return res.status(400).json({
+    if (result.errors || !result.data) {
+      console.error("خطا در پاسخ زرین‌پال:", {
+        status: response.status,
+        data: result,
+      });
+      return res.status(502).json({
         success: false,
-        message: "خطا در اتصال به درگاه پرداخت",
-        errorCode: result.errors.code,
-        errorMessage: result.errors.message,
+        message: "پاسخ نامعتبر از زرین‌پال",
+        error: result.errors || { message: "Invalid response structure" },
       });
     }
 
     if (result.data.code !== 100) {
-      console.error("پاسخ نامعتبر از زرین‌پال:", result.data);
       return res.status(400).json({
         success: false,
-        message: "درخواست پرداخت توسط زرین‌پال رد شد",
+        message: result.data.message || "درخواست پرداخت توسط زرین‌پال رد شد",
         code: result.data.code,
       });
     }
 
-    // ذخیره اطلاعات پرداخت در دیتابیس
+    // ذخیره اطلاعات پرداخت
     const payment = await Payment.create({
       userId: userData.phoneNumber,
       amount,
@@ -147,7 +144,7 @@ const requestPayment = async (req, res) => {
       },
     });
 
-    // ارسال لینک پرداخت به کاربر
+    // پاسخ به کلاینت
     res.json({
       success: true,
       paymentUrl: `https://${
@@ -157,19 +154,11 @@ const requestPayment = async (req, res) => {
       paymentId: payment._id,
     });
   } catch (error) {
-    console.error("خطا در ایجاد درخواست پرداخت:", error);
-
-    if (error.code === 11000) {
-      return res.status(400).json({
-        success: false,
-        message: "تراکنش تکراری",
-        error: "DUPLICATE_TRANSACTION",
-      });
-    }
-
-    if (error.response?.data) {
-      console.error("پاسخ خطا از زرین‌پال:", error.response.data);
-    }
+    console.error("خطا در ایجاد درخواست پرداخت:", {
+      message: error.message,
+      stack: error.stack,
+      response: error.response?.data,
+    });
 
     res.status(500).json({
       success: false,
@@ -187,7 +176,7 @@ const verifyPayment = async (req, res) => {
     // اعتبارسنجی پارامترهای ورودی
     const { error, value } = paymentVerifySchema.validate(req.query, {
       abortEarly: false,
-      allowUnknown: false,
+      allowUnknown: true,
     });
 
     if (error) {
@@ -199,36 +188,43 @@ const verifyPayment = async (req, res) => {
 
     const { Authority, Status } = value;
 
-    if (Status !== "OK") {
-      return res.redirect(
-        `${process.env.FRONTEND_URL}/payment/failed?reason=payment_cancelled`
-      );
-    }
-
+    // یافتن تراکنش
     const payment = await Payment.findOne({ authority: Authority });
-
     if (!payment) {
       return res.redirect(
         `${process.env.FRONTEND_URL}/payment/failed?reason=payment_not_found`
       );
     }
 
+    // بررسی وضعیت قبلی
     if (payment.paymentState) {
       return res.redirect(
         `${process.env.FRONTEND_URL}/payment/success?refId=${payment.refId}&paymentId=${payment._id}&alreadyVerified=true`
       );
     }
 
-    // ارسال درخواست تایید به زرین‌پال
+    // اگر کاربر انصراف داده باشد
+    if (Status === "NOK") {
+      payment.verificationError = {
+        message: "کاربر از پرداخت انصراف داد",
+        status: "CANCELLED",
+      };
+      await payment.save();
+      return res.redirect(
+        `${process.env.FRONTEND_URL}/payment/failed?reason=user_cancelled`
+      );
+    }
+
+    // تایید پرداخت با زرین‌پال
     const verifyResponse = await axios.post(
       `${ZARINPAL_BASE_URL}/verify.json`,
       {
         merchant_id: process.env.ZARINPAL_MERCHANT_ID,
         authority: Authority,
-        amount: payment.amount,
+        amount: payment.amount * 10, // تبدیل به ریال
       },
       {
-        timeout: 10000,
+        timeout: 30000,
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
@@ -238,13 +234,11 @@ const verifyPayment = async (req, res) => {
 
     const result = verifyResponse.data;
 
+    // بررسی خطاهای زرین‌پال
     if (result.errors) {
-      console.error("خطا در تایید پرداخت:", result.errors);
-
       payment.verificationError = {
         code: result.errors.code,
         message: result.errors.message || "خطای ناشناخته از زرین‌پال",
-        details: result.errors,
       };
       await payment.save();
 
@@ -253,13 +247,11 @@ const verifyPayment = async (req, res) => {
       );
     }
 
+    // بررسی کد وضعیت
     if (result.data.code !== 100 && result.data.code !== 101) {
-      console.error("کد تأیید غیرمجاز:", result.data);
-
       payment.verificationError = {
         code: result.data.code,
-        message: "کد تأیید نامعتبر",
-        details: result.data,
+        message: result.data.message || "کد تأیید نامعتبر",
       };
       await payment.save();
 
@@ -268,22 +260,21 @@ const verifyPayment = async (req, res) => {
       );
     }
 
-    // پرداخت موفق: ذخیره اطلاعات
+    // پرداخت موفق
     payment.paymentState = true;
     payment.refId = result.data.ref_id;
     payment.verifiedAt = new Date();
-    payment.verificationError = null;
     await payment.save();
 
     res.redirect(
       `${process.env.FRONTEND_URL}/payment/success?refId=${payment.refId}&paymentId=${payment._id}`
     );
   } catch (error) {
-    console.error("خطا در تایید پرداخت:", error);
-
-    if (error.response?.data) {
-      console.error("پاسخ خطا از زرین‌پال:", error.response.data);
-    }
+    console.error("خطا در تایید پرداخت:", {
+      message: error.message,
+      stack: error.stack,
+      response: error.response?.data,
+    });
 
     res.redirect(
       `${process.env.FRONTEND_URL}/payment/failed?reason=server_error`
@@ -312,7 +303,6 @@ const getPaymentStatus = async (req, res) => {
 
     // یافتن پرداخت
     const payment = await Payment.findById(req.params.paymentId);
-
     if (!payment) {
       return res.status(404).json({
         success: false,
@@ -326,10 +316,8 @@ const getPaymentStatus = async (req, res) => {
       paymentState: payment.paymentState,
       amount: payment.amount,
       description: payment.description,
-      date: payment.date,
       userData: payment.userData,
       createdAt: payment.createdAt,
-      updatedAt: payment.updatedAt,
     };
 
     // اطلاعات اضافی برای پرداخت‌های تایید شده
@@ -342,15 +330,10 @@ const getPaymentStatus = async (req, res) => {
 
     res.json(response);
   } catch (error) {
-    console.error("خطا در دریافت وضعیت پرداخت:", error);
-
-    // مدیریت خطاهای خاص
-    if (error.name === "CastError") {
-      return res.status(400).json({
-        success: false,
-        message: "شناسه پرداخت نامعتبر است",
-      });
-    }
+    console.error("خطا در دریافت وضعیت پرداخت:", {
+      message: error.message,
+      stack: error.stack,
+    });
 
     res.status(500).json({
       success: false,
