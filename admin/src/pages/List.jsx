@@ -56,17 +56,19 @@ const List = () => {
     let copyList = list.slice();
     if (search) {
       copyList = copyList.filter((item) =>
-        item.name.toLowerCase().includes(search.toLowerCase())
+        item?.name?.toLowerCase()?.includes(search.toLowerCase())
       );
     }
 
     if (selectedCategory && selectedCategory !== "all") {
-      copyList = copyList.filter((p) => p.category.includes(selectedCategory));
+      copyList = copyList.filter((p) =>
+        p?.category?.includes(selectedCategory)
+      );
     }
 
     if (selectedSubCategory && selectedSubCategory !== "full") {
       copyList = copyList.filter((p) =>
-        p.subCategory.includes(selectedSubCategory)
+        p?.subCategory?.includes(selectedSubCategory)
       );
     }
 
@@ -284,7 +286,9 @@ const List = () => {
                   <img
                     className="w-24 md:w-40"
                     src={
-                      `${backendUrl}/uploads/${item.img[0]}`
+                      item?.img?.[0]
+                        ? `${backendUrl}/uploads/${item.img[0]}`
+                        : assets.noImage
                       // assets.product1 ||
                       // item.img[0].substring(0, item.img[0].indexOf("?"))
                     }
