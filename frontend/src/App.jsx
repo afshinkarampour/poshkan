@@ -46,7 +46,15 @@ const App = () => {
         <Route path="/user-info-order" element={<OrderReciverInfo />} />
         <Route path="/special-products" element={<SpecialProducts />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/payment/verify" element={<PaymentVerify />} />
+        {/* <Route path="/payment/verify" element={<PaymentVerify />} /> */}
+        <Route
+          path="/payment/success"
+          element={<PaymentResult type="success" />}
+        />
+        <Route
+          path="/payment/failed"
+          element={<PaymentResult type="failed" />}
+        />
       </Routes>
       {/* </div> */}
       <Footer />

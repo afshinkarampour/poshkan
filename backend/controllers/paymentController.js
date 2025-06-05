@@ -88,7 +88,7 @@ const requestPayment = async (req, res) => {
         amount: amount,
         callback_url: process.env.ZARINPAL_CALLBACK_URL,
         description: description.substring(0, 255),
-        currency: "IRT",
+        currency: "IRR",
         metadata: {
           mobile: userData.phoneNumber,
           email: userData.email || "no-reply@poshkan.ir",
