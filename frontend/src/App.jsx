@@ -49,11 +49,11 @@ const App = () => {
         {/* <Route path="/payment/verify" element={<PaymentVerify />} /> */}
         <Route
           path="/payment/success"
-          element={<PaymentResult type="success" />}
+          element={<PaymentVerify type="success" />}
         />
         <Route
           path="/payment/failed"
-          element={<PaymentResult type="failed" />}
+          element={<PaymentVerify type="failed" />}
         />
       </Routes>
       {/* </div> */}
