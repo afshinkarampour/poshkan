@@ -4,14 +4,8 @@ import axioxInstance from "./axiosInstance";
 const API_URL = `${import.meta.env.VITE_BACKEND_URL}/api/payment`;
 
 export const requestPayment = async (amount, description, userData) => {
-  // if (!process.env.ZARINPAL_MERCHANT_ID || !process.env.ZARINPAL_CALLBACK_URL) {
-  //   throw {
-  //     status: 500,
-  //     message: "پیکربندی درگاه پرداخت ناقص است",
-  //   };
-  // }
   try {
-    const response = await axios.post(
+    const response = await axioxInstance.post(
       `${API_URL}/request`,
       {
         amount,

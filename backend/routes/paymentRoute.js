@@ -9,8 +9,8 @@ import {
 
 const paymentRouter = express.Router();
 
-paymentRouter.post("/request", requestPayment);
-paymentRouter.get("/verify", verifyPayment);
-paymentRouter.get("/status/:paymentId", getPaymentStatus);
+paymentRouter.post("/request", authUser, requestPayment);
+paymentRouter.get("/verify", authUser, verifyPayment);
+paymentRouter.get("/status/:paymentId", authUser, getPaymentStatus);
 
 export default paymentRouter;

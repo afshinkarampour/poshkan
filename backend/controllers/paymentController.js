@@ -222,7 +222,7 @@ const verifyPayment = async (req, res) => {
       {
         merchant_id: process.env.ZARINPAL_MERCHANT_ID,
         authority: Authority,
-        amount: payment.amount * 10, // تبدیل به ریال
+        amount: payment.amount,
       },
       {
         timeout: 30000,

@@ -61,7 +61,7 @@ const PaymentVerify = () => {
 
   const getErrorMessage = (reason) => {
     const messages = {
-      payment_cancelled: "پرداخت توسط کاربر لغو شد",
+      user_cancelled: "پرداخت توسط کاربر لغو شد",
       payment_not_found: "اطلاعات پرداخت یافت نشد",
       verification_failed: "تایید پرداخت ناموفق بود",
       server_error: "خطای سرور در پردازش پرداخت",
