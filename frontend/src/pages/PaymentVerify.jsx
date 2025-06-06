@@ -109,8 +109,7 @@ const PaymentVerify = () => {
               {convertToPersianDigits(formatAmount(payment.amount))} ریال
             </p>
             <p>
-              <span className="font-semibold">تاریخ:</span>{" "}
-              {new Date(payment.faDate)}
+              <span className="font-semibold">تاریخ:</span> {payment.faDate}
             </p>
           </div>
           <button
