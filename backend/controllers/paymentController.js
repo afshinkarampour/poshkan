@@ -90,7 +90,6 @@ const requestPayment = async (req, res) => {
         callback_url: process.env.ZARINPAL_CALLBACK_URL,
         description: description.substring(0, 255),
         currency: "IRR",
-        faDate: moment().locale("fa").format("YYYY/M/D"),
         metadata: {
           mobile: userData.phoneNumber,
           email: userData.email || "no-reply@poshkan.ir",
@@ -138,6 +137,7 @@ const requestPayment = async (req, res) => {
       refId: null,
       verifiedAt: null,
       verificationError: null,
+      faDate: null,
       userData: {
         name: userData.name,
         family: userData.family,
@@ -245,6 +245,7 @@ const verifyPayment = async (req, res) => {
     payment.isPaid = true;
     payment.paymentState = true; // ⬅️ این خط اضافه شده
     payment.verifiedAt = new Date(); // ⬅️ این خط اضافه شده
+    payment.faDate = moment().locale("fa").format("YYYY/M/D");
     payment.refId = result.data.ref_id;
     payment.cardPan = result.data.card_pan || null;
     payment.cardHash = result.data.card_hash || null;
