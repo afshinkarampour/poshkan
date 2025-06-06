@@ -48,7 +48,7 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         {/* <Route path="/payment/verify" element={<PaymentVerify />} /> */}
         <Route
-          path="/payment/success"
+          path="/payment/verify"
           element={<PaymentVerify type="success" />}
         />
         <Route
