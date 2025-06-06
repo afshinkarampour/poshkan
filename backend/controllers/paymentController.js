@@ -313,6 +313,7 @@ const getPaymentStatus = async (req, res) => {
       success: true,
       paymentState: payment.paymentState,
       amount: payment.amount,
+      faDate: payment.faDate,
       description: payment.description,
       userData: payment.userData,
       createdAt: payment.createdAt,
