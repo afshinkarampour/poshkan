@@ -145,6 +145,9 @@ const requestPayment = async (req, res) => {
       },
     });
 
+    console.log("Amount received from frontend:", amount);
+    console.log("Amount saved in DB:", payment.amount);
+
     // پاسخ به کلاینت
     res.json({
       success: true,
