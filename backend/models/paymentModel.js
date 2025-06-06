@@ -31,7 +31,6 @@ const paymentSchema = new mongoose.Schema(
     //برای ذخیره تاریخ شمسی
     faDate: {
       type: String,
-      required: true,
     },
     authority: {
       type: String,
