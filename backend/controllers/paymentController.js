@@ -3,8 +3,6 @@ import Joi from "joi";
 import Payment from "../models/paymentModel.js";
 import moment from "jalali-moment";
 
-moment.loadPersian({ usePersianDigits: false });
-
 // تنظیم آدرس API زرین‌پال
 const ZARINPAL_BASE_URL =
   process.env.ZARINPAL_SANDBOX === "true"
@@ -61,6 +59,7 @@ const paymentVerifySchema = Joi.object({
  * ایجاد درخواست پرداخت جدید
  */
 const requestPayment = async (req, res) => {
+  console.log("تاریخ شمسی:", moment().locale("fa").format("YYYY/MM/DD"));
   try {
     // اعتبارسنجی ورودی‌ها
     const { error, value } = paymentRequestSchema.validate(req.body, {
@@ -247,7 +246,7 @@ const verifyPayment = async (req, res) => {
     payment.isPaid = true;
     payment.paymentState = true; // ⬅️ این خط اضافه شده
     payment.verifiedAt = new Date(); // ⬅️ این خط اضافه شده
-    payment.faDate = moment().locale("fa").format("YYYY/M/D");
+    // payment.faDate = moment().locale("fa").format("YYYY/M/D");
     payment.refId = result.data.ref_id;
     payment.cardPan = result.data.card_pan || null;
     payment.cardHash = result.data.card_hash || null;
