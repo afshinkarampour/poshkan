@@ -251,7 +251,7 @@ const verifyPayment = async (req, res) => {
     await payment.save();
 
     res.redirect(
-      `${process.env.FRONTEND_URL}/payment/success?ref_id=${payment.refId}`
+      `${process.env.FRONTEND_URL}/payment/verify?refId=${payment.refId}&paymentId=${payment._id}`
     );
   } catch (error) {
     console.error("خطا در تایید پرداخت:", {
