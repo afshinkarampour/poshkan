@@ -1,3 +1,4 @@
+import { required } from "joi";
 import mongoose from "mongoose";
 
 const paymentSchema = new mongoose.Schema(
@@ -5,12 +6,12 @@ const paymentSchema = new mongoose.Schema(
     userId: {
       type: String,
       required: true,
-      index: true, // اضافه شدن ایندکس برای جستجوی سریعتر
+      index: true,
     },
     amount: {
       type: Number,
       required: true,
-      min: 1000, // حداقل مبلغ پرداخت
+      min: 1000,
     },
     paymentState: {
       type: Boolean,
@@ -20,25 +21,30 @@ const paymentSchema = new mongoose.Schema(
     description: {
       type: String,
       required: true,
-      maxlength: 255, // مطابق با محدودیت زرین پال
+      maxlength: 255,
     },
     date: {
-      type: Date, // تغییر از String به Date برای پردازش راحت‌تر
+      type: Date,
       required: true,
-      default: Date.now, // مقدار پیش‌فرض خودکار
+      default: Date.now,
+    },
+    //برای ذخیره تاریخ شمسی
+    faDate: {
+      type: String,
+      required: true,
     },
     authority: {
       type: String,
       unique: true,
-      sparse: true, // اجازه null برای مواردی که هنوز Authority دریافت نکرده‌اند
+      sparse: true,
       index: true,
     },
     refId: {
       type: String,
-      index: true, // ایندکس برای جستجوی سریع
+      index: true,
     },
     verifiedAt: {
-      type: Date, // زمان تایید پرداخت
+      type: Date,
     },
     verificationError: {
       code: { type: Number }, // کد خطای زرین پال

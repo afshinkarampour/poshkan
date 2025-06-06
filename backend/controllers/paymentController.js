@@ -1,6 +1,7 @@
 import axios from "axios";
 import Joi from "joi";
 import Payment from "../models/paymentModel.js";
+import moment from "jalali-moment";
 
 // تنظیم آدرس API زرین‌پال
 const ZARINPAL_BASE_URL =
@@ -89,6 +90,7 @@ const requestPayment = async (req, res) => {
         callback_url: process.env.ZARINPAL_CALLBACK_URL,
         description: description.substring(0, 255),
         currency: "IRR",
+        faDate: moment().locale("fa").format("YYYY/M/D"),
         metadata: {
           mobile: userData.phoneNumber,
           email: userData.email || "no-reply@poshkan.ir",

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { ShopContext } from "../context/ShopContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getPaymentStatus } from "../services/paymentService";
@@ -9,6 +10,8 @@ const PaymentVerify = () => {
   const [payment, setPayment] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const { convertToPersianDigits, formatAmount } = useContext(ShopContext);
 
   useEffect(() => {
     const verifyPayment = async () => {
@@ -96,18 +99,18 @@ const PaymentVerify = () => {
       ) : payment?.paymentState ? (
         <div className="text-center text-green-600">
           <h2 className="text-xl font-bold mb-2">پرداخت موفقیت آمیز بود</h2>
-          <div className="space-y-2 text-left my-4">
+          <div className="space-y-2 text-right my-4">
             <p>
               <span className="font-semibold">شماره پیگیری:</span>{" "}
               {payment.refId}
             </p>
             <p>
               <span className="font-semibold">مبلغ:</span>{" "}
-              {payment.amount.toLocaleString()} ریال
+              {convertToPersianDigits(formatAmount(payment.amount))} ریال
             </p>
             <p>
               <span className="font-semibold">تاریخ:</span>{" "}
-              {new Date(payment.date).toLocaleString("fa-IR")}
+              {new Date(payment.faDate)}
             </p>
           </div>
           <button

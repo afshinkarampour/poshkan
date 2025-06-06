@@ -46,7 +46,6 @@ const App = () => {
         <Route path="/user-info-order" element={<OrderReciverInfo />} />
         <Route path="/special-products" element={<SpecialProducts />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        {/* <Route path="/payment/verify" element={<PaymentVerify />} /> */}
         <Route
           path="/payment/verify"
           element={<PaymentVerify type="success" />}
@@ -56,7 +55,6 @@ const App = () => {
           element={<PaymentVerify type="failed" />}
         />
       </Routes>
-      {/* </div> */}
       <Footer />
     </div>
   );
