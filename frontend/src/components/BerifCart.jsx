@@ -52,6 +52,11 @@ const BerifCart = () => {
             const productData = products.find(
               (product) => product._id === item._id
             );
+            //فرضاً محصول قبلا توسط مدیر حدف شده
+            if (!productData) {
+              updateQuantity(item._id, item.size, 0); // حذف آیتم
+              return null; // از رندر جلوگیری کنید
+            }
             return (
               <div key={index}>
                 <div

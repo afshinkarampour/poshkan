@@ -1,4 +1,5 @@
 import productModel from "../models/productModel.js";
+import userModel from "../models/userModel.js";
 import "dotenv/config";
 import * as fs from "fs/promises";
 import moment from "jalali-moment";
@@ -248,6 +249,12 @@ const removeProduct = async (req, res) => {
         }
       }
     }
+
+    //حذف محصول از سبد خرید تمام کاربران
+    await userModel.updateMany(
+      { [`cartData.${id}`]: { $exists: true } }, // شرط: کاربرانی که این محصول را در سبد دارند
+      { $unset: { [`cartData.${id}`]: 1 } } // حذف محصول از سبد آنها
+    );
 
     // حذف محصول از دیتابیس
     await productModel.findByIdAndDelete(id);
