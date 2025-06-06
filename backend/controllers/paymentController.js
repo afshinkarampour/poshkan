@@ -145,9 +145,6 @@ const requestPayment = async (req, res) => {
       },
     });
 
-    console.log("Amount received from frontend:", amount);
-    console.log("Amount saved in DB:", payment.amount);
-
     // پاسخ به کلاینت
     res.json({
       success: true,
@@ -192,86 +189,69 @@ const verifyPayment = async (req, res) => {
 
     const { Authority, Status } = value;
 
-    // یافتن تراکنش
+    if (Status !== "OK") {
+      return res.redirect(
+        `${process.env.FRONTEND_URL}/payment/failed?reason=user_canceled`
+      );
+    }
+
     const payment = await Payment.findOne({ authority: Authority });
     if (!payment) {
       return res.redirect(
-        `${process.env.FRONTEND_URL}/payment/failed?reason=payment_not_found`
+        `${process.env.FRONTEND_URL}/payment/failed?reason=not_found`
       );
     }
 
-    // بررسی وضعیت قبلی
-    if (payment.paymentState) {
-      return res.redirect(
-        `${process.env.FRONTEND_URL}/payment/success?refId=${payment.refId}&paymentId=${payment._id}&alreadyVerified=true`
-      );
-    }
-
-    // اگر کاربر انصراف داده باشد
-    if (Status === "NOK") {
-      payment.verificationError = {
-        message: "کاربر از پرداخت انصراف داد",
-        status: "CANCELLED",
-      };
-      await payment.save();
-      return res.redirect(
-        `${process.env.FRONTEND_URL}/payment/failed?reason=user_cancelled`
-      );
-    }
-
-    // تایید پرداخت با زرین‌پال
     const verifyResponse = await axios.post(
-      `${ZARINPAL_BASE_URL}/verify.json`,
+      "https://api.zarinpal.com/pg/v4/payment/verify.json",
       {
         merchant_id: process.env.ZARINPAL_MERCHANT_ID,
-        authority: Authority,
         amount: payment.amount,
+        authority: Authority,
       },
       {
-        timeout: 30000,
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json",
         },
       }
     );
 
     const result = verifyResponse.data;
 
-    // بررسی خطاهای زرین‌پال
-    if (result.errors) {
+    // بررسی اینکه آیا ساختار پاسخ معتبر است یا نه
+    if (!result.data || typeof result.data.code === "undefined") {
       payment.verificationError = {
-        code: result.errors.code,
-        message: result.errors.message || "خطای ناشناخته از زرین‌پال",
+        message: "پاسخ نامعتبر از زرین‌پال دریافت شد",
+        rawResponse: result,
       };
       await payment.save();
-
       return res.redirect(
-        `${process.env.FRONTEND_URL}/payment/failed?reason=verification_failed&code=${result.errors.code}`
+        `${process.env.FRONTEND_URL}/payment/failed?reason=invalid_response`
       );
     }
 
-    // بررسی کد وضعیت
+    // بررسی موفقیت‌آمیز بودن پرداخت
     if (result.data.code !== 100 && result.data.code !== 101) {
       payment.verificationError = {
         code: result.data.code,
         message: result.data.message || "کد تأیید نامعتبر",
       };
       await payment.save();
-
       return res.redirect(
         `${process.env.FRONTEND_URL}/payment/failed?reason=invalid_code&code=${result.data.code}`
       );
     }
 
-    // پرداخت موفق
-    payment.paymentState = true;
+    // پرداخت تأیید شده است
+    payment.isPaid = true;
     payment.refId = result.data.ref_id;
-    payment.verifiedAt = new Date();
+    payment.cardPan = result.data.card_pan || null;
+    payment.cardHash = result.data.card_hash || null;
+    payment.paidAt = new Date();
     await payment.save();
 
     res.redirect(
-      `${process.env.FRONTEND_URL}/payment/success?refId=${payment.refId}&paymentId=${payment._id}`
+      `${process.env.FRONTEND_URL}/payment/success?ref_id=${payment.refId}`
     );
   } catch (error) {
     console.error("خطا در تایید پرداخت:", {
@@ -280,10 +260,114 @@ const verifyPayment = async (req, res) => {
       response: error.response?.data,
     });
 
+    const authority = req.query.Authority;
+    const payment = await Payment.findOne({ authority });
+
+    if (payment) {
+      payment.verificationError = {
+        message: error.response?.data?.errors?.message || error.message,
+        rawResponse: error.response?.data || null,
+      };
+      await payment.save();
+    }
+
     res.redirect(
       `${process.env.FRONTEND_URL}/payment/failed?reason=server_error`
     );
   }
+
+  //   // یافتن تراکنش
+  //   const payment = await Payment.findOne({ authority: Authority });
+  //   if (!payment) {
+  //     return res.redirect(
+  //       `${process.env.FRONTEND_URL}/payment/failed?reason=payment_not_found`
+  //     );
+  //   }
+
+  //   // بررسی وضعیت قبلی
+  //   if (payment.paymentState) {
+  //     return res.redirect(
+  //       `${process.env.FRONTEND_URL}/payment/success?refId=${payment.refId}&paymentId=${payment._id}&alreadyVerified=true`
+  //     );
+  //   }
+
+  //   // اگر کاربر انصراف داده باشد
+  //   if (Status === "NOK") {
+  //     payment.verificationError = {
+  //       message: "کاربر از پرداخت انصراف داد",
+  //       status: "CANCELLED",
+  //     };
+  //     await payment.save();
+  //     return res.redirect(
+  //       `${process.env.FRONTEND_URL}/payment/failed?reason=user_cancelled`
+  //     );
+  //   }
+
+  //   // تایید پرداخت با زرین‌پال
+  //   const verifyResponse = await axios.post(
+  //     `${ZARINPAL_BASE_URL}/verify.json`,
+  //     {
+  //       merchant_id: process.env.ZARINPAL_MERCHANT_ID,
+  //       authority: Authority,
+  //       amount: payment.amount,
+  //     },
+  //     {
+  //       timeout: 30000,
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Accept: "application/json",
+  //       },
+  //     }
+  //   );
+
+  //   const result = verifyResponse.data;
+
+  //   // بررسی خطاهای زرین‌پال
+  //   if (result.errors) {
+  //     payment.verificationError = {
+  //       code: result.errors.code,
+  //       message: result.errors.message || "خطای ناشناخته از زرین‌پال",
+  //     };
+  //     await payment.save();
+
+  //     return res.redirect(
+  //       `${process.env.FRONTEND_URL}/payment/failed?reason=verification_failed&code=${result.errors.code}`
+  //     );
+  //   }
+
+  //   // بررسی کد وضعیت
+  //   if (result.data.code !== 100 && result.data.code !== 101) {
+  //     payment.verificationError = {
+  //       code: result.data.code,
+  //       message: result.data.message || "کد تأیید نامعتبر",
+  //     };
+  //     await payment.save();
+
+  //     return res.redirect(
+  //       `${process.env.FRONTEND_URL}/payment/failed?reason=invalid_code&code=${result.data.code}`
+  //     );
+  //   }
+
+  //   // پرداخت موفق
+  //   payment.paymentState = true;
+  //   payment.refId = result.data.ref_id;
+  //   payment.verifiedAt = new Date();
+  //   await payment.save();
+
+  //   res.redirect(
+  //     `${process.env.FRONTEND_URL}/payment/success?refId=${payment.refId}&paymentId=${payment._id}`
+  //   );
+  // } catch (error) {
+  //   console.error("خطا در تایید پرداخت:", {
+  //     message: error.message,
+  //     stack: error.stack,
+  //     response: error.response?.data,
+  //   });
+
+  //   res.redirect(
+  //     `${process.env.FRONTEND_URL}/payment/failed?reason=server_error`
+  //   );
+  // }
 };
 
 /**
