@@ -3,6 +3,8 @@ import Joi from "joi";
 import Payment from "../models/paymentModel.js";
 import moment from "jalali-moment";
 
+moment.loadPersian({ usePersianDigits: false });
+
 // تنظیم آدرس API زرین‌پال
 const ZARINPAL_BASE_URL =
   process.env.ZARINPAL_SANDBOX === "true"
