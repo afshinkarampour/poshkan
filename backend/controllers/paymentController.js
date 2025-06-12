@@ -130,7 +130,7 @@ const requestPayment = async (req, res) => {
 
     // ذخیره اطلاعات پرداخت
     const payment = await Payment.create({
-      userId: userData._id,
+      userId: userData.phoneNumber,
       amount,
       description,
       paymentState: false,
