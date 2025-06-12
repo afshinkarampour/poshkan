@@ -113,10 +113,10 @@ const PaymentVerify = () => {
             </p>
           </div>
           <button
-            onClick={() => navigate("/orders")}
+            onClick={() => navigate("/dashboard")}
             className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
           >
-            مشاهده سفارشات
+            مشاهده سفارشات در داشبورد شما
           </button>
         </div>
       ) : (

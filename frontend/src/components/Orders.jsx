@@ -8,32 +8,45 @@ const Orders = () => {
   const { backendUrl, token, currency } = useContext(ShopContext);
 
   const [orderData, setOrderData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const loadOrderData = async () => {
     try {
+      setLoading(true);
+      setError(null);
       const response = await axiosInstance.get(
-        backendUrl + "/api/order/userorders"
+        backendUrl + "/api/payment/userpayments"
       );
       //each person many orders and each order many Items
       if (response.data.success) {
-        let allOrdersItem = [];
-        response.data.orders.map((order) => {
-          order.items.map((item) => {
-            item["status"] = order.status;
-            item["payment"] = order.payment;
-            item["paymentMethod"] = order.paymentMethod;
-            item["date"] = order.date;
-            allOrdersItem.push(item);
-          });
-        });
-        setOrderData(allOrdersItem.reverse());
+        // let allOrdersItem = [];
+        // response.data.userOrderInfo.map((order) => {
+        // order.items.map((item) => {
+        //   item["status"] = order.status;
+        //   item["payment"] = order.payment;
+        //   item["paymentMethod"] = order.paymentMethod;
+        //   item["date"] = order.date;
+        //   allOrdersItem.push(item);
+        // });
+        // });
+        setOrderData(response.data.userOrderInfo);
       }
-    } catch (error) {}
+    } catch (error) {
+      setError("خطا در دریافت سفارشات. لطفا دوباره تلاش کنید.");
+      console.error("Error loading orders:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     loadOrderData();
   }, []);
+
+  if (loading) return <div>در حال دریافت سفارشات...</div>;
+  if (error) return <div className="text-red-500">{error}</div>;
+  if (orderData.length === 0) return <div>شما هنوز سفارشی ثبت نکرده‌اید.</div>;
 
   return (
     <div>
@@ -41,13 +54,22 @@ const Orders = () => {
         <Title text1={"سفارش‌های"} text2={"من"} />
       </div>
       <div className="">
-        {orderData.map((item, index) => (
+        {orderData.map((item) => (
           <div
-            key={index}
+            key={item._id}
             className="py-4 border-t border-b text-gray-700 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
           >
             <div className="flex items-start gap-6 text-sm">
-              <img
+              <p>
+                شماره سفارش: <span>{item.refId}</span>
+              </p>
+              <p>
+                مبلغ سفارش: <span>{item.amount}</span>
+              </p>
+              <p>
+                تاریخ سفارش: <span>{item.faDate}</span>
+              </p>
+              {/* <img
                 src={item.img[0].substring(0, item.img[0].indexOf("?"))}
                 className="w-16 sm:w-20"
                 alt=""
@@ -68,13 +90,9 @@ const Orders = () => {
                     {new Date(item.date).toDateString()}{" "}
                   </span>
                 </p>
-                {/* <p className="mt-1">
-                  Payment{" "}
-                  <span className="text-gray-400">{item.paymentMethod}</span>
-                </p> */}
-              </div>
+              </div> */}
             </div>
-            <div className="md:w-1/2 flex justify-between">
+            {/* <div className="md:w-1/2 flex justify-between">
               <div className="flex items-center gap-2">
                 <p className="min-w-2 h-2 rounded-full bg-green-500"></p>
                 <p className="text-sm md:text-base">{item.status}</p>
@@ -85,7 +103,7 @@ const Orders = () => {
               >
                 Track Order
               </button>
-            </div>
+            </div> */}
           </div>
         ))}
       </div>

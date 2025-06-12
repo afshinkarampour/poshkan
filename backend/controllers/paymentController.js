@@ -2,6 +2,7 @@ import axios from "axios";
 import Joi from "joi";
 import Payment from "../models/paymentModel.js";
 import moment from "jalali-moment";
+import { trusted } from "mongoose";
 
 // تنظیم آدرس API زرین‌پال
 const ZARINPAL_BASE_URL =
@@ -79,7 +80,7 @@ const requestPayment = async (req, res) => {
       });
     }
 
-    const { amount, description, userData } = value;
+    const { amount, description, userData, items } = value;
 
     // ساخت درخواست پرداخت
     const response = await axios.post(
@@ -129,7 +130,7 @@ const requestPayment = async (req, res) => {
 
     // ذخیره اطلاعات پرداخت
     const payment = await Payment.create({
-      userId: userData.phoneNumber,
+      userId: userData._id,
       amount,
       description,
       paymentState: false,
@@ -138,6 +139,7 @@ const requestPayment = async (req, res) => {
       verifiedAt: null,
       verificationError: null,
       faDate: null,
+      items,
       userData: {
         name: userData.name,
         family: userData.family,
@@ -243,8 +245,8 @@ const verifyPayment = async (req, res) => {
 
     // ✅ پرداخت تایید شده، ذخیره اطلاعات کامل
     payment.isPaid = true;
-    payment.paymentState = true; // ⬅️ این خط اضافه شده
-    payment.verifiedAt = new Date(); // ⬅️ این خط اضافه شده
+    payment.paymentState = true;
+    payment.verifiedAt = new Date();
     payment.faDate = moment().locale("fa").format("YYYY/M/D");
     payment.refId = result.data.ref_id;
     payment.cardPan = result.data.card_pan || null;
@@ -342,4 +344,43 @@ const getPaymentStatus = async (req, res) => {
   }
 };
 
-export { requestPayment, verifyPayment, getPaymentStatus };
+const getPaymentByUserId = async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        message: "User is logged out. Please log in again.",
+      });
+    }
+
+    const userOrderInfo = await Payment.find({
+      userId: req.user._id,
+      paymentState: true,
+    }).sort({ createdAt: -1 });
+
+    // const orders = userOrderInfo.map((order) => ({
+    //   _id: order._id,
+    //   amount: order.amount,
+    //   faDate: order.faDate,
+    //   description: order.description,
+    //   items: order.items,
+    //   paymentState: order.paymentState,
+    //   refId: order.refId,
+    //   createdAt: order.createdAt,
+    // }));
+
+    return res.json({ success: true, userOrderInfo });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+const getAllPayments = async (req, res) => {};
+
+export {
+  requestPayment,
+  verifyPayment,
+  getPaymentStatus,
+  getPaymentByUserId,
+  getAllPayments,
+};

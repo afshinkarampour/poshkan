@@ -50,6 +50,7 @@ const paymentSchema = new mongoose.Schema(
       message: { type: String }, // پیام خطا
       details: { type: Object }, // اطلاعات تکمیلی خطا
     },
+    items: { type: Object, default: {} },
     userData: {
       name: {
         type: String,
