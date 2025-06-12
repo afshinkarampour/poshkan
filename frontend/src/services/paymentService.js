@@ -30,7 +30,7 @@ export const requestPayment = async (amount, description, userData) => {
 
 export const getPaymentStatus = async (paymentId) => {
   try {
-    const response = await axioxInstance.get(`${API_URL}/status/${paymentId}`);
+    const response = await axios.get(`${API_URL}/status/${paymentId}`);
     return response.data;
   } catch (error) {
     console.error("Get payment status error:", error);
