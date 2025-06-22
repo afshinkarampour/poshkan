@@ -151,7 +151,12 @@ const PlaceOrder = () => {
 
       toast.info("در حال اتصال به درگاه پرداخت...", { autoClose: false });
 
-      const response = await requestPayment(amount, description, userData);
+      const response = await requestPayment(
+        amount,
+        description,
+        userData,
+        cartData
+      );
       window.location.href = response.paymentUrl;
     } catch (error) {
       console.error("Payment error:", error);

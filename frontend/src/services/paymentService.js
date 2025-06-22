@@ -3,7 +3,12 @@ import axioxInstance from "./axiosInstance";
 
 const API_URL = `${import.meta.env.VITE_BACKEND_URL}/api/payment`;
 
-export const requestPayment = async (amount, description, userData) => {
+export const requestPayment = async (
+  amount,
+  description,
+  userData,
+  cartData
+) => {
   try {
     const response = await axioxInstance.post(
       `${API_URL}/request`,
@@ -11,6 +16,7 @@ export const requestPayment = async (amount, description, userData) => {
         amount,
         description: description.substring(0, 255),
         userData,
+        cartData,
       },
       {
         headers: {

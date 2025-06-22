@@ -80,7 +80,7 @@ const requestPayment = async (req, res) => {
       });
     }
 
-    const { amount, description, userData, items } = value;
+    const { amount, description, userData, OrderItems } = value;
 
     // ساخت درخواست پرداخت
     const response = await axios.post(
@@ -139,7 +139,7 @@ const requestPayment = async (req, res) => {
       verifiedAt: null,
       verificationError: null,
       faDate: null,
-      items,
+      OrderItems,
       userData: {
         name: userData.name,
         family: userData.family,
