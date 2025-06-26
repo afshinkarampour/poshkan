@@ -2,7 +2,6 @@ import axios from "axios";
 import Joi from "joi";
 import Payment from "../models/paymentModel.js";
 import moment from "jalali-moment";
-import { trusted } from "mongoose";
 
 // تنظیم آدرس API زرین‌پال
 const ZARINPAL_BASE_URL =
@@ -43,6 +42,21 @@ const paymentRequestSchema = Joi.object({
       "object.base": "اطلاعات کاربر باید به صورت آبجکت باشد",
       "any.required": "اطلاعات کاربر الزامی است",
     }),
+  orderItems: Joi.array()
+    .items(
+      Joi.object({
+        productId: Joi.string().required(),
+        quantity: Joi.number().min(1).required(),
+        price: Joi.number().min(0).required(),
+      })
+    )
+    .min(1)
+    .required()
+    .messages({
+      "array.base": "آیتم‌های سفارش باید به صورت آرایه باشند",
+      "array.min": "حداقل یک آیتم باید در سفارش وجود داشته باشد",
+      "any.required": "آیتم‌های سفارش الزامی هستند",
+    }),
 });
 
 // اعتبارسنجی تایید پرداخت
@@ -80,7 +94,7 @@ const requestPayment = async (req, res) => {
       });
     }
 
-    const { amount, description, userData, OrderItems } = value;
+    const { amount, description, userData, orderItems } = value;
 
     // ساخت درخواست پرداخت
     const response = await axios.post(
@@ -139,7 +153,7 @@ const requestPayment = async (req, res) => {
       verifiedAt: null,
       verificationError: null,
       faDate: null,
-      OrderItems,
+      orderItems,
       userData: {
         name: userData.name,
         family: userData.family,
