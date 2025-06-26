@@ -153,7 +153,7 @@ const requestPayment = async (req, res) => {
       verifiedAt: null,
       verificationError: null,
       faDate: null,
-      cartData,
+      items: cartData,
       userData: {
         name: userData.name,
         family: userData.family,
