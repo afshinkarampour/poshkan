@@ -23,12 +23,12 @@ const paymentRequestSchema = Joi.object({
     "any.required": "توضیحات پرداخت الزامی است",
   }),
   userData: Joi.object({
-    userId: Joi.string().length(24).hex().required().messages({
-      "string.base": "userId باید رشته باشد",
-      "string.length": "userId باید دقیقا ۲۴ کاراکتر باشد",
-      "string.hex": "userId باید فقط شامل اعداد و حروف هگزادسیمال باشد",
-      "any.required": "userId الزامی است",
-    }),
+    // userId: Joi.string().length(24).hex().required().messages({
+    //   "string.base": "userId باید رشته باشد",
+    //   "string.length": "userId باید دقیقا ۲۴ کاراکتر باشد",
+    //   "string.hex": "userId باید فقط شامل اعداد و حروف هگزادسیمال باشد",
+    //   "any.required": "userId الزامی است",
+    // }),
     name: Joi.string().required().messages({
       "string.base": "نام باید متن باشد",
       "any.required": "نام کاربر الزامی است",
@@ -150,7 +150,7 @@ const requestPayment = async (req, res) => {
 
     // ذخیره اطلاعات پرداخت
     const payment = await Payment.create({
-      userId: userData.userId,
+      userId: req.user._id,
       amount,
       description,
       paymentState: false,
