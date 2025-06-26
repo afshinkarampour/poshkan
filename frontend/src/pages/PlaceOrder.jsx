@@ -142,6 +142,7 @@ const PlaceOrder = () => {
       const description = `پرداخت برای سفارش ${userInfo.name} ${userInfo.family} - ${userInfo.phoneNumber}`;
 
       const userData = {
+        userId: userInfo._id,
         name: userInfo.name,
         family: userInfo.family,
         phoneNumber: userInfo.phoneNumber,
