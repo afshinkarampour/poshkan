@@ -53,7 +53,7 @@ const paymentRequestSchema = Joi.object({
           "string.empty": "نام محصول نمی‌تواند خالی باشد",
           "any.required": "نام محصول الزامی است",
         }),
-        img: Joi.string().uri().required().messages({
+        image: Joi.string().uri().required().messages({
           "string.base": "آدرس تصویر باید متن باشد",
           "string.uri": "آدرس تصویر باید یک URL معتبر باشد",
           "any.required": "آدرس تصویر الزامی است",
