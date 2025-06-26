@@ -56,50 +56,78 @@ const Orders = () => {
       </div>
       <div className="">
         {orderData.map((item) => (
-          <div
-            key={item._id}
-            className="py-4 border-t border-b text-gray-700 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
-          >
-            <div className="flex items-start gap-6 text-sm">
-              <p>
-                شماره سفارش: <span>{item.refId}</span>
-              </p>
-              <p>
-                مبلغ سفارش:{" "}
-                <span>{convertToPersianDigits(formatAmount(item.amount))}</span>{" "}
-                ریال
-              </p>
-              <p>
-                تاریخ سفارش: <span>{item.faDate}</span>
-              </p>
+          <div className="grid grid-cols-3 grid-rows-4 gap-4">
+            <div className="col-span-3">
+              <div className="flex items-start gap-6 text-sm">
+                <p>
+                  شماره سفارش: <span>{item.refId}</span>
+                </p>
+                <p>
+                  مبلغ سفارش:{" "}
+                  <span>
+                    {convertToPersianDigits(formatAmount(item.amount))}
+                  </span>{" "}
+                  ریال
+                </p>
+                <p>
+                  تاریخ سفارش: <span>{item.faDate}</span>
+                </p>
+              </div>
             </div>
-            <div>
-              {item.items?.map((item) => (
-                <div className="flex justify-around">
+            <div className="col-span-3 row-start-2">
+              <p>state time line</p>
+            </div>
+            {item.items?.map((item) => (
+              <>
+                <div className="row-span-2 col-start-3 row-start-3">
                   <img
                     className="w-20 sm:w-32"
                     src={`${backendUrl}/uploads/${item?.image}`}
                     alt=""
                   />
+                </div>
+                <div className="col-span-2 col-start-1 row-start-3">
                   <p>{item?.name}</p>
-                  <p>تعداد : {item?.quantity}</p>
+                </div>
+                <div className="col-span-2 row-start-4">
                   <p>سایز و رنگ : {item?.size}</p>
                 </div>
-              ))}
-            </div>
-            {/* <div className="md:w-1/2 flex justify-between">
-              <div className="flex items-center gap-2">
-                <p className="min-w-2 h-2 rounded-full bg-green-500"></p>
-                <p className="text-sm md:text-base">{item.status}</p>
-              </div>
-              <button
-                onClick={loadOrderData}
-                className="border px-4 py-2 text-sm font-medium rounded-sm"
-              >
-                Track Order
-              </button>
-            </div> */}
+              </>
+            ))}
           </div>
+
+          // <div
+          //   key={item._id}
+          //   className="py-4 border-t border-b text-gray-700 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+          // >
+          //
+          //   <div>
+          //     {item.items?.map((item) => (
+          //       <div className="flex justify-around">
+          //         <img
+          //           className="w-20 sm:w-32"
+          //           src={`${backendUrl}/uploads/${item?.image}`}
+          //           alt=""
+          //         />
+          //         <p>{item?.name}</p>
+          //         <p>تعداد : {item?.quantity}</p>
+          //         <p>سایز و رنگ : {item?.size}</p>
+          //       </div>
+          //     ))}
+          //   </div>
+          //   {/* <div className="md:w-1/2 flex justify-between">
+          //     <div className="flex items-center gap-2">
+          //       <p className="min-w-2 h-2 rounded-full bg-green-500"></p>
+          //       <p className="text-sm md:text-base">{item.status}</p>
+          //     </div>
+          //     <button
+          //       onClick={loadOrderData}
+          //       className="border px-4 py-2 text-sm font-medium rounded-sm"
+          //     >
+          //       Track Order
+          //     </button>
+          //   </div> */}
+          // </div>
         ))}
       </div>
     </div>
