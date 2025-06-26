@@ -81,6 +81,12 @@ const paymentVerifySchema = Joi.object({
  */
 const requestPayment = async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({
+        success: false,
+        message: "کاربر احراز هویت نشده است. لطفا ابتدا وارد شوید.",
+      });
+    }
     // اعتبارسنجی ورودی‌ها
     const { error, value } = paymentRequestSchema.validate(req.body, {
       abortEarly: false,
