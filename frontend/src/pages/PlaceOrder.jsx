@@ -78,10 +78,18 @@ const PlaceOrder = () => {
       for (const items in cartItems) {
         for (const item in cartItems[items]) {
           if (cartItems[items][item] > 0) {
+            const productData = products.find(
+              (product) => product._id === items
+            );
+
+            if (!productData) continue;
+
             tempData.push({
               _id: items,
               size: item,
               quantity: cartItems[items][item],
+              name: productData.name,
+              image: productData.img[0],
             });
           }
         }

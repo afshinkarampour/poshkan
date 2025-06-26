@@ -23,12 +23,6 @@ const paymentRequestSchema = Joi.object({
     "any.required": "توضیحات پرداخت الزامی است",
   }),
   userData: Joi.object({
-    // userId: Joi.string().length(24).hex().required().messages({
-    //   "string.base": "userId باید رشته باشد",
-    //   "string.length": "userId باید دقیقا ۲۴ کاراکتر باشد",
-    //   "string.hex": "userId باید فقط شامل اعداد و حروف هگزادسیمال باشد",
-    //   "any.required": "userId الزامی است",
-    // }),
     name: Joi.string().required().messages({
       "string.base": "نام باید متن باشد",
       "any.required": "نام کاربر الزامی است",
@@ -54,6 +48,16 @@ const paymentRequestSchema = Joi.object({
         _id: Joi.string().required(),
         size: Joi.string().required(),
         quantity: Joi.number().min(1).required(),
+        name: Joi.string().min(1).required().messages({
+          "string.base": "نام محصول باید متن باشد",
+          "string.empty": "نام محصول نمی‌تواند خالی باشد",
+          "any.required": "نام محصول الزامی است",
+        }),
+        img: Joi.string().uri().required().messages({
+          "string.base": "آدرس تصویر باید متن باشد",
+          "string.uri": "آدرس تصویر باید یک URL معتبر باشد",
+          "any.required": "آدرس تصویر الزامی است",
+        }),
       })
     )
     .min(1)
@@ -165,7 +169,13 @@ const requestPayment = async (req, res) => {
       verifiedAt: null,
       verificationError: null,
       faDate: null,
-      items: cartData,
+      items: cartData.map((item) => ({
+        _id: item._id,
+        size: item.size,
+        quantity: item.quantity,
+        name: item.name,
+        image: item.image,
+      })),
       userData: {
         name: userData.name,
         family: userData.family,
@@ -383,17 +393,6 @@ const getPaymentByUserId = async (req, res) => {
       userId: req.user._id,
       paymentState: true,
     }).sort({ createdAt: -1 });
-
-    // const orders = userOrderInfo.map((order) => ({
-    //   _id: order._id,
-    //   amount: order.amount,
-    //   faDate: order.faDate,
-    //   description: order.description,
-    //   items: order.items,
-    //   paymentState: order.paymentState,
-    //   refId: order.refId,
-    //   createdAt: order.createdAt,
-    // }));
 
     return res.json({ success: true, userOrderInfo });
   } catch (error) {

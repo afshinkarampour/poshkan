@@ -5,7 +5,8 @@ import axios from "axios";
 import axiosInstance from "../services/axiosInstance";
 
 const Orders = () => {
-  const { backendUrl, token, currency } = useContext(ShopContext);
+  const { backendUrl, formatAmount, convertToPersianDigits } =
+    useContext(ShopContext);
 
   const [orderData, setOrderData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -64,33 +65,27 @@ const Orders = () => {
                 شماره سفارش: <span>{item.refId}</span>
               </p>
               <p>
-                مبلغ سفارش: <span>{item.amount}</span>
+                مبلغ سفارش:{" "}
+                <span>{convertToPersianDigits(formatAmount(item.amount))}</span>{" "}
+                ریال
               </p>
               <p>
                 تاریخ سفارش: <span>{item.faDate}</span>
               </p>
-              {/* <img
-                src={item.img[0].substring(0, item.img[0].indexOf("?"))}
-                className="w-16 sm:w-20"
-                alt=""
-              />
-              <div>
-                <p className="sm:text-base font-medium">{item.name}</p>
-                <div className="flex items-center gap-3 mt-1 text-base text-gray-700">
-                  <p>
-                    {currency}
-                    {item.price}
-                  </p>
-                  <p>تعداد: {item.quantity}</p>
-                  <p>اندازه: {item.size}</p>
+            </div>
+            <div>
+              {item.items?.map((item) => (
+                <div className="flex justify-around">
+                  <img
+                    className="w-20 sm:w-32"
+                    src={`${backendUrl}/uploads/${item?.image}`}
+                    alt=""
+                  />
+                  <p>{item?.name}</p>
+                  <p>تعداد : {item?.quantity}</p>
+                  <p>سایز و رنگ : {item?.size}</p>
                 </div>
-                <p className="mt-1">
-                  تاریخ{" "}
-                  <span className="text-gray-400">
-                    {new Date(item.date).toDateString()}{" "}
-                  </span>
-                </p>
-              </div> */}
+              ))}
             </div>
             {/* <div className="md:w-1/2 flex justify-between">
               <div className="flex items-center gap-2">
