@@ -45,7 +45,7 @@ const paymentRequestSchema = Joi.object({
   cartData: Joi.array()
     .items(
       Joi.object({
-        productId: Joi.string().required(),
+        _id: Joi.string().required(),
         size: Joi.string().required(),
         quantity: Joi.number().min(1).required(),
       })
