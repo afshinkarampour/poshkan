@@ -42,7 +42,7 @@ const paymentRequestSchema = Joi.object({
       "object.base": "اطلاعات کاربر باید به صورت آبجکت باشد",
       "any.required": "اطلاعات کاربر الزامی است",
     }),
-  orderItems: Joi.array()
+  cartData: Joi.array()
     .items(
       Joi.object({
         productId: Joi.string().required(),
@@ -94,7 +94,7 @@ const requestPayment = async (req, res) => {
       });
     }
 
-    const { amount, description, userData, orderItems } = value;
+    const { amount, description, userData, cartData } = value;
 
     // ساخت درخواست پرداخت
     const response = await axios.post(
@@ -153,7 +153,7 @@ const requestPayment = async (req, res) => {
       verifiedAt: null,
       verificationError: null,
       faDate: null,
-      orderItems,
+      cartData,
       userData: {
         name: userData.name,
         family: userData.family,
