@@ -54,9 +54,9 @@ const Orders = () => {
       <div className="text-2xl">
         <Title text1={"سفارش‌های"} text2={"من"} />
       </div>
-      <div className="">
+      <div className="mt-4">
         {orderData.map((item) => (
-          <div className="grid grid-cols-3 grid-rows-4 gap-4">
+          <div className="grid grid-cols-3 grid-rows-4 gap-4 border-b border-t border-gray-400 mb-4 lg:justify-items-center">
             <div className="col-span-3">
               <div className="flex items-start gap-6 text-sm">
                 <p>
@@ -79,18 +79,18 @@ const Orders = () => {
             </div>
             {item.items?.map((item) => (
               <>
+                <div className="col-span-2 col-start-1 row-start-3">
+                  <p>{item?.name}</p>
+                </div>
+                <div className="col-span-2 row-start-4">
+                  <p>سایز و رنگ : {item?.size}</p>
+                </div>
                 <div className="row-span-2 col-start-3 row-start-3">
                   <img
                     className="w-20 sm:w-32"
                     src={`${backendUrl}/uploads/${item?.image}`}
                     alt=""
                   />
-                </div>
-                <div className="col-span-2 col-start-1 row-start-3">
-                  <p>{item?.name}</p>
-                </div>
-                <div className="col-span-2 row-start-4">
-                  <p>سایز و رنگ : {item?.size}</p>
                 </div>
               </>
             ))}
