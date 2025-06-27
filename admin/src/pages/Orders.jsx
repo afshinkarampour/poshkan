@@ -125,34 +125,47 @@ const Orders = () => {
               <AiFillProduct className="w-12 " size={50} />
               {/* <img src="" alt="" /> */}
               <div>
-                <div>
+                {/* <div>
                   <span className="ml-2"> مشخصات محصول سفارش شده:</span>
                   {order.items &&
                     Array.isArray(order.items) &&
                     order.items.map((item, index) => {
-                      // if (index === order.items.length - 1) {
-                      //   return (
-                      //     <div>
-                      //       <p className="py-0.5" key={index}>
-                      //         {item.name} / {item.quantity} /
-                      //         <span className="ml-2">{item.size}</span> ,
-                      //       </p>
-                      //     </div>
-                      //   );
-                      // } else {
+                      if (index === order.items.length - 1) {
+                        return (
+                          <div>
+                            <p className="py-0.5" key={index}>
+                              {item.name} / {item.quantity} /
+                              <span className="ml-2">{item.size}</span> ,
+                            </p>
+                          </div>
+                        );
+                      } else {
                       return (
                         <div>
-                          {/* <span className="ml-2"> مشخصات محصول:</span> */}
                           <p className="py-0.5" key={index}>
                             {item.name} / {item.quantity} /
                             <span className="ml-2">{item.size}</span> /
-                            {/* <span className="ml-2">{item.quantity}</span> */}
                           </p>
                         </div>
                       );
-                      // }
+                      }
                     })}
+                </div> */}
+                
+                <div>
+                  <span className="ml-2">مشخصات محصول سفارش شده:</span>
+                  <p className="py-0.5">
+                    {Array.isArray(order.items) && order.items.length > 0
+                      ? order.items
+                          .map(
+                            (item) =>
+                              `${item.name} / ${item.quantity} / ${item.size}`
+                          )
+                          .join(" , ")
+                      : "بدون آیتم"}
+                  </p>
                 </div>
+
                 <p className="mt-3 mb-2 font-medium">
                   <p className="ml-2">نام و نام خانوادگی:</p>
                   {order.userData.name + " " + order.userData.family}
