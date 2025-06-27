@@ -7,7 +7,7 @@ import { AiFillProduct } from "react-icons/ai";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
-  const [selectedStatus, setSelectedStatus] = useState([]);
+  const [selectedStatus, setSelectedStatus] = useState("all");
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [showOrders, setShowOrders] = useState([]);
@@ -15,9 +15,9 @@ const Orders = () => {
   const [error, setError] = useState(null);
 
   const applyFilter = () => {
-    let copyOrders = orders.slice();
+    let copyOrders = [...orders];
     if (selectedStatus !== "all") {
-      copyOrders = copyOrders.filter((o) => o.status.includes(selectedStatus));
+      copyOrders = copyOrders.filter((o) => o.status === selectedStatus);
     }
     setFilteredOrders(copyOrders);
   };
@@ -137,8 +137,8 @@ const Orders = () => {
             className="w-full md:w-32 lg:w-48 py-1 bg-yellow-200"
           >
             <option value="all">همه‌ حالت‌ها</option>
-            <option value="تایید سفارش">تایید</option>
-            <option value="ارسال سفارش">بسته‌بندی</option>
+            <option value="تایید">تایید</option>
+            <option value="دسته‌بندی">بسته‌بندی</option>
             <option value="ارسال">ارسال</option>
           </select>
         </div>
