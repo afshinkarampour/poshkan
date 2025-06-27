@@ -56,7 +56,7 @@ const Orders = () => {
       </div>
       <div className="mt-4">
         {orderData.map((item) => (
-          <div className="grid grid-cols-3 grid-rows-4 gap-4 border-b border-t border-gray-400 mb-4 lg:justify-items-center">
+          <div className="py-4 grid grid-cols-3 grid-rows-4 gap-1 border-b border-t border-gray-400 mb-4 lg:justify-items-center">
             <div className="col-span-3">
               <div className="flex items-start gap-6 text-sm">
                 <p>
@@ -74,23 +74,50 @@ const Orders = () => {
                 </p>
               </div>
             </div>
+            {/* starting state stepper */}
             <div className="col-span-3 row-start-2">
-              <p>state time line</p>
+              <ol className="flex items-center w-full text-sm text-gray-500 font-medium sm:text-base">
+                <li className="flex md:w-full items-center text-indigo-600  sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-4 xl:after:mx-8 ">
+                  <div className="flex items-center whitespace-nowrap after:content-['/'] sm:after:hidden after:mx-2 ">
+                    <span className="w-6 h-6 bg-indigo-600 border border-indigo-200 rounded-full flex justify-center items-center mr-3 text-sm text-white lg:w-10 lg:h-10">
+                      1
+                    </span>{" "}
+                    پرداخت شده
+                  </div>
+                </li>
+                <li className="flex md:w-full items-center text-gray-600 sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-4 xl:after:mx-8 ">
+                  <div className="flex items-center whitespace-nowrap after:content-['/'] sm:after:hidden after:mx-2 ">
+                    <span className="w-6 h-6 bg-gray-100 border border-gray-200 rounded-full flex justify-center items-center mr-3 lg:w-10 lg:h-10">
+                      2
+                    </span>{" "}
+                    بسته بندی
+                  </div>
+                </li>
+                <li className="flex md:w-full items-center text-gray-600 ">
+                  <div className="flex items-center  ">
+                    <span className="w-6 h-6 bg-gray-100 border border-gray-200 rounded-full flex justify-center items-center mr-3 lg:w-10 lg:h-10">
+                      3
+                    </span>{" "}
+                    ارسال
+                  </div>
+                </li>
+              </ol>
             </div>
+            {/* end stepper */}
             {item.items?.map((item) => (
               <>
-                <div className="col-span-2 col-start-1 row-start-3">
-                  <p>{item?.name}</p>
-                </div>
-                <div className="col-span-2 row-start-4">
-                  <p>سایز و رنگ : {item?.size}</p>
-                </div>
                 <div className="row-span-2 col-start-3 row-start-3">
                   <img
                     className="w-20 sm:w-32"
                     src={`${backendUrl}/uploads/${item?.image}`}
                     alt=""
                   />
+                </div>
+                <div className="col-span-2 col-start-1 row-start-3">
+                  <p>{item?.name}</p>
+                </div>
+                <div className="col-span-2 row-start-4">
+                  <p>سایز و رنگ : {item?.size}</p>
                 </div>
               </>
             ))}
