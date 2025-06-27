@@ -401,7 +401,7 @@ const getPaymentByUserId = async (req, res) => {
 
 const getAllPayments = async (req, res) => {
   try {
-    const orders = await Payment.find({});
+    const orders = await Payment.find({ paymentState: true });
     res.status(200).json({ success: true, orders }).sort({ createdAt: -1 });
   } catch (error) {
     console.error("Error fetching all orders:", error);

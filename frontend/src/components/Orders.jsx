@@ -56,7 +56,10 @@ const Orders = () => {
       </div>
       <div className="mt-4">
         {orderData.map((item) => (
-          <div className="py-4 grid grid-cols-3 grid-rows-5 gap-1 border-b border-t border-gray-400 mb-4 lg:justify-items-center">
+          <div
+            key={item.refId}
+            className="py-4 grid grid-cols-3 grid-rows-5 gap-1 border-b border-t border-gray-400 mb-4 lg:justify-items-center"
+          >
             <div className="col-span-3">
               <div className="flex items-start gap-6 text-sm">
                 <p>

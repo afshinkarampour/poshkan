@@ -11,6 +11,8 @@ const Orders = () => {
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [showOrders, setShowOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const applyFilter = () => {
     let copyOrders = orders.slice();
@@ -26,6 +28,8 @@ const Orders = () => {
 
   const fetchAllorders = async () => {
     try {
+      setLoading(true);
+      setError(null);
       const response = await axiosInstance.post(
         backendUrl + "/api/paymet/allPayments"
       );
@@ -35,7 +39,10 @@ const Orders = () => {
         toast.error(response.data.message);
       }
     } catch (error) {
+      setError("خطا در دریافت سفارشات. لطفا دوباره تلاش کنید.");
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -46,7 +53,12 @@ const Orders = () => {
         { paymentId, status: event.target.value }
       );
       if (response.data.success) {
-        await fetchAllorders();
+        const updatedOrders = orders.map((order) =>
+          order._id === paymentId
+            ? { ...order, status: event.target.value }
+            : order
+        );
+        setOrders(updatedOrders);
       }
     } catch (error) {
       console.log(error);
@@ -76,6 +88,10 @@ const Orders = () => {
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedStatus]);
+
+  if (loading) return <div>در حال دریافت سفارشات...</div>;
+  if (error) return <div className="text-red-500">{error}</div>;
+  if (showOrders.length === 0) return <div>سفارشی برای نمایش وجود ندارد.</div>;
 
   return (
     <div className="">
