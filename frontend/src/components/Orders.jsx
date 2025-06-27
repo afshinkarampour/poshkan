@@ -119,7 +119,7 @@ const Orders = () => {
                 <div className="col-span-2 row-start-4">
                   <p>سایز و رنگ : {item?.size}</p>
                 </div>
-                <div className="col-span-2 row-start-5">
+                <div className="col-span-2 row-start-5 pb-1 border-b">
                   <p>تعداد: {item?.quantity}</p>
                 </div>
               </>
