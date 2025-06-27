@@ -401,8 +401,10 @@ const getPaymentByUserId = async (req, res) => {
 
 const getAllPayments = async (req, res) => {
   try {
-    const orders = await Payment.find({ paymentState: true });
-    res.status(200).json({ success: true, orders }).sort({ createdAt: -1 });
+    const orders = await Payment.find({ paymentState: true }).sort({
+      createdAt: -1,
+    });
+    res.status(200).json({ success: true, orders });
   } catch (error) {
     console.error("Error fetching all orders:", error);
     res.status(500).json({ success: false, message: "Internal Server Error" });
