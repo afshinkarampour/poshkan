@@ -130,27 +130,27 @@ const Orders = () => {
                   {order.items &&
                     Array.isArray(order.items) &&
                     order.items.map((item, index) => {
-                      if (index === order.items.length - 1) {
-                        return (
-                          <div>
-                            <p className="py-0.5" key={index}>
-                              {item.name} / {item.quantity} /
-                              <span className="ml-2">{item.size}</span> ,
-                            </p>
-                          </div>
-                        );
-                      } else {
-                        return (
-                          <div>
-                            {/* <span className="ml-2"> مشخصات محصول:</span> */}
-                            <p className="py-0.5" key={index}>
-                              {item.name} / {item.quantity} /
-                              <span className="ml-2">{item.size}</span> /
-                              <span className="ml-2">{item.quantity}</span>
-                            </p>
-                          </div>
-                        );
-                      }
+                      // if (index === order.items.length - 1) {
+                      //   return (
+                      //     <div>
+                      //       <p className="py-0.5" key={index}>
+                      //         {item.name} / {item.quantity} /
+                      //         <span className="ml-2">{item.size}</span> ,
+                      //       </p>
+                      //     </div>
+                      //   );
+                      // } else {
+                      return (
+                        <div>
+                          {/* <span className="ml-2"> مشخصات محصول:</span> */}
+                          <p className="py-0.5" key={index}>
+                            {item.name} / {item.quantity} /
+                            <span className="ml-2">{item.size}</span> /
+                            {/* <span className="ml-2">{item.quantity}</span> */}
+                          </p>
+                        </div>
+                      );
+                      // }
                     })}
                 </div>
                 <p className="mt-3 mb-2 font-medium">
