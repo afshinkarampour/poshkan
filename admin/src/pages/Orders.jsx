@@ -110,8 +110,7 @@ const Orders = () => {
             <option value="all">همه‌ حالت‌ها</option>
             <option value="تایید سفارش">تایید</option>
             <option value="ارسال سفارش">بسته‌بندی</option>
-            <option value="تحویل داده شده">تحویل داده شده</option>
-            <option value="لغو شده">لغو شده</option>
+            <option value="ارسال">ارسال</option>
           </select>
         </div>
       </div>
@@ -172,6 +171,9 @@ const Orders = () => {
                 </p>
                 <div>
                   <p>آدرس پستی:</p>
+                  <p>
+                    {order.userData?.province} / {order.userData?.city}
+                  </p>
                   <p>{order.userData.address}</p>
                 </div>
                 <p>
@@ -188,7 +190,7 @@ const Orders = () => {
                 {/* <p>
                   پرداخت شده{order.payment ? "پرداخت انجام شد" : "درحال پرداخت"}
                 </p> */}
-                <p>تاریخ پرداخت: {new Date(order.date).toLocaleDateString()}</p>
+                <p>تاریخ پرداخت: {order?.faDate}</p>
               </div>
               <p className="text-sm sm:text-[15px]">
                 <span className="ml-2">مبلغ پرداخت شده:</span>

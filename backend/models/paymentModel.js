@@ -67,6 +67,8 @@ const paymentSchema = new mongoose.Schema(
         required: true,
         index: true,
       },
+      province: { type: String },
+      city: { type: String },
       address: {
         type: String,
         trim: true,

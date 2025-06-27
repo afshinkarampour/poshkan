@@ -180,6 +180,8 @@ const requestPayment = async (req, res) => {
         family: userData.family,
         phoneNumber: userData.phoneNumber,
         email: userData.email || null,
+        province: userData.province || null,
+        city: userData.city || null,
         address: userData.address || null,
       },
     });
