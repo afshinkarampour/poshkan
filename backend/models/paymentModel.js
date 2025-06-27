@@ -1,4 +1,4 @@
-import Joi from "joi";
+import Joi, { string } from "joi";
 import mongoose from "mongoose";
 
 const paymentSchema = new mongoose.Schema(
@@ -50,12 +50,13 @@ const paymentSchema = new mongoose.Schema(
       message: { type: String }, // پیام خطا
       details: { type: Object }, // اطلاعات تکمیلی خطا
     },
+    status: { type: String, default: "تایید سفارش" },
     items: { type: Object, default: {} },
     userData: {
       name: {
         type: String,
         required: true,
-        trim: true, // حذف فاصله‌های اضافه
+        trim: true,
       },
       family: {
         type: String,
@@ -65,7 +66,6 @@ const paymentSchema = new mongoose.Schema(
       phoneNumber: {
         type: String,
         required: true,
-        // match: /^09[0-9]{9}$/, // اعتبارسنجی شماره تلفن
         index: true,
       },
       address: {
@@ -75,7 +75,7 @@ const paymentSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true, // اضافه شدن createdAt و updatedAt به صورت خودکار
+    timestamps: true,
   }
 );
 

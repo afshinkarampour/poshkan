@@ -26,9 +26,11 @@ const Orders = () => {
 
   const fetchAllorders = async () => {
     try {
-      const response = await axiosInstance.post(backendUrl + "/api/order/list");
+      const response = await axiosInstance.post(
+        backendUrl + "/api/paymet/allPayments"
+      );
       if (response.data.success) {
-        setOrders(response.data.orders.reverse());
+        setOrders(response.data.orders);
       } else {
         toast.error(response.data.message);
       }
@@ -37,11 +39,11 @@ const Orders = () => {
     }
   };
 
-  const statusHandler = async (event, orderId) => {
+  const statusHandler = async (event, paymentId) => {
     try {
       const response = await axiosInstance.post(
-        backendUrl + "/api/order/status",
-        { orderId, status: event.target.value }
+        backendUrl + "/api/payment/updateStatus",
+        { paymentId, status: event.target.value }
       );
       if (response.data.success) {
         await fetchAllorders();
@@ -90,8 +92,8 @@ const Orders = () => {
             className="w-full md:w-32 lg:w-48 py-1 bg-yellow-200"
           >
             <option value="all">همه‌ حالت‌ها</option>
-            <option value="تایید سفارش">تایید سفارش</option>
-            <option value="ارسال سفارش">ارسال سفارش</option>
+            <option value="تایید سفارش">تایید</option>
+            <option value="ارسال سفارش">بسته‌بندی</option>
             <option value="تحویل داده شده">تحویل داده شده</option>
             <option value="لغو شده">لغو شده</option>
           </select>
@@ -125,7 +127,8 @@ const Orders = () => {
                           {/* <span className="ml-2"> مشخصات محصول:</span> */}
                           <p className="py-0.5" key={index}>
                             {item.name} / {item.quantity} /
-                            <span className="ml-2">{item.size}</span>
+                            <span className="ml-2">{item.size}</span> /
+                            <span className="ml-2">{item.quantity}</span>
                           </p>
                         </div>
                       );
@@ -134,24 +137,15 @@ const Orders = () => {
                 </div>
                 <p className="mt-3 mb-2 font-medium">
                   <p className="ml-2">نام و نام خانوادگی:</p>
-                  {order.address.firstName + " " + order.address.lastName}
+                  {order.userData.name + " " + order.userData.family}
                 </p>
                 <div>
                   <p>آدرس پستی:</p>
-                  <p>{order.address.street + ","}</p>
-                  <p>
-                    {order.address.city +
-                      ", " +
-                      order.address.state +
-                      ", " +
-                      order.address.country +
-                      ", " +
-                      order.address.zipCode}
-                  </p>
+                  <p>{order.userData.address}</p>
                 </div>
                 <p>
                   <span className="ml-2">همراه: </span>
-                  {order.address.phone}
+                  {order.userData.phoneNumber}
                 </p>
               </div>
               <div>
@@ -176,10 +170,10 @@ const Orders = () => {
                 value={order.status}
                 className="p-2 font-semibold"
               >
-                <option value="تایید سفارش">تایید سفارش</option>
-                <option value="ارسال سفارش">ارسال سفارش</option>
-                <option value="تحویل داده شده">تحویل داده شده</option>
-                <option value="لغو شده">لغو شده</option>
+                <option value="تایید">تایید</option>
+                <option value="بسته‌بندی">بسته‌بندی</option>
+                <option value="ارسال">ارسال</option>
+                {/* <option value="لغو شده">لغو شده</option> */}
               </select>
             </div>
           ))}

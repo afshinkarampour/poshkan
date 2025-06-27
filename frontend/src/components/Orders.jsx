@@ -82,7 +82,7 @@ const Orders = () => {
                     <span className="w-6 h-6 bg-indigo-600 border border-indigo-200 rounded-full flex justify-center items-center mr-3 text-sm text-white lg:w-10 lg:h-10">
                       1
                     </span>{" "}
-                    پرداخت شده
+                    تایید
                   </div>
                 </li>
                 <li className="flex md:w-full items-center text-gray-600 sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-4 xl:after:mx-8 ">
@@ -90,7 +90,7 @@ const Orders = () => {
                     <span className="w-6 h-6 bg-gray-100 border border-gray-200 rounded-full flex justify-center items-center mr-3 lg:w-10 lg:h-10">
                       2
                     </span>{" "}
-                    بسته بندی
+                    بسته‌بندی
                   </div>
                 </li>
                 <li className="flex md:w-full items-center text-gray-600 ">

@@ -399,7 +399,51 @@ const getPaymentByUserId = async (req, res) => {
   }
 };
 
-const getAllPayments = async (req, res) => {};
+const getAllPayments = async (req, res) => {
+  try {
+    const orders = await Payment.find({});
+    res.status(200).json({ success: true, orders }).sort({ createdAt: -1 });
+  } catch (error) {
+    console.error("Error fetching all orders:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
+
+//Update orders status from admin panel
+const updateStatus = async (req, res) => {
+  try {
+    const updateStatusSchema = Joi.object({
+      paymentId: Joi.string().required(),
+      status: Joi.string().valid("تایید", "بسته‌بندی", "ارسال").required(),
+    });
+
+    const { error } = updateStatusSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({
+        success: false,
+        message: error.details[0].message,
+      });
+    }
+
+    const { paymentId, status } = req.body;
+    const updatedOrder = await Payment.findByIdAndUpdate(
+      paymentId,
+      { status },
+      { new: true }
+    );
+    if (!updatedOrder) {
+      return res
+        .status(404)
+        .json({ success: false, message: "سفارش یافت نشد" });
+    }
+    res
+      .status(200)
+      .json({ success: true, message: "Status updated", order: updatedOrder });
+  } catch (error) {
+    console.error("Error updating status:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
 
 export {
   requestPayment,
@@ -407,4 +451,5 @@ export {
   getPaymentStatus,
   getPaymentByUserId,
   getAllPayments,
+  updateStatus,
 };
