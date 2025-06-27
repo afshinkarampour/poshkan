@@ -56,7 +56,7 @@ const Orders = () => {
       </div>
       <div className="mt-4">
         {orderData.map((item) => (
-          <div className="py-4 grid grid-cols-3 grid-rows-4 gap-1 border-b border-t border-gray-400 mb-4 lg:justify-items-center">
+          <div className="py-4 grid grid-cols-3 grid-rows-5 gap-1 border-b border-t border-gray-400 mb-4 lg:justify-items-center">
             <div className="col-span-3">
               <div className="flex items-start gap-6 text-sm">
                 <p>
@@ -106,7 +106,7 @@ const Orders = () => {
             {/* end stepper */}
             {item.items?.map((item) => (
               <>
-                <div className="row-span-2 col-start-3 row-start-3">
+                <div className="row-span-3 col-start-3 row-start-3">
                   <img
                     className="w-20 sm:w-32"
                     src={`${backendUrl}/uploads/${item?.image}`}
@@ -118,6 +118,9 @@ const Orders = () => {
                 </div>
                 <div className="col-span-2 row-start-4">
                   <p>سایز و رنگ : {item?.size}</p>
+                </div>
+                <div className="col-span-2 row-start-4">
+                  <p>تعداد: {item?.quantity}</p>
                 </div>
               </>
             ))}
