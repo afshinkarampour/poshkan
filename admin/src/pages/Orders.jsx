@@ -30,7 +30,7 @@ const Orders = () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await axiosInstance.post(
+      const response = await axiosInstance.get(
         backendUrl + "/api/payment/allPayments"
       );
       if (response.data.success) {
