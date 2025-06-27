@@ -7,7 +7,7 @@ import { AiFillProduct } from "react-icons/ai";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
-  const [selectedStatus, setSelectedStatus] = useState("all");
+  const [selectedStatus, setSelectedStatus] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [showOrders, setShowOrders] = useState([]);
@@ -15,9 +15,9 @@ const Orders = () => {
   const [error, setError] = useState(null);
 
   const applyFilter = () => {
-    let copyOrders = [...orders];
+    let copyOrders = orders.slice();
     if (selectedStatus !== "all") {
-      copyOrders = copyOrders.filter((o) => o.status === selectedStatus);
+      copyOrders = copyOrders.filter((o) => o.status.includes(selectedStatus));
     }
     setFilteredOrders(copyOrders);
   };
