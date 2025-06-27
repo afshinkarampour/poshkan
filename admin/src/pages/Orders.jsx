@@ -55,7 +55,7 @@ const Orders = () => {
       if (response.data.success) {
         const updatedOrders = orders.map((order) =>
           order._id === paymentId
-            ? { ...order, status: event.target.value }
+            ? { ...order, status: updatedOrders.status }
             : order
         );
         setOrders(updatedOrders);
@@ -138,7 +138,7 @@ const Orders = () => {
           >
             <option value="all">همه‌ حالت‌ها</option>
             <option value="تایید">تایید</option>
-            <option value="دسته‌بندی">بسته‌بندی</option>
+            <option value="بسته‌بندی">بسته‌بندی</option>
             <option value="ارسال">ارسال</option>
           </select>
         </div>
@@ -154,31 +154,31 @@ const Orders = () => {
               {/* <img src="" alt="" /> */}
               <div>
                 {/* <div>
-                  <span className="ml-2"> مشخصات محصول سفارش شده:</span>
-                  {order.items &&
-                    Array.isArray(order.items) &&
-                    order.items.map((item, index) => {
-                      if (index === order.items.length - 1) {
+                    <span className="ml-2"> مشخصات محصول سفارش شده:</span>
+                    {order.items &&
+                      Array.isArray(order.items) &&
+                      order.items.map((item, index) => {
+                        if (index === order.items.length - 1) {
+                          return (
+                            <div>
+                              <p className="py-0.5" key={index}>
+                                {item.name} / {item.quantity} /
+                                <span className="ml-2">{item.size}</span> ,
+                              </p>
+                            </div>
+                          );
+                        } else {
                         return (
                           <div>
                             <p className="py-0.5" key={index}>
                               {item.name} / {item.quantity} /
-                              <span className="ml-2">{item.size}</span> ,
+                              <span className="ml-2">{item.size}</span> /
                             </p>
                           </div>
                         );
-                      } else {
-                      return (
-                        <div>
-                          <p className="py-0.5" key={index}>
-                            {item.name} / {item.quantity} /
-                            <span className="ml-2">{item.size}</span> /
-                          </p>
-                        </div>
-                      );
-                      }
-                    })}
-                </div> */}
+                        }
+                      })}
+                  </div> */}
 
                 <div>
                   <span className="ml-2">مشخصات محصول سفارش شده:</span>
@@ -217,8 +217,8 @@ const Orders = () => {
                 </p>
                 {/* <p className="mt-3">Method : {order.paymentMethod}</p> */}
                 {/* <p>
-                  پرداخت شده{order.payment ? "پرداخت انجام شد" : "درحال پرداخت"}
-                </p> */}
+                    پرداخت شده{order.payment ? "پرداخت انجام شد" : "درحال پرداخت"}
+                  </p> */}
                 <p>تاریخ پرداخت: {order?.faDate}</p>
               </div>
               <p className="text-sm sm:text-[15px]">
