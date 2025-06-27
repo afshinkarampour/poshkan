@@ -155,7 +155,7 @@ const Orders = () => {
                 <div>
                   <span className="ml-2">مشخصات محصول سفارش شده:</span>
                   <p className="py-0.5">
-                    {Array.isArray(order?.items) && order.items?.length > 0
+                    {Array.isArray(order?.items)
                       ? order?.items
                           .map(
                             (item) =>
