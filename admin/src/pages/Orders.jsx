@@ -155,11 +155,11 @@ const Orders = () => {
                 <div>
                   <span className="ml-2">مشخصات محصول سفارش شده:</span>
                   <p className="py-0.5">
-                    {Array.isArray(order.items) && order.items.length > 0
-                      ? order.items
+                    {Array.isArray(order?.items) && order.items?.length > 0
+                      ? order?.items
                           .map(
                             (item) =>
-                              `${item.name} / ${item.quantity} / ${item.size}`
+                              `${item?.name} / ${item?.quantity} / ${item?.size}`
                           )
                           .join(" , ")
                       : "بدون آیتم"}
