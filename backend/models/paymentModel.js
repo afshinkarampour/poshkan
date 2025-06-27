@@ -1,4 +1,3 @@
-import Joi, { string } from "joi";
 import mongoose from "mongoose";
 
 const paymentSchema = new mongoose.Schema(
