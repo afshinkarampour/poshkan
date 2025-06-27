@@ -31,7 +31,7 @@ const Orders = () => {
       setLoading(true);
       setError(null);
       const response = await axiosInstance.post(
-        backendUrl + "/api/paymet/allPayments"
+        backendUrl + "/api/payment/allPayments"
       );
       if (response.data.success) {
         setOrders(response.data.orders);
