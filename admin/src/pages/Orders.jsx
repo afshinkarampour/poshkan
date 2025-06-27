@@ -181,7 +181,7 @@ const Orders = () => {
               </div>
               <div>
                 <p className="text-sm sm:text-[15px]">
-                  تعداد سفارش: {order.items.length}
+                  تعداد سفارش: {order?.items.length}
                 </p>
                 {/* <p className="mt-3">Method : {order.paymentMethod}</p> */}
                 {/* <p>
