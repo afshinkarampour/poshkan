@@ -55,7 +55,7 @@ const Orders = () => {
       if (response.data.success) {
         const updatedOrders = orders.map((order) =>
           order._id === paymentId
-            ? { ...order, status: updatedOrders.status }
+            ? { ...order, status: event.target.value }
             : order
         );
         setOrders(updatedOrders);
