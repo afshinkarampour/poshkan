@@ -89,6 +89,35 @@ const Orders = () => {
     setCurrentPage(1);
   }, [selectedStatus]);
 
+  function convertToPersianDigits(input) {
+    if (!input) return null;
+    // Convert the input to a string to ensure replace works
+    const inputStr = input.toString();
+    const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+    return inputStr.replace(/\d/g, (digit) => persianDigits[digit]);
+  }
+
+  function formatAmount(amount) {
+    // Check if the input is a valid number
+    if (typeof amount !== "number" && typeof amount !== "string") {
+      console.error(
+        "Invalid input type. Input must be a number or a numeric string."
+      );
+      return "Invalid input";
+    }
+    // Convert input to a string
+    const amountStr = amount.toString();
+    // Validate if it's a numeric string
+    if (!/^\d+$/.test(amountStr)) {
+      console.error(
+        "Input contains invalid characters. Only numbers are allowed."
+      );
+      return "Invalid input";
+    }
+    // Use regex to format with commas
+    return amountStr.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   if (loading) return <div>در حال دریافت سفارشات...</div>;
   if (error) return <div className="text-red-500">{error}</div>;
   if (showOrders.length === 0) return <div>سفارشی برای نمایش وجود ندارد.</div>;
@@ -195,8 +224,8 @@ const Orders = () => {
               <p className="text-sm sm:text-[15px]">
                 <span className="ml-2">مبلغ پرداخت شده:</span>
                 <div className="flex gap-1">
-                  <p>{order.amount}</p>
-                  <p>{currency}</p>
+                  <p>{convertToPersianDigits(formatAmount(order.amount))}</p>
+                  <p>ریال</p>
                 </div>
               </p>
               <select
