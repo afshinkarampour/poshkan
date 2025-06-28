@@ -88,11 +88,11 @@ const Orders = () => {
                   <li
                     className={`flex md:w-full items-center ${
                       step1Active ? "text-indigo-600" : "text-gray-600"
-                    } sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-4 xl:after:mx-8`}
+                    } sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-400 after:border-1 after:hidden sm:after:inline-block after:mx-4 xl:after:mx-8`}
                   >
                     <div className="flex items-center whitespace-nowrap after:content-['/'] sm:after:hidden after:mx-2">
                       <span
-                        className={`w-6 h-6 ${
+                        className={`w-4 h-4 ml-1 ${
                           step1Active
                             ? "bg-indigo-600 border-indigo-200 text-white"
                             : "bg-gray-100 border-gray-200"
@@ -106,11 +106,11 @@ const Orders = () => {
                   <li
                     className={`flex md:w-full items-center ${
                       step2Active ? "text-indigo-600" : "text-gray-600"
-                    } sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-4 xl:after:mx-8`}
+                    } sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-400 after:border-1 after:hidden sm:after:inline-block after:mx-4 xl:after:mx-8`}
                   >
                     <div className="flex items-center whitespace-nowrap after:content-['/'] sm:after:hidden after:mx-2">
                       <span
-                        className={`w-6 h-6 ${
+                        className={`w-4 h-4 ml-1 ${
                           step2Active
                             ? "bg-indigo-600 border-indigo-200 text-white"
                             : "bg-gray-100 border-gray-200"
@@ -128,7 +128,7 @@ const Orders = () => {
                   >
                     <div className="flex items-center">
                       <span
-                        className={`w-6 h-6 ${
+                        className={`w-4 h-4 ml-1 ${
                           step3Active
                             ? "bg-indigo-600 border-indigo-200 text-white"
                             : "bg-gray-100 border-gray-200"
