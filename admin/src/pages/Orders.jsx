@@ -58,7 +58,7 @@ const Orders = () => {
             ? { ...order, status: event.target.value }
             : order
         );
-        setOrders(updatedOrders);
+        setShowOrders(updatedOrders);
       }
     } catch (error) {
       console.log(error);
