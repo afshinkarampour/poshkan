@@ -59,7 +59,6 @@ const Orders = () => {
             : order
         );
         setOrders(updatedOrders);
-        setShowOrders(updatedOrders);
       }
     } catch (error) {
       console.log(error);
@@ -139,7 +138,7 @@ const Orders = () => {
           >
             <option value="all">همه‌ حالت‌ها</option>
             <option value="تایید">تایید</option>
-            <option value="بسته‌بندی">بسته‌بندی</option>
+            <option value="بسته‌ بندی">بسته‌ بندی</option>
             <option value="ارسال">ارسال</option>
           </select>
         </div>
@@ -231,11 +230,11 @@ const Orders = () => {
               </p>
               <select
                 onChange={(event) => statusHandler(event, order._id)}
-                value={order.status}
+                value={order.status || "تایید"}
                 className="p-2 font-semibold"
               >
                 <option value="تایید">تایید</option>
-                <option value="بسته‌بندی">بسته‌بندی</option>
+                <option value="بسته‌ بندی">بسته‌ بندی</option>
                 <option value="ارسال">ارسال</option>
                 {/* <option value="لغو شده">لغو شده</option> */}
               </select>

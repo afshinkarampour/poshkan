@@ -11,6 +11,7 @@ const Orders = () => {
   const [orderData, setOrderData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [status, setStatus] = useState([]);
 
   const loadOrderData = async () => {
     try {
@@ -55,7 +56,7 @@ const Orders = () => {
         <Title text1={"سفارش‌های"} text2={"من"} />
       </div>
       <div className="mt-4">
-        {orderData.map((item) => (
+        {orderData.map((item, index) => (
           <div
             key={item.refId}
             className="py-4 grid grid-cols-3 grid-rows-5 gap-1 border-b border-t border-gray-400 mb-4 lg:justify-items-center"
@@ -78,6 +79,7 @@ const Orders = () => {
               </div>
             </div>
             {/* starting state stepper */}
+            {setStatus(...status, item?item.status)}
             <div className="col-span-3 row-start-2">
               <ol className="flex items-center w-full text-sm text-gray-500 font-medium sm:text-base">
                 <li className="flex md:w-full items-center text-indigo-600  sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-4 xl:after:mx-8 ">

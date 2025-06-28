@@ -418,7 +418,7 @@ const updateStatus = async (req, res) => {
   try {
     const updateStatusSchema = Joi.object({
       paymentId: Joi.string().required(),
-      status: Joi.string().valid("تایید", "بسته‌بندی", "ارسال").required(),
+      status: Joi.string().valid("تایید", "بسته‌ بندی", "ارسال").required(),
     });
 
     const { error } = updateStatusSchema.validate(req.body);
