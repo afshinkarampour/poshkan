@@ -92,11 +92,11 @@ const Orders = () => {
                   >
                     <div className="flex items-center whitespace-nowrap after:content-['/'] sm:after:hidden after:mx-2">
                       <span
-                        className={`w-4 h-4 ml-1 ${
+                        className={`w-6 h-6 ml-1 ${
                           step1Active
                             ? "bg-indigo-600 border-indigo-200 text-white"
                             : "bg-gray-100 border-gray-200"
-                        } rounded-full flex justify-center items-center mr-3 text-sm lg:w-10 lg:h-10`}
+                        } rounded-full flex justify-center items-center mr-3 text-sm lg:w-8 lg:h-8`}
                       >
                         1
                       </span>{" "}
@@ -110,11 +110,11 @@ const Orders = () => {
                   >
                     <div className="flex items-center whitespace-nowrap after:content-['/'] sm:after:hidden after:mx-2">
                       <span
-                        className={`w-4 h-4 ml-1 ${
+                        className={`w-6 h-6 ml-1 ${
                           step2Active
                             ? "bg-indigo-600 border-indigo-200 text-white"
                             : "bg-gray-100 border-gray-200"
-                        } rounded-full flex justify-center items-center mr-3 lg:w-10 lg:h-10`}
+                        } rounded-full flex justify-center items-center mr-3 lg:w-8 lg:h-8`}
                       >
                         2
                       </span>{" "}
@@ -128,11 +128,11 @@ const Orders = () => {
                   >
                     <div className="flex items-center">
                       <span
-                        className={`w-4 h-4 ml-1 ${
+                        className={`w-6 h-6 ml-1 ${
                           step3Active
                             ? "bg-indigo-600 border-indigo-200 text-white"
                             : "bg-gray-100 border-gray-200"
-                        } rounded-full flex justify-center items-center mr-3 lg:w-10 lg:h-10`}
+                        } rounded-full flex justify-center items-center mr-3 lg:w-8 lg:h-8`}
                       >
                         3
                       </span>{" "}
