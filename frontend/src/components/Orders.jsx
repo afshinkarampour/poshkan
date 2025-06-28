@@ -58,7 +58,7 @@ const Orders = () => {
         {orderData.map((item) => {
           const step1Active = true; // همیشه مرحله 1 فعال هست
           const step2Active =
-            item.status.includs("بسته") || item.status === "ارسال";
+            item.status.includes("بسته") || item.status === "ارسال";
           const step3Active = item.status === "ارسال";
           return (
             <div
