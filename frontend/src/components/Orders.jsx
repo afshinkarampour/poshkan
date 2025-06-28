@@ -57,8 +57,7 @@ const Orders = () => {
       <div className="mt-4">
         {orderData.map((item) => {
           const step1Active = true; // همیشه مرحله 1 فعال هست
-          const step2Active =
-            item.status === "بسته بندی" || item.status === "ارسال";
+          const step2Active = item.status === "بسته بندی";
           const step3Active = item.status === "ارسال";
           return (
             <div
