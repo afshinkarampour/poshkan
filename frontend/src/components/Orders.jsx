@@ -79,7 +79,6 @@ const Orders = () => {
               </div>
             </div>
             {/* starting state stepper */}
-            {setStatus(...status, item?item.status)}
             <div className="col-span-3 row-start-2">
               <ol className="flex items-center w-full text-sm text-gray-500 font-medium sm:text-base">
                 <li className="flex md:w-full items-center text-indigo-600  sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-4 xl:after:mx-8 ">
