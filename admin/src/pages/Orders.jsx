@@ -211,6 +211,7 @@ const Orders = () => {
                 </p>
               </div>
               <div>
+                <p>شماره سفاره: {order.refId}</p>
                 <p className="text-sm sm:text-[15px]">
                   تعداد سفارش:{" "}
                   {Array.isArray(order.items) ? order.items.length : 0}
