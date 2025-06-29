@@ -48,26 +48,38 @@ const Orders = () => {
 
   const statusHandler = async (event, paymentId) => {
     try {
+      const newStatus = event.target.value;
+
       const response = await axiosInstance.post(
         backendUrl + "/api/payment/updateStatus",
-        { paymentId, status: event.target.value }
+        { paymentId, status: newStatus }
       );
       if (response.data.success) {
         const updatedOrders = orders.map((order) =>
-          order._id === paymentId
-            ? { ...order, status: event.target.value }
-            : order
+          order._id === paymentId ? { ...order, status: newStatus } : order
         );
         setOrders(updatedOrders);
 
-        // با استفاده از updatedOrders فیلتر کن
-        let copyOrders = updatedOrders.slice();
+        // حالا فیلتر بر اساس مقدار جدید اعمال می‌کنیم
+        let filtered = updatedOrders;
+
         if (selectedStatus !== "all") {
-          copyOrders = copyOrders.filter((o) =>
+          filtered = updatedOrders.filter((o) =>
             o.status.includes(selectedStatus)
           );
         }
-        setFilteredOrders(copyOrders);
+
+        setFilteredOrders(filtered);
+
+        // چون showOrders از filteredOrders ساخته می‌شه:
+        const indexOfLastProduct = currentPage * itemsPerPage;
+        const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
+        const pageItems = filtered.slice(
+          indexOfFirstProduct,
+          indexOfLastProduct
+        );
+
+        setShowOrders(pageItems);
       }
     } catch (error) {
       console.log(error);
