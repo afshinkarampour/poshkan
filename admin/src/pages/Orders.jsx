@@ -59,6 +59,15 @@ const Orders = () => {
             : order
         );
         setOrders(updatedOrders);
+
+        // با استفاده از updatedOrders فیلتر کن
+        let copyOrders = updatedOrders.slice();
+        if (selectedStatus !== "all") {
+          copyOrders = copyOrders.filter((o) =>
+            o.status.includes(selectedStatus)
+          );
+        }
+        setFilteredOrders(copyOrders);
       }
     } catch (error) {
       console.log(error);
