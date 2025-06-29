@@ -435,6 +435,7 @@ const updateStatus = async (req, res) => {
       { status },
       { new: true }
     );
+
     if (!updatedOrder) {
       return res
         .status(404)

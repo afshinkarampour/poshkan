@@ -49,7 +49,7 @@ const paymentSchema = new mongoose.Schema(
       message: { type: String }, // پیام خطا
       details: { type: Object }, // اطلاعات تکمیلی خطا
     },
-    status: { type: String, default: "تایید سفارش" },
+    status: { type: String, default: "تایید" },
     items: { type: Object, default: {} },
     userData: {
       name: {

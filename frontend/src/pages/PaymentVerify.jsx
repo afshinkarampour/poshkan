@@ -3,6 +3,7 @@ import { ShopContext } from "../context/ShopContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getPaymentStatus } from "../services/paymentService";
+import axiosInstance from "../services/axiosInstance";
 
 const PaymentVerify = () => {
   const location = useLocation();
@@ -11,7 +12,21 @@ const PaymentVerify = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const { convertToPersianDigits, formatAmount } = useContext(ShopContext);
+  const { convertToPersianDigits, formatAmount, setCartItems, backendUrl } =
+    useContext(ShopContext);
+
+  const finalizePurchase = async () => {
+    try {
+      const response = await axiosInstance.post(
+        backendUrl + "/api/cart/clearCart"
+      );
+      if (response.data.success) {
+        setCartItems({});
+      }
+    } catch (error) {
+      console.error("خطا در پاک‌سازی سبد خرید:", error);
+    }
+  };
 
   useEffect(() => {
     const verifyPayment = async () => {
@@ -41,6 +56,8 @@ const PaymentVerify = () => {
 
         if (response.paymentState) {
           toast.success("پرداخت با موفقیت انجام شد");
+          //calling function to do somthing after successfull payment
+          await finalizePurchase();
         } else {
           toast.warning("پرداخت هنوز تایید نشده است");
         }

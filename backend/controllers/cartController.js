@@ -42,47 +42,6 @@ const addToCart = async (req, res) => {
   }
 };
 
-// const addToCart = async (req, res) => {
-//   try {
-//     const schema = Joi.object({
-//       itemId: Joi.string().hex().length(24).required(),
-//       size: Joi.string().max(10).required(),
-//       color: Joi.string().max(10).required(),
-//     });
-//     const { error } = schema.validate(req.body);
-//     if (error)
-//       return res.json({
-//         success: false,
-//         message: error.details[0].message,
-//       });
-
-//     const { itemId, size, color } = req.body;
-//     const userId = req.user._id;
-
-//     const userData = await userModel.findById(userId);
-
-//     let cartData = await userData.cartData;
-
-//     if (cartData[itemId]) {
-//       if (cartData[itemId][`${color},${size}`]) {
-//         cartData[itemId][`${color},${size}`] += 1;
-//       } else {
-//         cartData[itemId][`${color},${size}`] = 1;
-//       }
-//     } else {
-//       cartData[itemId] = {};
-//       cartData[itemId][`${color},${size}`] = 1;
-//     }
-
-//     await userModel.findByIdAndUpdate(userId, { cartData });
-
-//     res.json({ success: true, message: "Added To Cart" });
-//   } catch (error) {
-//     console.log(error);
-//     res.json({ success: false, message: error.message });
-//   }
-// };
-
 // update user cart
 const updateCart = async (req, res) => {
   try {
@@ -124,41 +83,6 @@ const updateCart = async (req, res) => {
   }
 };
 
-// const updateCart = async (req, res) => {
-//   try {
-//     const schema = Joi.object({
-//       itemId: Joi.string().hex().length(24).required(),
-//       size: Joi.string().max(20).required(),
-//       quantity: Joi.number().required(),
-//     });
-//     const { error } = schema.validate(req.body);
-//     if (error) {
-//       console.log(error);
-
-//       return res.json({
-//         success: false,
-//         message: error.details[0].message,
-//       });
-//     }
-
-//     const { itemId, size, quantity } = req.body;
-//     const userId = req.user._id;
-//     const userData = await userModel.findById(userId);
-//     console.log(userData);
-
-//     let cartData = await userData.cartData;
-
-//     cartData[itemId][size] = quantity;
-
-//     await userModel.findByIdAndUpdate(userId, { cartData });
-
-//     res.json({ success: true, message: "Cart Updated" });
-//   } catch (error) {
-//     console.log(error);
-//     res.json({ success: false, message: error.message });
-//   }
-// };
-
 // get user cart
 const getUserCart = async (req, res) => {
   try {
@@ -180,19 +104,33 @@ const getUserCart = async (req, res) => {
   }
 };
 
-// const getUserCart = async (req, res) => {
-//   try {
-//     const userId = req.user._id;
+// clear user cart
+const clearCart = async (req, res) => {
+  try {
+    const userId = req.user._id;
 
-//     const userData = await userModel.findById(userId);
+    const updatedUser = await userModel.findByIdAndUpdate(
+      userId,
+      { cartData: {} }, // پاک کردن کل سبد خرید
+      { new: true }
+    );
 
-//     let cartData = await userData.cartData;
+    if (!updatedUser) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
 
-//     res.json({ success: true, cartData });
-//   } catch (error) {
-//     console.log(error);
-//     res.json({ success: false, message: error.message });
-//   }
-// };
+    res.status(200).json({
+      success: true,
+      message: "Cart has been cleared",
+      cart: updatedUser.cartData,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
 
-export { addToCart, updateCart, getUserCart };
+export { addToCart, updateCart, getUserCart, clearCart };
