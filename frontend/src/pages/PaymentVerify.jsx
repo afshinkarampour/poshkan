@@ -15,19 +15,6 @@ const PaymentVerify = () => {
   const { convertToPersianDigits, formatAmount, setCartItems, backendUrl } =
     useContext(ShopContext);
 
-  const finalizePurchase = async () => {
-    try {
-      const response = await axiosInstance.post(
-        backendUrl + "/api/cart/clearCart"
-      );
-      if (response.data.success) {
-        setCartItems({});
-      }
-    } catch (error) {
-      console.error("خطا در پاک‌سازی سبد خرید:", error);
-    }
-  };
-
   useEffect(() => {
     const verifyPayment = async () => {
       const searchParams = new URLSearchParams(location.search);
@@ -56,8 +43,8 @@ const PaymentVerify = () => {
 
         if (response.paymentState) {
           toast.success("پرداخت با موفقیت انجام شد");
-          //calling function to do somthing after successfull payment
-          await finalizePurchase();
+
+          setCartItems({});
         } else {
           toast.warning("پرداخت هنوز تایید نشده است");
         }

@@ -1,7 +1,9 @@
 import axios from "axios";
 import Joi from "joi";
-import Payment from "../models/paymentModel.js";
 import moment from "jalali-moment";
+import Payment from "../models/paymentModel.js";
+import productModel from "../models/productModel.js";
+import userModel from "../models/userModel.js";
 
 // تنظیم آدرس API زرین‌پال
 const ZARINPAL_BASE_URL =
@@ -264,6 +266,56 @@ const verifyPayment = async (req, res) => {
         rawResponse: result,
       };
       await payment.save();
+
+      //آپدیت موجودی انبار
+      for (const item of payment.items) {
+        try {
+          const product = productModel.findById(item.id);
+          if (!product) {
+            console.warn(`محصول با آیدی ${item._id} یافت نشد`);
+            continue;
+          }
+
+          product.warehouseInventory -= item.quantity;
+
+          const [color, size] = item.size.split(",");
+
+          const featureIndex = product.features.findIndex(
+            (f) => f.color === color && f.size === size
+          );
+
+          if (featureIndex !== -1) {
+            product.features[featureIndex].count -= item.quantity;
+
+            if (product.features[featureIndex].count < 0) {
+              product.features[featureIndex].count = 0;
+            }
+          } else {
+            console.warn(
+              `ویژگی با رنگ '${color}' و سایز '${size}' در محصول '${item._id}' یافت نشد`
+            );
+          }
+
+          // اطمینان از اینکه موجودی کل منفی نشه
+          if (product.warehouseInventory < 0) {
+            product.warehouseInventory = 0;
+          }
+
+          await product.save();
+        } catch (err) {
+          console.error(
+            `خطا در کاهش موجودی برای محصول ${item._id}:`,
+            err.message
+          );
+        }
+      }
+
+      //پاک کردن سبد خرید کاربر
+      await userModel.updateOne(
+        { _id: payment.userId },
+        { $set: { cartData: {} } }
+      );
+
       return res.redirect(
         `${process.env.FRONTEND_URL}/payment/failed?reason=invalid_response`
       );
