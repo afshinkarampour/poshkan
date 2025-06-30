@@ -1,5 +1,11 @@
 import mongoose from "mongoose";
 
+const featureSchema = new mongoose.Schema({
+  color: { type: String, required: true },
+  size: { type: String, required: true },
+  count: { type: Number, required: true, default: 0 },
+});
+
 const productSchema = new mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String },
@@ -9,7 +15,7 @@ const productSchema = new mongoose.Schema({
   category: { type: String, required: true },
   subCategory: { type: String, required: true },
   productType: { type: String },
-  features: { type: Array, required: true },
+  features: { type: [featureSchema], required: true },
   userSizeGuide: { type: Array, required: true },
   warehouseInventory: { type: Number, required: true },
   bestSeller: { type: Boolean, required: true },
