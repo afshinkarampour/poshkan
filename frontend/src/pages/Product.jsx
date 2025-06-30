@@ -93,6 +93,11 @@ const Product = () => {
       return;
     }
 
+    if (product.warehouseInventory <= 0) {
+      toast.error("در حال حاضر این محصول موجود نمی‌باشد.");
+      return;
+    }
+
     for (let i = 0; i < product.features.length; i++)
       if (
         product.features[i].color === color &&
