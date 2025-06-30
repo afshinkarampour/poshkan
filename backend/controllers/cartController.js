@@ -105,32 +105,32 @@ const getUserCart = async (req, res) => {
 };
 
 // clear user cart
-const clearCart = async (req, res) => {
-  try {
-    const userId = req.user._id;
+// const clearCart = async (req, res) => {
+//   try {
+//     const userId = req.user._id;
 
-    const updatedUser = await userModel.findByIdAndUpdate(
-      userId,
-      { cartData: {} }, // پاک کردن کل سبد خرید
-      { new: true }
-    );
+//     const updatedUser = await userModel.findByIdAndUpdate(
+//       userId,
+//       { cartData: {} }, // پاک کردن کل سبد خرید
+//       { new: true }
+//     );
 
-    if (!updatedUser) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
-    }
+//     if (!updatedUser) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "User not found",
+//       });
+//     }
 
-    res.status(200).json({
-      success: true,
-      message: "Cart has been cleared",
-      cart: updatedUser.cartData,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Server Error" });
-  }
-};
+//     res.status(200).json({
+//       success: true,
+//       message: "Cart has been cleared",
+//       cart: updatedUser.cartData,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ success: false, message: "Server Error" });
+//   }
+// };
 
-export { addToCart, updateCart, getUserCart, clearCart };
+export { addToCart, updateCart, getUserCart };

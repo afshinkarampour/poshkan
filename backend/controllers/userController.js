@@ -145,9 +145,10 @@ const loginUser = async (req, res) => {
     const user = await userModel.findOne({ phoneNumber });
 
     if (!user) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Invalid Phone Number or Password" });
+      return res.status(400).json({
+        success: false,
+        message: "نام کابری یا رمز عبور اشتباه می باشد",
+      });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -165,6 +166,7 @@ const loginUser = async (req, res) => {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         maxAge: 14 * 60 * 1000, // 14 دقیقه
+        sameSite: "Strict",
       });
 
       // ذخیره Refresh Token در کوکی
@@ -172,9 +174,16 @@ const loginUser = async (req, res) => {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         maxAge: 24 * 60 * 60 * 1000, // 1 روز
+        sameSite: "Strict",
       });
 
-      res.status(200).json({ success: true, message: "Login successful" });
+      res
+        .status(200)
+        .json({ success: true, message: "ورود با موفقیت انجام شد" });
+    } else {
+      return res
+        .status(400)
+        .json({ success: false, message: "نام کاربری یا رمز عبور اشتباه است" });
     }
   } catch (error) {
     console.error("Login Error:", error);
@@ -209,6 +218,7 @@ const refreshAccessToken = async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       maxAge: 14 * 60 * 1000, // 14 minutes
+      sameSite: "Strict",
     });
 
     res.json({ success: true, accessToken });
@@ -256,6 +266,7 @@ const adminRefreshAccessToken = async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       maxAge: 14 * 60 * 1000, // 14 minutes
+      sameSite: "Strict",
     });
 
     res.json({ success: true, adminAccessToken });
@@ -468,7 +479,7 @@ const sendOtp = async (req, res) => {
     const otpRecord = new optModel({
       phoneNumber,
       otp,
-      expiresAt: Date.now() + 5 * 60 * 1000,
+      expiresAt: new Date(Date.now() + 5 * 60 * 1000),
     });
     await otpRecord.save();
 
@@ -537,6 +548,8 @@ const verifyOtp = async (req, res) => {
       .status(400)
       .send({ success: false, message: "Invalid or expired OTP" });
   }
+
+  await optModel.deleteOne({ phoneNumber, otp });
 
   res.status(200).send({ success: true, message: "OTP verified successfully" });
 };
