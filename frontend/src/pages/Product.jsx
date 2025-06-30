@@ -246,50 +246,60 @@ const Product = () => {
                 </button>
               </div>
               <div className="">
-                {features.map((item, index) => (
-                  <div key={index} className="mb-2">
-                    {/* Color box */}
-                    <div
-                      onClick={() => {
-                        setSelectedColor(
-                          selectedColor === item.color ? null : item.color
-                        );
-                      }}
-                      className={`bg-slate-100 py-2 w-16 h-10 cursor-pointer border ${
-                        selectedColor === item.color ? "border-slate-400" : ""
-                      }`}
-                    >
-                      <div className="flex items-center justify-center">
-                        {item.color}
-                      </div>
-                    </div>
-                    {/* Sizes for the selected color */}
-                    {selectedColor === item.color && (
-                      <div className="mt-2 mr-8">
-                        <p className="text-sm">
-                          سایزهای موجود برای رنگ {item.color}
-                        </p>
-                        <div className="flex gap-2">
-                          {item.sizes.map((size, sizeIndex) => (
-                            <div
-                              key={sizeIndex}
-                              onClick={() => {
-                                setSelectedSize(
-                                  selectedSize === size ? null : size
-                                );
-                              }}
-                              className={`flex items-center justify-center h-10 w-12 text-sm bg-slate-100 p-1 rounded border cursor-pointer ${
-                                selectedSize === size ? "border-slate-400" : ""
-                              }`}
-                            >
-                              {size}
-                            </div>
-                          ))}
+                {features.map((item, index) => {
+                  if (item.count > 0) {
+                    return (
+                      <div key={index} className="mb-2">
+                        {/* Color box */}
+                        <div
+                          onClick={() => {
+                            setSelectedColor(
+                              selectedColor === item.color ? null : item.color
+                            );
+                          }}
+                          className={`bg-slate-100 py-2 w-16 h-10 cursor-pointer border ${
+                            selectedColor === item.color
+                              ? "border-slate-400"
+                              : ""
+                          }`}
+                        >
+                          <div className="flex items-center justify-center">
+                            {item.color}
+                          </div>
                         </div>
+                        {/* Sizes for the selected color */}
+                        {selectedColor === item.color && (
+                          <div className="mt-2 mr-8">
+                            <p className="text-sm">
+                              سایزهای موجود برای رنگ {item.color}
+                            </p>
+                            <div className="flex gap-2">
+                              {item.sizes.map((size, sizeIndex) => (
+                                <div
+                                  key={sizeIndex}
+                                  onClick={() => {
+                                    setSelectedSize(
+                                      selectedSize === size ? null : size
+                                    );
+                                  }}
+                                  className={`flex items-center justify-center h-10 w-12 text-sm bg-slate-100 p-1 rounded border cursor-pointer ${
+                                    selectedSize === size
+                                      ? "border-slate-400"
+                                      : ""
+                                  }`}
+                                >
+                                  {size}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                ))}
+                    );
+                  } else {
+                    return null;
+                  }
+                })}
               </div>
             </div>
             <p className="py-2 text-[13px] text-[#15224c]">
