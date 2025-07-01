@@ -65,6 +65,7 @@ const SignIn = () => {
           window.location.href = localStorage.getItem("previousPageUrl")
             ? localStorage.getItem("previousPageUrl")
             : "/";
+          localStorage.removeItem("previousPageUrl");
         } else {
           toast.error(response.data.message);
         }
