@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
-import Title from "./Title";
-import axios from "axios";
 import axiosInstance from "../services/axiosInstance";
+import Title from "./Title";
 
 const Orders = () => {
   const { backendUrl, formatAmount, convertToPersianDigits } =
@@ -21,16 +20,6 @@ const Orders = () => {
       );
       //each person many orders and each order many Items
       if (response.data.success) {
-        // let allOrdersItem = [];
-        // response.data.userOrderInfo.map((order) => {
-        // order.items.map((item) => {
-        //   item["status"] = order.status;
-        //   item["payment"] = order.payment;
-        //   item["paymentMethod"] = order.paymentMethod;
-        //   item["date"] = order.date;
-        //   allOrdersItem.push(item);
-        // });
-        // });
         setOrderData(response.data.userOrderInfo);
       }
     } catch (error) {
@@ -87,14 +76,14 @@ const Orders = () => {
                 <ol className="flex items-center w-full text-sm text-gray-500 font-medium sm:text-base">
                   <li
                     className={`flex md:w-full items-center ${
-                      step1Active ? "text-indigo-600" : "text-gray-600"
+                      step1Active ? "text-[#f01b87]" : "text-gray-600"
                     } sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-400 after:border-1 after:hidden sm:after:inline-block after:mx-4 xl:after:mx-8`}
                   >
                     <div className="flex items-center whitespace-nowrap after:content-['/'] sm:after:hidden after:mx-2">
                       <span
                         className={`w-6 h-6 ml-1 ${
                           step1Active
-                            ? "bg-indigo-600 border-indigo-200 text-white"
+                            ? "bg-[#f01b87] border-indigo-200 text-white"
                             : "bg-gray-100 border-gray-200"
                         } rounded-full flex justify-center items-center mr-3 text-sm lg:w-8 lg:h-8`}
                       >
@@ -105,14 +94,14 @@ const Orders = () => {
                   </li>
                   <li
                     className={`flex md:w-full items-center ${
-                      step2Active ? "text-indigo-600" : "text-gray-600"
+                      step2Active ? "text-[#f01b87]" : "text-gray-600"
                     } sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-400 after:border-1 after:hidden sm:after:inline-block after:mx-4 xl:after:mx-8`}
                   >
                     <div className="flex items-center whitespace-nowrap after:content-['/'] sm:after:hidden after:mx-2">
                       <span
                         className={`w-6 h-6 ml-1 ${
                           step2Active
-                            ? "bg-indigo-600 border-indigo-200 text-white"
+                            ? "bg-[#f01b87] border-indigo-200 text-white"
                             : "bg-gray-100 border-gray-200"
                         } rounded-full flex justify-center items-center mr-3 lg:w-8 lg:h-8`}
                       >
@@ -123,14 +112,14 @@ const Orders = () => {
                   </li>
                   <li
                     className={`flex md:w-full items-center ${
-                      step3Active ? "text-indigo-600" : "text-gray-600"
+                      step3Active ? "text-[#f01b87]" : "text-gray-600"
                     }`}
                   >
                     <div className="flex items-center">
                       <span
                         className={`w-6 h-6 ml-1 ${
                           step3Active
-                            ? "bg-indigo-600 border-indigo-200 text-white"
+                            ? "bg-[#f01b87] border-indigo-200 text-white"
                             : "bg-gray-100 border-gray-200"
                         } rounded-full flex justify-center items-center mr-3 lg:w-8 lg:h-8`}
                       >

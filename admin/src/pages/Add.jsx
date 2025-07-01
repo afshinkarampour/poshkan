@@ -24,6 +24,7 @@ const Add = () => {
   const [tempFeatures, setTempFeatures] = useState([{}]);
   const [features, setFeatures] = useState([{}]);
   const [warehouseInventory, setWarehouseInventory] = useState("");
+  const [weight, setWeight] = useState("");
   const [differentProduct, setDifferentProduct] = useState("");
   const [discount, setDiscount] = useState("");
   const [userSizeGuid, setUserSizeGuid] = useState([{}]);
@@ -50,6 +51,7 @@ const Add = () => {
       formData.append("isPublish", isPublish);
       formData.append("features", JSON.stringify(features));
       formData.append("warehouseInventory", warehouseInventory);
+      formData.append("weight", weight);
       formData.append("userSizeGuide", JSON.stringify(userSizeGuid));
 
       image1 && formData.append("image1", image1);
@@ -365,6 +367,21 @@ const Add = () => {
       </div>
 
       <div className="flex flex-col sm:flex-row gap-2 w-full sm:gap-8">
+        <div>
+          <p className="mb-2">وزن محصول</p>
+          <div className="flex gap-1 items-center">
+            <input
+              onChange={(e) => setWeight(e.target.value)}
+              value={weight}
+              className="w-full px-3 py-2 sm:w-[120px]"
+              type="text"
+              placeholder="1000"
+              required
+            />
+            گرم
+          </div>
+        </div>
+
         <div>
           <p className="mb-2">قیمت محصول</p>
           <div className="flex gap-1 items-center">

@@ -9,6 +9,7 @@ const Login = ({ setLogin }) => {
   const [password, setPassword] = useState("");
   const [captchaToken, setCaptchaToken] = useState(null);
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const handleCaptchaVerify = (token) => {
     setCaptchaToken(token);
@@ -33,6 +34,7 @@ const Login = ({ setLogin }) => {
     e.preventDefault();
     if (validateInputs()) {
       try {
+        setLoading(true);
         const response = await axiosInstance.post(
           backendUrl + "/api/user/admin",
           {
@@ -52,6 +54,8 @@ const Login = ({ setLogin }) => {
       } catch (error) {
         console.log(error);
         toast.error(error.message);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -94,6 +98,7 @@ const Login = ({ setLogin }) => {
           <button
             className="mt-2 w-full py-2 px-4 rounded-md text-white bg-[#15224c]"
             type="submit"
+            disabled={loading}
           >
             {" "}
             ورود

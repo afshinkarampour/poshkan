@@ -22,6 +22,7 @@ const Edit = () => {
   const [price, setPrice] = useState("");
   const [discount, setDiscount] = useState("");
   const [warehouseInventory, setWarehouseInventory] = useState("");
+  const [weight, setWeight] = useState("");
   const [differentProduct, setDifferentProduct] = useState("");
   const [tempFeatures, setTempFeatures] = useState([
     { color: "", size: "", count: 0 },
@@ -50,6 +51,7 @@ const Edit = () => {
       formData.append("isPublish", isPublish);
       formData.append("features", JSON.stringify(features));
       formData.append("warehouseInventory", warehouseInventory);
+      formData.append("weight", weight);
       formData.append("userSizeGuide", JSON.stringify(userSizeGuid));
       formData.append("productId", productId);
 
@@ -259,6 +261,7 @@ const Edit = () => {
     setImage4(productData.img[3] ? productData.img[3] : "");
     setName(productData.name);
     setDescription(productData.description);
+    setWeight(productData.weight);
     setPrice(productData.price);
     setDiscount(productData.discount ? productData.discount : "");
     setDifferentProduct(productData.features ? productData.features.length : 0);
@@ -501,6 +504,23 @@ const Edit = () => {
           </div>
         </div>
         <div className="flex flex-col sm:flex-row gap-2 sm:gap-5 mt-2">
+          <div>
+            <p className="mb-2">وزن محصول</p>
+            <div className="flex gap-1 items-center">
+              <input
+                onChange={(e) =>
+                  setWeight(e.target.value > 0 ? e.target.value : 0)
+                }
+                value={weight}
+                className="w-full px-3 py-2 sm:w-[120px]"
+                type="text"
+                placeholder="1000"
+                required
+              />
+              گرم
+            </div>
+          </div>
+
           <div>
             <p className="mb-1">قیمت محصول</p>
             <div className="flex gap-1 items-center">

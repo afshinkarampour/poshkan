@@ -10,8 +10,8 @@ export const ShopContext = createContext();
 
 const ShopContextProvider = (props) => {
   const currency = "تومان";
-  const delivery_fee = 40000; //Post fee
-  const itemsPerPage = 8; //for pagination
+  const delivery_fee = 70000; //Post fee
+  const itemsPerPage = 16; //for pagination
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const [search, setSearch] = useState("");

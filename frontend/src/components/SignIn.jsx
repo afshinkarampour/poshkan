@@ -13,6 +13,7 @@ const SignIn = () => {
   const [captchaToken, setCaptchaToken] = useState(null);
   const [value, setValue] = useState("");
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const { setCurrentState, backendUrl, setLogin } = useContext(ShopContext);
 
@@ -46,6 +47,7 @@ const SignIn = () => {
 
     if (validateInputs()) {
       try {
+        setLoading(true);
         const response = await axiosInstance.post(
           backendUrl + "/api/user/login",
           {
@@ -67,6 +69,8 @@ const SignIn = () => {
       } catch (error) {
         console.error("Login error:", error);
         toast.error(error.response?.data?.message || "خطا در ورود به سیستم");
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -122,6 +126,7 @@ const SignIn = () => {
           )}
           <button
             type="submit"
+            disabled={loading}
             className="bg-[#15224c] text-white w-full rounded-md font-light px-8 py-2 mt-4"
           >
             ورود

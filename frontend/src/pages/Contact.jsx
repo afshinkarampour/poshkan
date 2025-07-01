@@ -22,16 +22,16 @@ const Contact = () => {
             {/* <img src={assets.logo} className="mb-5 w-32" alt="" /> */}
             <div className="flex gap-2 items-center mr-5 mt-5">
               <MdOutlinePhoneIphone size={23} className="" />
-              <p className=""> تلفن پشیبانی : 09121234567</p>
+              <p className=""> تلفن پشیبانی : 09183279620</p>
             </div>
             <div className="flex gap-2 items-center mr-5 mt-5">
               <BsInstagram size={23} className="" />
               <p className=""> آدرس صفحه اینستاگرام : poshkan@</p>
             </div>
-            <div className="flex gap-2 items-center mr-5 mt-5">
+            {/* <div className="flex gap-2 items-center mr-5 mt-5">
               <FaTelegramPlane size={23} className="" />
               <p className=""> آدرس کانال تلگرام : poshkan@</p>
-            </div>
+            </div> */}
           </div>
           {/* <p className="text-gray-500">
             Here your Address <br /> Sute 350, Kerend, Iran

@@ -302,6 +302,12 @@ const List = () => {
                       {convertToPersianDigits(item.warehouseInventory)}
                     </p>
                   </div>
+                  <div className="flex gap-2">
+                    <p className="">وزن:</p>{" "}
+                    <p className="text-center">
+                      {convertToPersianDigits(item.weight)} گرم
+                    </p>
+                  </div>
                   <div className="">
                     <p className="">رنگ‌ها و سایزهای موجود:</p>{" "}
                     <p className="text-center">
