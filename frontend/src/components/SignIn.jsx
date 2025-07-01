@@ -61,8 +61,10 @@ const SignIn = () => {
           setLogin(true);
           toast.success("به پوشکان خوش آمدید");
           localStorage.setItem("isLogin", true);
-          navigate("/");
-          // window.location.href = "/";
+          // navigate("/");
+          window.location.href = localStorage.getItem("previousPageUrl")
+            ? localStorage.getItem("previousPageUrl")
+            : "/";
         } else {
           toast.error(response.data.message);
         }

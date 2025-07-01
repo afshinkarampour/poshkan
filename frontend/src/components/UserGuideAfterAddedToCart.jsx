@@ -47,6 +47,7 @@ const UserGuideAfterAddedToCart = () => {
           <div>
             <button
               onClick={() => {
+                localStorage.setItem("previousPageUrl", window.location.href);
                 navigate("/login");
                 setShowDialogBox(false);
               }}

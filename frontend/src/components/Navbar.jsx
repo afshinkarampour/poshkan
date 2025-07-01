@@ -23,6 +23,11 @@ const Navbar = () => {
 
   const [visible, setVisible] = useState(false);
 
+  const handleLogin = () => {
+    localStorage.setItem("previousPageUrl", window.location.href);
+    navigate("login");
+  };
+
   return (
     <div className="sticky top-0 z-20 sm:relative">
       <div className="flex items-center justify-between pt-2 sm:px-10 font-medium bg-white">
@@ -63,7 +68,7 @@ const Navbar = () => {
                     <p className="flex items-center justify-start gap-4 pr-1 pb-2 cursor-pointer boreder border-b border-[#15224c]">
                       {" "}
                       <MdSpaceDashboard />
-                      <Link to="/dashboard">داشبــــورد</Link>
+                      <Link to="/dashboard">حساب کاربری</Link>
                     </p>
                     <p
                       onClick={handleLogOut}
@@ -78,7 +83,7 @@ const Navbar = () => {
             </div>
           ) : (
             <div
-              onClick={() => navigate("login")}
+              onClick={handleLogin}
               className="flex gap-2 justify-center items-center px-1 sm:px-5 py-3 border border-slate-400 rounded-md cursor-pointer"
             >
               <TbLogin size={20} />
