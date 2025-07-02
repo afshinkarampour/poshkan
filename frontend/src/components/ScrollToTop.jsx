@@ -8,11 +8,11 @@ const ScrollToTop = () => {
     window.scrollTo({
       top: 0,
       left: 0,
-      behavior: "smooth", // Optional: for smooth scrolling
+      behavior: "smooth",
     });
-  }, [pathname]); // Re-run effect whenever the pathname changes
+  }, [pathname]);
 
-  return null; // This component doesn't render anything visible
+  return null;
 };
 
 export default ScrollToTop;

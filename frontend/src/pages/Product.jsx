@@ -46,11 +46,11 @@ const Product = () => {
     fetchProductData();
   }, [productId, products]);
 
-  useLayoutEffect(() => {
-    if (productData) {
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" }); // "auto" بهتره اینجا
-    }
-  }, [productData]);
+  // useLayoutEffect(() => {
+  //   if (productData) {
+  //     window.scrollTo({ top: 0, left: 0, behavior: "auto" }); // "auto" بهتره اینجا
+  //   }
+  // }, [productData]);
 
   useEffect(() => {
     if (productData) {

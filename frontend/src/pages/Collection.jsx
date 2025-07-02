@@ -88,9 +88,9 @@ const Collection = () => {
     sortProducts();
   }, [sortType]);
 
-  useLayoutEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-  }, []);
+  // useLayoutEffect(() => {
+  //   window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  // }, []);
 
   const totalPages = Math.ceil(filterProducts.length / itemsPerPage);
   //Pagination
