@@ -28,13 +28,13 @@ const App = () => {
   return (
     <div>
       <ToastContainer />
-      <ScrollToTop />
       <Ads />
       {/* <div> */}
       {/* px-4 sm:px-[5vw] md:px-[7vw] lg:px-[4vw] */}
       <Navbar />
       <MenuBar />
       <Routes>
+        <ScrollToTop />
         <Route path="/" element={<Home />} />
         <Route path="/collection" element={<Collection />} />
         <Route path="/about" element={<About />} />

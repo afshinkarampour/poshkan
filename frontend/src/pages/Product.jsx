@@ -118,7 +118,6 @@ const Product = () => {
 
   return productData ? (
     <div>
-      <ScrollToTop />
       <div className="relative border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100">
         <div
           className="relative"
