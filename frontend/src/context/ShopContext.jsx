@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import axiosInstance from "../services/axiosInstance";
 
@@ -286,6 +286,12 @@ const ShopContextProvider = (props) => {
       getUserCart();
     }
   }, [isLogin]);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [location.pathname, location.search, location.hash]);
 
   const value = {
     products,
