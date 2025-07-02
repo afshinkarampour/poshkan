@@ -46,13 +46,9 @@ const Product = () => {
     fetchProductData();
   }, [productId, products]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (productData) {
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: "smooth", // یا "auto" اگر smooth نمی‌خوای
-      });
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" }); // "auto" بهتره اینجا
     }
   }, [productData]);
 
