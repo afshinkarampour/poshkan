@@ -48,6 +48,7 @@ const RelatedProducts = ({ category, subCategory }) => {
         <Title text1={"محصولات"} text2={"مرتبط"} />
       </div>
       <Swiper
+        navigation={true}
         slidesPerView={sliderNumber}
         spaceBetween={10}
         freeMode={true}
