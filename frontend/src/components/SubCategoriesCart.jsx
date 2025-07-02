@@ -13,10 +13,6 @@ const SubCategoriesCart = ({ catName, subCategoryName, src }) => {
       : setCategoryName("بچگانه");
   };
 
-  useEffect(() => {
-    console.log("catName: ", catName);
-  }, []);
-
   return (
     <Link
       to={{

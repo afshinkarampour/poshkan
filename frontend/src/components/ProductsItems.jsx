@@ -19,7 +19,7 @@ const ProductsItems = ({
 
   return (
     <Link
-      to={`/product/${id}`}
+      to={`/product/${id}#topPage`}
       className="text-gray-700 cursor-pointer"
       dir="rtl"
     >
