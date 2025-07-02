@@ -167,100 +167,120 @@ const Orders = () => {
       <div>
         <div>
           {showOrders.map((order, index) => (
-            <div
-              className="grid grid-cols-1 sm:grig-cols-[0.5fr_2fr_1fr] lg:grid-cols-[0.5fr_2fr_1fr_1fr_1fr] gap-3 items-start border-2 border-gary-200 p-5 md:p-8 my-3 md:my-4 text-xs sm:text-sm text-gray-700 bg-white"
-              key={index}
-            >
-              <AiFillProduct className="w-12 " size={50} />
-              {/* <img src="" alt="" /> */}
+            <div className="grid grid-cols-1 sm:grid-cols-[0.5fr_2fr_1fr] lg:grid-cols-[0.5fr_2fr_1fr_1fr_1fr] gap-3 items-start border-2 border-gray-200 p-5 md:p-8 my-3 text-xs sm:text-sm text-gray-700 bg-white rounded-lg shadow-sm hover:shadow-md transition">
+              <AiFillProduct className="w-12" size={50} />
+
               <div>
-                {/* <div>
-                    <span className="ml-2"> مشخصات محصول سفارش شده:</span>
-                    {order.items &&
-                      Array.isArray(order.items) &&
-                      order.items.map((item, index) => {
-                        if (index === order.items.length - 1) {
-                          return (
-                            <div>
-                              <p className="py-0.5" key={index}>
-                                {item.name} / {item.quantity} /
-                                <span className="ml-2">{item.size}</span> ,
-                              </p>
-                            </div>
-                          );
-                        } else {
-                        return (
-                          <div>
-                            <p className="py-0.5" key={index}>
-                              {item.name} / {item.quantity} /
-                              <span className="ml-2">{item.size}</span> /
-                            </p>
-                          </div>
-                        );
-                        }
-                      })}
-                  </div> */}
-
-                <div>
-                  <span className="ml-2">مشخصات محصول سفارش شده:</span>
-                  <p className="py-0.5">
-                    {Array.isArray(order?.items)
-                      ? order?.items
-                          .map(
-                            (item) =>
-                              `${item?.name} / ${item?.quantity} / ${item?.size}`
-                          )
-                          .join(" , ")
-                      : "بدون آیتم"}
-                  </p>
-                </div>
-
-                <p className="mt-3 mb-2 font-medium">
-                  <p className="ml-2">نام و نام خانوادگی:</p>
-                  {order.userData.name + " " + order.userData.family}
+                <p className="font-bold mb-1">📦 مشخصات محصول:</p>
+                <p className="py-0.5">
+                  {order.items?.map(
+                    (item, i) =>
+                      `${item.name} / ${item.quantity} / ${item.size}` +
+                      (i !== order.items.length - 1 ? " , " : "")
+                  )}
                 </p>
-                <div>
-                  <p>آدرس پستی:</p>
-                  <p>
-                    {order.userData?.province} / {order.userData?.city}
-                  </p>
-                  <p>{order.userData.address}</p>
-                </div>
+
+                <p className="mt-4 font-medium">
+                  👤 نام: {order.userData.name + " " + order.userData.family}
+                </p>
                 <p>
-                  <span className="ml-2">همراه: </span>
-                  {order.userData.phoneNumber}
+                  📍 آدرس: {order.userData?.province} / {order.userData?.city}
                 </p>
+                <p>{order.userData.address}</p>
+                <p>📱 {order.userData.phoneNumber}</p>
               </div>
+
               <div>
-                <p>شماره سفاره: {order.refId}</p>
-                <p className="text-sm sm:text-[15px]">
-                  تعداد سفارش:{" "}
-                  {Array.isArray(order.items) ? order.items.length : 0}
-                </p>
-                {/* <p className="mt-3">Method : {order.paymentMethod}</p> */}
-                {/* <p>
-                    پرداخت شده{order.payment ? "پرداخت انجام شد" : "درحال پرداخت"}
-                  </p> */}
-                <p>تاریخ پرداخت: {order?.faDate}</p>
+                <p>🔢 شماره سفارش: {order.refId}</p>
+                <p>📅 تاریخ پرداخت: {order?.faDate}</p>
+                <p>🧾 تعداد آیتم‌ها: {order.items?.length || 0}</p>
               </div>
-              <p className="text-sm sm:text-[15px]">
-                <span className="ml-2">مبلغ پرداخت شده:</span>
+
+              <div>
+                <p className="font-semibold">💰 مبلغ پرداخت شده:</p>
                 <div className="flex gap-1">
                   <p>{convertToPersianDigits(formatAmount(order.amount))}</p>
                   <p>ریال</p>
                 </div>
-              </p>
+              </div>
+
               <select
                 onChange={(event) => statusHandler(event, order._id)}
                 value={order.status || "تایید"}
-                className="p-2 font-semibold"
+                className="p-2 font-semibold bg-yellow-100 border border-gray-300 rounded-md"
               >
                 <option value="تایید">تایید</option>
                 <option value="بسته‌ بندی">بسته‌ بندی</option>
                 <option value="ارسال">ارسال</option>
-                {/* <option value="لغو شده">لغو شده</option> */}
               </select>
             </div>
+
+            // <div
+            //   className="grid grid-cols-1 sm:grid-cols-[0.5fr_2fr_1fr] lg:grid-cols-[0.5fr_2fr_1fr_1fr_1fr] gap-3 items-start border-2 border-gary-200 p-5 md:p-8 my-3 md:my-4 text-xs sm:text-sm text-gray-700 bg-white"
+            //   key={index}
+            // >
+            //   <AiFillProduct className="w-12 " size={50} />
+            //   <div>
+            //     <div>
+            //       <span className="ml-2">مشخصات محصول سفارش شده:</span>
+            //       <p className="py-0.5">
+            //         {Array.isArray(order?.items)
+            //           ? order?.items
+            //               .map(
+            //                 (item) =>
+            //                   `${item?.name} / ${item?.quantity} / ${item?.size}`
+            //               )
+            //               .join(" , ")
+            //           : "بدون آیتم"}
+            //       </p>
+            //     </div>
+
+            //     <p className="mt-3 mb-2 font-medium">
+            //       <p className="ml-2">نام و نام خانوادگی:</p>
+            //       {order.userData.name + " " + order.userData.family}
+            //     </p>
+            //     <div>
+            //       <p>آدرس پستی:</p>
+            //       <p>
+            //         {order.userData?.province} / {order.userData?.city}
+            //       </p>
+            //       <p>{order.userData.address}</p>
+            //     </div>
+            //     <p>
+            //       <span className="ml-2">همراه: </span>
+            //       {order.userData.phoneNumber}
+            //     </p>
+            //   </div>
+            //   <div>
+            //     <p>شماره سفاره: {order.refId}</p>
+            //     <p className="text-sm sm:text-[15px]">
+            //       تعداد سفارش:{" "}
+            //       {Array.isArray(order.items) ? order.items.length : 0}
+            //     </p>
+            //     {/* <p className="mt-3">Method : {order.paymentMethod}</p> */}
+            //     {/* <p>
+            //         پرداخت شده{order.payment ? "پرداخت انجام شد" : "درحال پرداخت"}
+            //       </p> */}
+            //     <p>تاریخ پرداخت: {order?.faDate}</p>
+            //   </div>
+            //   <p className="text-sm sm:text-[15px]">
+            //     <span className="ml-2">مبلغ پرداخت شده:</span>
+            //     <div className="flex gap-1">
+            //       <p>{convertToPersianDigits(formatAmount(order.amount))}</p>
+            //       <p>ریال</p>
+            //     </div>
+            //   </p>
+            //   <select
+            //     onChange={(event) => statusHandler(event, order._id)}
+            //     value={order.status || "تایید"}
+            //     className="p-2 font-semibold"
+            //   >
+            //     <option value="تایید">تایید</option>
+            //     <option value="بسته‌ بندی">بسته‌ بندی</option>
+            //     <option value="ارسال">ارسال</option>
+            //     {/* <option value="لغو شده">لغو شده</option> */}
+            //   </select>
+            // </div>
           ))}
         </div>
       </div>
