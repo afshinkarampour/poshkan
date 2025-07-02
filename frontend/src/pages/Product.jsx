@@ -46,8 +46,11 @@ const Product = () => {
   }, [productId, products]);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [productId, productData]);
+    const timer = setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 200);
+    return () => clearTimeout(timer);
+  }, [productId]);
 
   useEffect(() => {
     if (productData) {
