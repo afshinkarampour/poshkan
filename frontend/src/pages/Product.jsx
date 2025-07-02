@@ -46,13 +46,15 @@ const Product = () => {
     fetchProductData();
   }, [productId, products]);
 
-  // useEffect(() => {
-  //   window.scrollTo({ top: 0, behavior: "smooth" });
-  // }, [productId]);
-
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [productId]);
+    if (productData) {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth", // یا "auto" اگر smooth نمی‌خوای
+      });
+    }
+  }, [productData]);
 
   useEffect(() => {
     if (productData) {
