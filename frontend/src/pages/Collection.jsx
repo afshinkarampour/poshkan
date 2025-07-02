@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useLayoutEffect } from "react";
 import { ShopContext } from "../context/ShopContext";
 import { MdArrowDropDown } from "react-icons/md";
 import Title from "../components/Title";
