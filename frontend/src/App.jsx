@@ -33,7 +33,6 @@ const App = () => {
       {/* px-4 sm:px-[5vw] md:px-[7vw] lg:px-[4vw] */}
       <Navbar />
       <MenuBar />
-      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/collection" element={<Collection />} />
@@ -57,6 +56,7 @@ const App = () => {
           element={<PaymentVerify type="failed" />}
         />
       </Routes>
+      <ScrollToTop />
       <Footer />
     </div>
   );
