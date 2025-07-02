@@ -46,6 +46,10 @@ const Product = () => {
   }, [productId, products]);
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [productId]);
+
+  useEffect(() => {
     if (productData) {
       const newFeatures = [];
 
