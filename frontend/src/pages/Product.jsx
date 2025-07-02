@@ -7,6 +7,7 @@ import { assets } from "../assets/assets";
 import RelatedProducts from "../components/RelatedProducts";
 import UserSizeGuide from "../components/UserSizeGuide";
 import UserGuideAfterAddedToCart from "../components/UserGuideAfterAddedToCart";
+import ScrollToTop from "../components/ScrollToTop";
 
 const Product = () => {
   const { productId } = useParams();
@@ -114,6 +115,7 @@ const Product = () => {
 
   return productData ? (
     <div>
+      <ScrollToTop />
       <div className="relative border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100">
         <div
           className="relative"

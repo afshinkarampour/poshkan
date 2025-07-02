@@ -1,13 +1,12 @@
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const ScrollToTop = () => {
-  const location = useLocation();
+  const { productId } = useParams();
 
   useEffect(() => {
-    // روی هر تغییری در مسیر یا پارامترها عمل کن
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [location.pathname, location.search, location.hash]);
+  }, [productId]);
 
   return null;
 };
