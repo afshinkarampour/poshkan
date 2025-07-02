@@ -46,13 +46,6 @@ const Product = () => {
   }, [productId, products]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      window.scrollTo(0, 0);
-    }, 200);
-    return () => clearTimeout(timer);
-  }, [productId]);
-
-  useEffect(() => {
     if (productData) {
       const newFeatures = [];
 

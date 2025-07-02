@@ -22,11 +22,13 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Ads from "./components/Ads";
 import MenuBar from "./components/MenuBar";
+import ScrollToTop from "./components/ScrollToTop";
 
 const App = () => {
   return (
     <div>
       <ToastContainer />
+      <ScrollToTop />
       <Ads />
       {/* <div> */}
       {/* px-4 sm:px-[5vw] md:px-[7vw] lg:px-[4vw] */}
