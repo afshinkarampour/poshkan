@@ -50,11 +50,9 @@ const Product = () => {
   //   window.scrollTo({ top: 0, behavior: "smooth" });
   // }, [productId]);
 
-  useLayoutEffect(() => {
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "auto" });
-    }, 50); // کمی تأخیر تا مرورگر کاملاً DOM رو رندر کنه
-  }, [productData]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     if (productData) {
