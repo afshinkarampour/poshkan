@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { toast } from "react-toastify";
@@ -46,10 +46,15 @@ const Product = () => {
     fetchProductData();
   }, [productId, products]);
 
-  useEffect(() => {
-    console.log("Scrolling to top for:", productId);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [productId]);
+  // useEffect(() => {
+  //   window.scrollTo({ top: 0, behavior: "smooth" });
+  // }, [productId]);
+
+  useLayoutEffect(() => {
+    if (productData) {
+      window.scrollTo(0, 0);
+    }
+  }, [productData]);
 
   useEffect(() => {
     if (productData) {
