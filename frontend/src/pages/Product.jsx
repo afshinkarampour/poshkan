@@ -46,6 +46,7 @@ const Product = () => {
   }, [productId, products]);
 
   useEffect(() => {
+    console.log("Scrolling to top for:", productId);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [productId]);
 
