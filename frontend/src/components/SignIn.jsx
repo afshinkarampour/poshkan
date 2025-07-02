@@ -130,7 +130,7 @@ const SignIn = () => {
           <button
             type="submit"
             disabled={loading}
-            className="bg-[#15224c] text-white w-full rounded-md font-light px-8 py-2 mt-4"
+            className="bg-[#15224c] text-white w-full rounded-md font-light px-8 py-2 mt-4 disabled:opacity-50"
           >
             ورود
           </button>

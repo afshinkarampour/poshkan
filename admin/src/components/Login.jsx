@@ -96,9 +96,9 @@ const Login = ({ setLogin }) => {
             onChange={handleCaptchaVerify}
           />
           <button
-            className="mt-2 w-full py-2 px-4 rounded-md text-white bg-[#15224c]"
-            type="submit"
+            className="mt-2 w-full py-2 px-4 rounded-md text-white bg-[#15224c] disabled:opacity-50"
             disabled={loading}
+            type="submit"
           >
             {" "}
             ورود
