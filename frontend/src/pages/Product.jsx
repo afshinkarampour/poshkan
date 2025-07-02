@@ -52,7 +52,7 @@ const Product = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [productId]);
 
   useEffect(() => {
     if (productData) {
