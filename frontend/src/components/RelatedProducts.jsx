@@ -16,6 +16,7 @@ import "./styles.css";
 const RelatedProducts = ({ category, subCategory }) => {
   const { products } = useContext(ShopContext);
 
+  const [swiperRef, setSwiperRef] = useState(null);
   const [related, setRelated] = useState([]);
   const [sliderNumber, setSliderNumber] = useState(2);
 
@@ -48,6 +49,7 @@ const RelatedProducts = ({ category, subCategory }) => {
         <Title text1={"محصولات"} text2={"مرتبط"} />
       </div>
       <Swiper
+        onSwiper={setSwiperRef}
         navigation={true}
         slidesPerView={sliderNumber}
         spaceBetween={10}
