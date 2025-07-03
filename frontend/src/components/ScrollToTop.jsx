@@ -5,15 +5,15 @@ const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    console.log("gototop1");
-    const root = document.getElementById("root");
-    root.scrollTo({
+    console.log("go to top1");
+
+    window.scrollTo({
       top: 0,
       left: 0,
       behavior: "smooth",
     });
 
-    console.log("gototop2");
+    console.log("go to top2");
   }, [pathname]);
 
   return null;
