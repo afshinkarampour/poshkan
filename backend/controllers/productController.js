@@ -197,17 +197,11 @@ const addProduct = async (req, res) => {
 //function for list product
 const listProduct = async (req, res) => {
   try {
-    const isPublish = req.query.isPublish;
-    const products = await productModel.find(
-      isPublish ? { isPublished: true } : {}
-    );
-    if (!products || products.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: "No products found",
-      });
-    }
+    const isPublish = req.query.isPublish === "true";
+    const filter = isPublish ? { isPublish: true } : {};
+    const products = await productModel.find(filter);
 
+    // این شرط رو حذف کن، چون products همیشه یک آرایه است (حتی اگر خالی باشه)
     res.status(200).json({
       success: true,
       products,
@@ -220,6 +214,31 @@ const listProduct = async (req, res) => {
     });
   }
 };
+// const listProduct = async (req, res) => {
+//   try {
+//     const isPublish = req.query.isPublish;
+//     const products = await productModel.find(
+//       isPublish ? { isPublished: true } : {}
+//     );
+//     if (!products || products.length === 0) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "No products found",
+//       });
+//     }
+
+//     res.status(200).json({
+//       success: true,
+//       products,
+//     });
+//   } catch (error) {
+//     console.error("Error listing products:", error);
+//     res.status(500).json({
+//       success: false,
+//       message: "Internal Server Error",
+//     });
+//   }
+// };
 
 //function for removing product
 const removeProduct = async (req, res) => {
