@@ -19,6 +19,7 @@ const AddCopon = () => {
   const [today, setToday] = useState(new DateObject());
   const [tempCopons, setTempCopons] = useState([]);
   const [copons, setCopons] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const fetchAllCopons = async () => {
     const response = await axiosInstance.get(backendUrl + "/api/copon/getAll");
@@ -66,6 +67,7 @@ const AddCopon = () => {
     };
 
     try {
+      setLoading(true);
       const response = await axiosInstance.post(
         backendUrl + "/api/copon/add",
         coponData
@@ -84,6 +86,8 @@ const AddCopon = () => {
     } catch (error) {
       console.error("Error:", error);
       toast.error("خطا در ارسال درخواست!");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -174,9 +178,10 @@ const AddCopon = () => {
         <div className="flex justify-center">
           <button
             type="submit"
-            className="px-[86px] py-2 rounded-md bg-[#15224c] text-white mt-5"
+            className="px-[86px] py-2 rounded-md bg-[#15224c] text-white mt-5 disabled:opacity-50"
+            disabled={loading}
           >
-            ثبت
+            {!loading ? "ثبت" : "درحال ثبت"}
           </button>
         </div>
       </form>

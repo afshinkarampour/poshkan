@@ -31,6 +31,7 @@ const Add = () => {
   const [tempUserSizeGuide, setTempUserSizeGuide] = useState([{}]);
   const [differentSizes, setDifferentSizes] = useState("");
   const [isPublish, setPublish] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const onSubmitHandeler = async (e) => {
     e.preventDefault();
@@ -39,6 +40,7 @@ const Add = () => {
     const savedDiscount = converToSimpleEnglishNumber(discount);
 
     try {
+      setLoading(true);
       const formData = new FormData();
       formData.append("name", name);
       formData.append("description", description);
@@ -89,6 +91,8 @@ const Add = () => {
       console.log(error);
       console.log(response);
       toast.error(response?.data?.message || "خطای نامشخصی رخ داده است");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -467,106 +471,14 @@ const Add = () => {
         </label>
       </div>
       <button
-        className="px-5 py-3 rounded-lg mt-4 bg-[#15224c] text-white font-semibold"
+        className="px-5 py-3 rounded-lg mt-4 bg-[#15224c] text-white font-semibold disabled:opacity-50"
+        disabled={loading}
         type="submit"
       >
-        ثبت محصول
+        {!loading ? "ثبت محصول" : "در حال ذخیره محصول"}
       </button>
     </form>
   );
 };
 
 export default Add;
-
-{
-  /* <div>
-        <p className="mb-2">Product sizes</p>
-        <div className="flex gap-3">
-          <div
-            onClick={() =>
-              setSizes((prev) =>
-                prev.includes("S")
-                  ? prev.filter((item) => item !== "S")
-                  : [...prev, "S"]
-              )
-            }
-          >
-            <p
-              className={`${
-                sizes.includes("S") ? "bg-pink-100" : "bg-slate-200"
-              } px-3 py-1 cursor-pointer`}
-            >
-              S
-            </p>
-          </div>
-          <div
-            onClick={() =>
-              setSizes((prev) =>
-                prev.includes("M")
-                  ? prev.filter((item) => item !== "M")
-                  : [...prev, "M"]
-              )
-            }
-          >
-            <p
-              className={`${
-                sizes.includes("M") ? "bg-pink-100" : "bg-slate-200"
-              } px-3 py-1 cursor-pointer`}
-            >
-              M
-            </p>
-          </div>
-          <div
-            onClick={() =>
-              setSizes((prev) =>
-                prev.includes("L")
-                  ? prev.filter((item) => item !== "L")
-                  : [...prev, "L"]
-              )
-            }
-          >
-            <p
-              className={`${
-                sizes.includes("L") ? "bg-pink-100" : "bg-slate-200"
-              } px-3 py-1 cursor-pointer`}
-            >
-              L
-            </p>
-          </div>
-          <div
-            onClick={() =>
-              setSizes((prev) =>
-                prev.includes("XL")
-                  ? prev.filter((item) => item !== "XL")
-                  : [...prev, "XL"]
-              )
-            }
-          >
-            <p
-              className={`${
-                sizes.includes("XL") ? "bg-pink-100" : "bg-slate-200"
-              } px-3 py-1 cursor-pointer`}
-            >
-              XL
-            </p>
-          </div>
-          <div
-            onClick={() =>
-              setSizes((prev) =>
-                prev.includes("XXL")
-                  ? prev.filter((item) => item !== "XXL")
-                  : [...prev, "XXL"]
-              )
-            }
-          >
-            <p
-              className={`${
-                sizes.includes("XXL") ? "bg-pink-100" : "bg-slate-200"
-              } px-3 py-1 cursor-pointer`}
-            >
-              XXL
-            </p>
-          </div>
-        </div>
-      </div> */
-}

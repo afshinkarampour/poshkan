@@ -35,10 +35,12 @@ const Edit = () => {
   const [differentSizes, setDifferentSizes] = useState("");
   const [bestseller, setBestseller] = useState(false);
   const [isPublish, setPublish] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
+      loading(true);
       const formData = new FormData();
       formData.append("name", name);
       formData.append("description", description);
@@ -79,6 +81,8 @@ const Edit = () => {
     } catch (error) {
       console.log(error);
       toast.error(error.message);
+    } finally {
+      loading(false);
     }
   };
 
@@ -596,10 +600,11 @@ const Edit = () => {
         </div>
         <div className="flex flex-col justify-around">
           <button
-            className="py-3 rounded-lg mt-4 bg-[#15224c] text-white font-semibold"
+            className="py-3 rounded-lg mt-4 bg-[#15224c] text-white font-semibold disabled:opacity-50"
             type="submit"
+            disabled={loading}
           >
-            ویرایش محصول
+            {!loading ? "ویرایش محصول" : "در حال ویرایش"}
           </button>
           <button
             className="py-3 rounded-lg mt-4 bg-[#15224c] text-white font-semibold"
