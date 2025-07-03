@@ -197,7 +197,10 @@ const addProduct = async (req, res) => {
 //function for list product
 const listProduct = async (req, res) => {
   try {
-    const products = await productModel.find({});
+    const isPublish = req.query.isPublish;
+    const products = await productModel.find(
+      isPublish ? { isPublished: true } : {}
+    );
     if (!products || products.length === 0) {
       return res.status(404).json({
         success: false,

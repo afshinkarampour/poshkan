@@ -160,18 +160,33 @@ const ShopContextProvider = (props) => {
   const getProductData = async () => {
     try {
       const response = await axios.get(backendUrl + "/api/product/list", {
-        isPublish: true,
+        params: { isPublish: true },
       });
-      if (response.data.success) {
-        //اونایی که موجود نیستند میندازه آخر
-        const sortedproducts = [...response.data.products].sort(
-          (a, b) => (b.warehouseInventory === 0) - (a.warehouseInventory === 0)
-        );
 
-        setProducts(sortedproducts.reverse());
+      if (response.data.success && Array.isArray(response.data.products)) {
+        // اول محصولاتی که موجودی دارند، بعد ناموجودها
+        const sortedProducts = [...response.data.products].sort((a, b) => {
+          return a.warehouseInventory === 0
+            ? 1
+            : b.warehouseInventory === 0
+            ? -1
+            : 0;
+        });
+
+        setProducts(sortedProducts);
       } else {
-        toast.error(response.data.message);
+        toast.error(response.data.message || "خطا در دریافت محصولات");
       }
+      // if (response.data.success) {
+      //   //اونایی که موجود نیستند میندازه آخر
+      //   const sortedproducts = [...response.data.products].sort(
+      //     (a, b) => (b.warehouseInventory === 0) - (a.warehouseInventory === 0)
+      //   );
+
+      //   setProducts(sortedproducts.reverse());
+      // } else {
+      //   toast.error(response.data.message);
+      // }
     } catch (error) {
       console.log(error);
       toast.error(error.message);
