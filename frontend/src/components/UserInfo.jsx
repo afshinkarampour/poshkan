@@ -194,12 +194,15 @@ const UserInfo = () => {
                 <div className="flex gap-2 items-center px-2 py-2 my-2 mx-5 border rounded-lg">
                   <IoIosPhonePortrait size={20} />
                   <p className="text-sm">همراه :</p>
-                  <input
+                  <p className="w-[60%] outline-none bg-inherit">
+                    {phoneNumber}
+                  </p>
+                  {/* <input
                     type="text"
                     className="w-[60%] outline-none bg-inherit"
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
-                  />
+                  /> */}
                 </div>
                 {errors.phoneNumber && (
                   <p className="text-red-500 text-xs">{errors.phoneNumber}</p>
