@@ -6,7 +6,7 @@ const ScrollToTop = () => {
 
   useEffect(() => {
     console.log("go to top1");
-
+    window.focus();
     window.scrollTo({
       top: 0,
       left: 0,
