@@ -223,8 +223,15 @@ const refreshAccessToken = async (req, res) => {
 
     res.json({ success: true, accessToken });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: error.message });
+    if (error.name === "TokenExpiredError") {
+      return res.status(401).json({
+        success: false,
+        message: "نشست شما منقضی شده است. لطفاً دوباره وارد شوید.",
+      });
+    }
+    return res
+      .status(403)
+      .json({ success: false, message: "توکن نامعتبر است" });
   }
 };
 
@@ -381,7 +388,7 @@ const adminLogin = async (req, res) => {
 
       res.json({ success: true, message: "Login successful" });
     } else {
-      res.json({ success: false, message: "Invalid Eamil or Password" });
+      res.json({ success: false, message: "ایمیل یا رمز عبور اشتباه است" });
     }
   } catch (error) {
     console.log(error);
@@ -467,7 +474,7 @@ const sendOtp = async (req, res) => {
         .send({ success: false, message: "شماره موبایل نامعتبر است" });
     }
 
-    const phone = await optModel.find({ phoneNumber });
+    const phone = await optModel.findOne({ phoneNumber });
     if (phone) {
       await optModel.deleteOne({ phoneNumber });
     }

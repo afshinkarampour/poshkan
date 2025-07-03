@@ -4,9 +4,10 @@ const authUser = async (req, res, next) => {
   const token = req.cookies.jwt;
 
   if (!token) {
-    return res
-      .status(401)
-      .json({ success: false, message: "Token Not Provided" });
+    return res.status(401).json({
+      success: false,
+      message: "نشست شما منقضی شده. لطفاً دوباره وارد شوید",
+    });
   }
 
   try {
