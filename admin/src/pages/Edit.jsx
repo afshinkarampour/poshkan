@@ -171,9 +171,7 @@ const Edit = () => {
           <input
             required
             className="py-2 pr-2 w-[140px]"
-            value={
-              tempFeatures[i].size ? tempFeatures[i].size : tempFeatures.size
-            }
+            value={tempFeatures[i].size ?? ""}
             name={"size" + i}
             onChange={(e) => handleSizeFeatureChange(e.target.value, i)}
             type="text"
@@ -184,9 +182,7 @@ const Edit = () => {
           <input
             required
             className="py-2 pr-2 w-[140px]"
-            value={
-              tempFeatures[i].count ? tempFeatures[i].count : tempFeatures.count
-            }
+            value={tempFeatures[i].count ?? ""}
             name={"count" + i}
             onChange={(e) => handleCountFeatureChange(e.target.value, i)}
             type="number"
@@ -311,11 +307,12 @@ const Edit = () => {
     let totalCount = 0;
 
     for (let i = 0; i < differentProduct; i++) {
-      if (parseInt(tempFeatures[i].count)) {
-        totalCount += parseInt(tempFeatures[i].count);
-        setWarehouseInventory(parseInt(totalCount));
+      const parsed = parseInt(tempFeatures[i].count);
+      if (!isNaN(parsed)) {
+        totalCount += parsed;
       }
     }
+    setWarehouseInventory(totalCount);
 
     let x = []; //features array
     for (let i = 0; i < differentProduct; i++) {

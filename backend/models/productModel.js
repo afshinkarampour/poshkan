@@ -17,7 +17,7 @@ const productSchema = new mongoose.Schema({
   productType: { type: String },
   features: { type: [featureSchema], required: true },
   userSizeGuide: { type: Array, required: true },
-  warehouseInventory: { type: Number, required: true },
+  warehouseInventory: { type: Number, required: true, default: 0 },
   weight: { type: Number, default: 0 },
   bestSeller: { type: Boolean, required: true },
   date: { type: String, required: true },
