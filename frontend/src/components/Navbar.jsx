@@ -29,7 +29,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="sticky top-0 z-20 sm:relative">
+    <div className="sticky top-0 z-30 sm:relative">
       <div className="flex items-center justify-between pt-2 sm:px-10 font-medium bg-white">
         <Link to="/">
           <img src={assets.logo} alt="Poshkan" className="w-[75px]" />

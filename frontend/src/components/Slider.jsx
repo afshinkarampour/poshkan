@@ -30,7 +30,7 @@ const Slider = () => {
   return (
     <div className="relative flex items-center justify-center h-[220px] lg:h-[388px]">
       <BiSolidLeftArrow
-        className="absolute w-[2rem] h-[2rem] text-white drop-shadow-sm left-[1rem] cursor-pointer"
+        className="absolute w-[2rem] h-[2rem] text-white drop-shadow-sm left-[1rem] cursor-pointer z-10"
         onClick={() => handleLeftSlide(currentSlide)}
       />
       <div className="">
