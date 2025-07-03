@@ -159,7 +159,9 @@ const ShopContextProvider = (props) => {
 
   const getProductData = async () => {
     try {
-      const response = await axios.get(backendUrl + "/api/product/list");
+      const response = await axios.get(backendUrl + "/api/product/list", {
+        isPublish: true,
+      });
       if (response.data.success) {
         //اونایی که موجود نیستند میندازه آخر
         const sortedproducts = [...response.data.products].sort(
