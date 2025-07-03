@@ -40,7 +40,7 @@ const Edit = () => {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
-      loading(true);
+      setLoading(true);
       const formData = new FormData();
       formData.append("name", name);
       formData.append("description", description);
@@ -82,7 +82,7 @@ const Edit = () => {
       console.log(error);
       toast.error(error.message);
     } finally {
-      loading(false);
+      setLoading(false);
     }
   };
 
