@@ -88,7 +88,7 @@ const Orders = () => {
                       key={index}
                       className={`flex items-center ${
                         index < 2
-                          ? 'after:w-6 after:h-1 after:mx-2 after:content-[""] after:border-b after:border-gray-400 after:inline-block'
+                          ? 'after:w-4 sm:after:w-8 after:h-1 after:mx-2 after:content-[""] after:border-b after:border-gray-400 after:inline-block'
                           : ""
                       } ${step.active ? "text-pink-600" : "text-gray-400"}`}
                     >
