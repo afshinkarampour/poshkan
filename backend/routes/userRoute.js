@@ -18,11 +18,12 @@ import {
 } from "../controllers/userController.js";
 import authUser from "../middleware/auth.js";
 import adminAuth from "../middleware/adminAuth.js";
+import { loginLimiter } from "../middleware/rateLimiter.js";
 
 const userRouter = express.Router();
 
 userRouter.post("/register", registerUser);
-userRouter.post("/login", loginUser);
+userRouter.post("/login", loginLimiter, loginUser);
 userRouter.post("/admin", adminLogin);
 userRouter.post("/adminlogout", logoutAdmin);
 userRouter.post("/refresh", refreshAccessToken);
