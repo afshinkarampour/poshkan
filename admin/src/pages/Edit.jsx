@@ -162,7 +162,7 @@ const Edit = () => {
             className="py-2 pr-2 w-[140px]"
             value={tempFeatures[i].color}
             name={"color" + i}
-            onChange={(e) => handleColorFeatureChange(e.target.value.trim(), i)}
+            onChange={(e) => handleColorFeatureChange(e.target.value, i)}
             type="text"
           ></input>
         </div>
@@ -173,7 +173,7 @@ const Edit = () => {
             className="py-2 pr-2 w-[140px]"
             value={tempFeatures[i].size ?? ""}
             name={"size" + i}
-            onChange={(e) => handleSizeFeatureChange(e.target.value.trim(), i)}
+            onChange={(e) => handleSizeFeatureChange(e.target.value, i)}
             type="text"
           ></input>
         </div>

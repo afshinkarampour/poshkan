@@ -199,7 +199,7 @@ const ForgetPassword = () => {
               <div className="w-[250px] sm:w-[300px]">
                 <p>شماره همراه</p>
                 <input
-                  onChange={(e) => setPhoneNumber(e.target.value.trim())}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
                   value={phoneNumber}
                   type="text"
                   className="w-full px-3 py-2 my-2 border rounded-md border-gray-500"

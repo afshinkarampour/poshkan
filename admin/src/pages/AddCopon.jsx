@@ -125,7 +125,7 @@ const AddCopon = () => {
           <div className="mb-2">
             <p className="text-sm mb-1">کد تخفیف</p>
             <input
-              onChange={(e) => setCodeName(e.target.value.trim())}
+              onChange={(e) => setCodeName(e.target.value)}
               value={codeName}
               className="w-[200px] px-2 py-1"
               type="text"
