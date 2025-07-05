@@ -276,6 +276,9 @@ const Edit = () => {
     setUserSizeGuid(productData.userSizeGuide ? productData.userSizeGuide : "");
     setBestseller(productData.bestSeller);
     setPublish(productData.isPublish);
+    setCategory(productData.category || "مردانه");
+    setSubCategory(productData.subCategory || "پیراهن");
+    setProductType(productData.productType || "روزمره");
   };
 
   const fetchProduct = async () => {
@@ -608,7 +611,7 @@ const Edit = () => {
           </button>
           <button
             className="py-3 rounded-lg mt-4 bg-[#15224c] text-white font-semibold"
-            type="cancel"
+            type="button"
             onClick={() => (window.location.href = "/list")}
           >
             بازگشت به محصولات
