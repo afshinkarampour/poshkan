@@ -449,14 +449,15 @@ const Edit = () => {
             <select
               onChange={(e) => setCategory(e.target.value)}
               className="w-[230px] pr-1 py-2"
+              value={category}
             >
               {categories.map((item) => (
                 <option
                   key={item.id}
                   value={item.name}
-                  selected={
-                    item.name === productData.category ? "true" : "false"
-                  }
+                  // selected={
+                  //   item.name === productData.category ? "true" : "false"
+                  // }
                 >
                   {item.name}
                 </option>
@@ -468,6 +469,7 @@ const Edit = () => {
             <select
               onChange={(e) => setSubCategory(e.target.value)}
               className="w-[230px] pr-1 py-2"
+              value={subCategory}
             >
               {categories
                 .filter((item) => item.name === category)[0]
@@ -475,9 +477,9 @@ const Edit = () => {
                   <option
                     key={item.id}
                     value={item.name}
-                    selected={
-                      item.name === productData.subCategory ? "true" : "false"
-                    }
+                    // selected={
+                    //   item.name === productData.subCategory ? "true" : "false"
+                    // }
                   >
                     {item.name}
                   </option>
@@ -489,14 +491,15 @@ const Edit = () => {
             <select
               onChange={(e) => setProductType(e.target.value)}
               className="w-[230px] pr-1 py-2"
+              value={productType}
             >
               {productTypes.map((item) => (
                 <option
                   key={item.id}
                   value={item.name}
-                  selected={
-                    item.name === productData.productType ? "true" : "false"
-                  }
+                  // selected={
+                  //   item.name === productData.productType ? "true" : "false"
+                  // }
                 >
                   {item.name}
                 </option>
