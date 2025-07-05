@@ -113,7 +113,7 @@ const Add = () => {
             onChange={(e) =>
               setTempFeatures((data) => ({
                 ...data,
-                [e.target.name]: e.target.value,
+                [e.target.name]: e.target.value.trim(),
               }))
             }
             type="text"
@@ -129,7 +129,7 @@ const Add = () => {
             onChange={(e) =>
               setTempFeatures((data) => ({
                 ...data,
-                [e.target.name]: e.target.value,
+                [e.target.name]: e.target.value.trim(),
               }))
             }
             type="text"
@@ -304,7 +304,7 @@ const Add = () => {
       <div className="w-full">
         <p className="mb-2">نام محصول</p>
         <input
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value.trim())}
           value={name}
           className="w-full max-w-[500px] px-3 py-2"
           type="text"

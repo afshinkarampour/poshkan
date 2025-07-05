@@ -90,7 +90,7 @@ const SignIn = () => {
           <div className="w-[300px]">
             <p>شماره همراه</p>
             <input
-              onChange={(e) => setPhoneNumber(e.target.value)}
+              onChange={(e) => setPhoneNumber(e.target.value.trim())}
               value={phoneNumber}
               type="text"
               className="w-full px-3 py-2 my-2 border rounded-md border-gray-500"

@@ -174,7 +174,7 @@ const SignUp = () => {
             <div className="mb-2">
               <p>نام</p>
               <input
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setName(e.target.value.trim())}
                 value={name}
                 type="text"
                 className="w-full px-3 py-2 border rounded-md border-gray-500"
@@ -186,7 +186,7 @@ const SignUp = () => {
             <div className="mb-2">
               <p>نام‌خانوادگی</p>
               <input
-                onChange={(e) => setFamily(e.target.value)}
+                onChange={(e) => setFamily(e.target.value.trim())}
                 value={family}
                 type="text"
                 className="w-full px-3 py-2 border rounded-md border-gray-500"
@@ -198,7 +198,7 @@ const SignUp = () => {
             <div className="mb-2">
               <p>شماره همراه</p>
               <input
-                onChange={(e) => setPhoneNumber(e.target.value)}
+                onChange={(e) => setPhoneNumber(e.target.value.trim())}
                 value={phoneNumber}
                 type="text"
                 className="w-full px-3 py-2 border rounded-md border-gray-500"
