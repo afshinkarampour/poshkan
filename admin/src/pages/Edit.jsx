@@ -317,8 +317,8 @@ const Edit = () => {
     let x = []; //features array
     for (let i = 0; i < differentProduct; i++) {
       let y = {}; //property object
-      y[`color`] = tempFeatures[i].color;
-      y[`size`] = tempFeatures[i].size;
+      y[`color`] = tempFeatures[i].color.trim();
+      y[`size`] = tempFeatures[i].size.trim();
       y[`count`] = parseInt(tempFeatures[i].count);
       x.push(y);
     }

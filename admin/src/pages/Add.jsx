@@ -207,8 +207,8 @@ const Add = () => {
     let x = []; //features array
     for (let i = 0; i < differentProduct; i++) {
       let y = {}; //property object
-      y[`color`] = tempFeatures[`color${i}`];
-      y[`size`] = tempFeatures[`size${i}`];
+      y[`color`] = tempFeatures[`color${i}`].trim();
+      y[`size`] = tempFeatures[`size${i}`].trim();
       y[`count`] = parseInt(tempFeatures[`count${i}`]);
       x.push(y);
     }
