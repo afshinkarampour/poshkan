@@ -279,7 +279,11 @@ const List = () => {
             <p className="font-bold text-center mb-2">
               {convertToPersianDigits(item.name)}
             </p>
-            {}
+            {warehouseInventory <= 0 ? (
+              <p className="text-center text-red-500 mb-2">اتمام موجودی</p>
+            ) : (
+              ""
+            )}
             <div className="flex flex-col md:grid md:grid-cols-[3fr_1fr_1fr_1fr_1fr] md:items-center">
               <div className="flex items-center">
                 <div className="pl-1">
