@@ -39,7 +39,7 @@ const paymentRequestSchema = Joi.object({
     address: Joi.string().optional(),
     email: Joi.string().email().optional(),
     province: Joi.string().max(25),
-    city: joi.string().max(30),
+    city: Joi.string().max(30),
   })
     .required()
     .messages({
