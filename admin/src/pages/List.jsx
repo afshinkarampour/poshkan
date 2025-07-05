@@ -279,7 +279,7 @@ const List = () => {
             <p className="font-bold text-center mb-2">
               {convertToPersianDigits(item.name)}
             </p>
-            {warehouseInventory <= 0 ? (
+            {item.warehouseInventory <= 0 ? (
               <p className="text-center text-red-500 mb-2">اتمام موجودی</p>
             ) : (
               ""
