@@ -5,7 +5,7 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const axiosInstance = axios.create({
   baseURL: backendUrl,
-  timeout: 10000,
+  timeout: 30000,
   withCredentials: true, // کوکی‌ها به طور خودکار ارسال می‌شوند
 });
 
