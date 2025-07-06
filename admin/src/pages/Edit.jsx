@@ -255,10 +255,41 @@ const Edit = () => {
     } else {
       setImage1("");
     }
+
+    if (productData.img[1]) {
+      const file = await urlToFile(
+        `${backendUrl}/uploads/${productData.img[1]}`,
+        productData.img[1]
+      );
+      setImage2(file);
+    } else {
+      setImage2("");
+    }
+
+    if (productData.img[2]) {
+      const file = await urlToFile(
+        `${backendUrl}/uploads/${productData.img[2]}`,
+        productData.img[2]
+      );
+      setImage3(file);
+    } else {
+      setImage3("");
+    }
+
+    if (productData.img[3]) {
+      const file = await urlToFile(
+        `${backendUrl}/uploads/${productData.img[3]}`,
+        productData.img[3]
+      );
+      setImage4(file);
+    } else {
+      setImage4("");
+    }
+
     // setImage1(productData.img[0] ? productData.img[0] : "");
-    setImage2(productData.img[1] ? productData.img[1] : "");
-    setImage3(productData.img[2] ? productData.img[2] : "");
-    setImage4(productData.img[3] ? productData.img[3] : "");
+    // setImage2(productData.img[1] ? productData.img[1] : "");
+    // setImage3(productData.img[2] ? productData.img[2] : "");
+    // setImage4(productData.img[3] ? productData.img[3] : "");
     setName(productData.name);
     setDescription(productData.description);
     setWeight(productData.weight);
@@ -320,8 +351,8 @@ const Edit = () => {
     let x = []; //features array
     for (let i = 0; i < differentProduct; i++) {
       let y = {}; //property object
-      y[`color`] = tempFeatures[i].color.trim();
-      y[`size`] = tempFeatures[i].size.trim();
+      y[`color`] = tempFeatures[i].color?.trim() || "";
+      y[`size`] = tempFeatures[i].size?.trim() || "";
       y[`count`] = parseInt(tempFeatures[i].count);
       x.push(y);
     }

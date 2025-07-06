@@ -97,12 +97,11 @@ const Add = () => {
   };
 
   const featuresInput = [];
-  let totalCount = 0;
 
   //ایجاد فرم بر اساس تعداد محصولات متفاوت(از نظر رنگ و سایز)
   for (let i = 0; i < differentProduct; i++) {
     featuresInput.push(
-      <div className="flex flex-col md:flex-row gap-3 items-center">
+      <div className="flex flex-col md:flex-row gap-3 items-center p-1 my-2 border border-gray-200">
         <div className="flex flex-col">
           رنگ{" "}
           <input
@@ -198,6 +197,7 @@ const Add = () => {
   }
 
   useEffect(() => {
+    let totalCount = 0;
     for (let i = 0; i < differentProduct; i++) {
       if (parseInt(tempFeatures[`count${i}`])) {
         totalCount += parseInt(tempFeatures[`count${i}`]);
@@ -207,8 +207,8 @@ const Add = () => {
     let x = []; //features array
     for (let i = 0; i < differentProduct; i++) {
       let y = {}; //property object
-      y[`color`] = tempFeatures[`color${i}`].trim();
-      y[`size`] = tempFeatures[`size${i}`].trim();
+      y[`color`] = tempFeatures[`color${i}`]?.trim() || "";
+      y[`size`] = tempFeatures[`size${i}`]?.trim() || "";
       y[`count`] = parseInt(tempFeatures[`count${i}`]);
       x.push(y);
     }
