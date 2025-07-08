@@ -41,6 +41,33 @@ const PlaceOrder = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  const isInventoryValid = () => {
+    let invalidItems = [];
+
+    for (const item of cartData) {
+      const product = products.find((p) => p._id === item._id);
+      if (!product) continue;
+
+      const [color, size] = item.size.split(",");
+
+      const feature = product.features.find(
+        (f) => f.size === size && f.color === color
+      );
+
+      if (!feature || feature.count < item.quantity) {
+        invalidItems.push({
+          name: product.name,
+          size,
+          color,
+          available: feature ? feature.count : 0,
+          requested: item.quantity,
+        });
+      }
+    }
+
+    return invalidItems;
+  };
+
   const onCodeSubmitHandle = async (e) => {
     e.preventDefault();
     if (verifyCodeInput()) {
@@ -128,6 +155,21 @@ const PlaceOrder = () => {
 
   const onPaymentHandle = async () => {
     if (!validateBeforePayment()) return;
+
+    const invalidItems = isInventoryValid();
+    if (invalidItems.length > 0) {
+      toast.error(
+        "بعضی از محصولات موجودی کافی ندارند. لطفا سبد خرید را اصلاح کنید."
+      );
+
+      invalidItems.forEach((item) => {
+        toast.warning(
+          `محصول "${item.name}" با رنگ "${item.color}" و سایز "${item.size}" فقط ${item.available} عدد موجود است. شما ${item.requested} عدد انتخاب کرده‌اید.`
+        );
+      });
+
+      return;
+    }
 
     try {
       setLoading(true);
