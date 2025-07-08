@@ -53,23 +53,25 @@ const Product = () => {
       // Group by color
       productData.features.forEach((feature) => {
         // Find if the color already exists in the newFeatures array
-        let colorGroup = newFeatures.find(
-          (item) => item.color === feature.color
-        );
+        if (feature.count > 0) {
+          let colorGroup = newFeatures.find(
+            (item) => item.color === feature.color
+          );
 
-        if (!colorGroup) {
-          // If the color group doesn't exist, create a new one
-          colorGroup = { color: feature.color, sizes: [], count: 0 };
-          newFeatures.push(colorGroup);
+          if (!colorGroup) {
+            // If the color group doesn't exist, create a new one
+            colorGroup = { color: feature.color, sizes: [], count: 0 };
+            newFeatures.push(colorGroup);
+          }
+
+          // Add the size to the sizes array if it's not already there
+          if (!colorGroup.sizes.includes(feature.size)) {
+            colorGroup.sizes.push(feature.size);
+          }
+
+          // Add the count to the total count for that color
+          colorGroup.count += feature.count;
         }
-
-        // Add the size to the sizes array if it's not already there
-        if (!colorGroup.sizes.includes(feature.size)) {
-          colorGroup.sizes.push(feature.size);
-        }
-
-        // Add the count to the total count for that color
-        colorGroup.count += feature.count;
       });
       setFeatures(newFeatures);
     }
