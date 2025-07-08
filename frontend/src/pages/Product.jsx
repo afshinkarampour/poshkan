@@ -248,7 +248,7 @@ const Product = () => {
               </div>
               <div className="">
                 {features.map((item, index) => {
-                  if (item.count > 0) {
+                  if (item.count && parseInt(item.count) > 0) {
                     return (
                       <div key={index} className="mb-2">
                         {/* Color box */}
@@ -329,7 +329,9 @@ const Product = () => {
             {/* <p className="border px-5 py-3 text-sm">بازدیدکننده‌گان (122)</p> */}
           </div>
           <div className="flex flex-col gap-4 border px-6 py-6 text-sm text-gray-500">
-            <p className="text-lg">{productData.description}</p>
+            <p className="text-lg whitespace-pre-wrap">
+              {productData.description}
+            </p>
           </div>
         </div>
         {/* --------------Display Related Products------------------ */}
