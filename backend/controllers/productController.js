@@ -199,7 +199,7 @@ const listProduct = async (req, res) => {
   try {
     const isPublish = req.query.isPublish === "true";
     const filter = isPublish ? { isPublish: true } : {};
-    const products = await productModel.find(filter);
+    const products = (await productModel.find(filter)).reverse();
 
     // این شرط رو حذف کن، چون products همیشه یک آرایه است (حتی اگر خالی باشه)
     res.status(200).json({

@@ -42,7 +42,7 @@ const List = () => {
         backendUrl + "/api/product/list"
       );
       if (response.data.success) {
-        setList(response.data.products.reverse());
+        setList(response.data.products);
       } else {
         toast.error(response.data.message);
       }
