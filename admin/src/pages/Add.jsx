@@ -101,7 +101,7 @@ const Add = () => {
   //ایجاد فرم بر اساس تعداد محصولات متفاوت(از نظر رنگ و سایز)
   for (let i = 0; i < differentProduct; i++) {
     featuresInput.push(
-      <div className="flex flex-col md:flex-row gap-3 items-center p-1 my-2 border border-gray-200">
+      <div className="flex flex-col md:flex-row gap-3 items-center p-3 my-2 border border-slate-500">
         <div className="flex flex-col">
           رنگ{" "}
           <input
