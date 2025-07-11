@@ -45,6 +45,7 @@ connectDB();
 
 //middlewares
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
 
 // تنظیم CORS برای همه درخواست‌ها
@@ -66,6 +67,7 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" })); //for sec
 //api endpoints
 app.use("/api/user", userRouter);
 app.use("/api/product", productRouter);
+app.use("/api/torob", productRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/order", orderRouter);
 app.use("/api/copon", coponRouter);

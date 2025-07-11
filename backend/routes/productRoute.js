@@ -39,8 +39,8 @@ productRouter.post(
 productRouter.get("/list", listProduct);
 // productRouter.get("/?category=categoryName", categorizedProduct);
 
-// route for trob
-productRouter.post("/torob/products", async (req, res) => {
+// route for torob
+productRouter.post("/products", async (req, res) => {
   try {
     const { page_unique, page_url, page = 1 } = req.body;
     const result = await torobProducts({ page_unique, page_url, page });
