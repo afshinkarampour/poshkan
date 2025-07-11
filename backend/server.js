@@ -7,6 +7,7 @@ import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
 import coponRouter from "./routes/coponRoute.js";
 import paymentRouter from "./routes/paymentRoute.js";
+import torobRouter from "./routes/torobRoute.js";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import path from "path";
@@ -67,7 +68,7 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" })); //for sec
 //api endpoints
 app.use("/api/user", userRouter);
 app.use("/api/product", productRouter);
-app.use("/api/torob", productRouter);
+app.use("/api/torob", torobRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/order", orderRouter);
 app.use("/api/copon", coponRouter);
