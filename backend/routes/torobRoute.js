@@ -3,15 +3,21 @@ import { torobProducts } from "../controllers/productController";
 
 const torobRouter = express.Router();
 
-// route for torob
-torobRouter.post("/products", async (req, res) => {
+torobRouter.use(express.urlencoded({ extended: true }));
+
+torobRouter.route("/products").post(async (req, res) => {
   try {
-    const { page_unique, page_url, page = 1 } = req.body;
-    const result = await torobProducts({ page_unique, page_url, page });
+    console.log("دریافت درخواست ترب - Body:", req.body);
+
+    if (!req.body || Object.keys(req.body).length === 0) {
+      return res.status(400).json({ error: "بدنه درخواست خالی است" });
+    }
+
+    const result = await torobProducts(req.body);
     res.json(result);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "خطای سرور" });
+    console.error("خطا:", error);
+    res.status(500).json({ error: "خطای سرور داخلی" });
   }
 });
 
