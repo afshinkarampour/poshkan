@@ -260,7 +260,7 @@ const Product = () => {
                               selectedColor === item.color ? null : item.color
                             );
                           }}
-                          className={`bg-slate-100 py-2 w-16 h-10 cursor-pointer border ${
+                          className={`bg-slate-100 py-2 w-20 h-10 cursor-pointer border ${
                             selectedColor === item.color
                               ? "border-slate-400"
                               : ""
