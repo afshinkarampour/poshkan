@@ -4,6 +4,7 @@ import {
   listProduct,
   removeProduct,
   singleProduct,
+  torobProducts,
   updateProduct,
   // categorizedProduct,
 } from "../controllers/productController.js";
@@ -37,5 +38,17 @@ productRouter.post(
 );
 productRouter.get("/list", listProduct);
 // productRouter.get("/?category=categoryName", categorizedProduct);
+
+// route for trob
+productRouter.post("/torob/products", async (req, res) => {
+  try {
+    const { page_unique, page_url, page = 1 } = req.body;
+    const result = await torobProducts({ page_unique, page_url, page });
+    res.json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "خطای سرور" });
+  }
+});
 
 export default productRouter;

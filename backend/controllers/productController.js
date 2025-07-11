@@ -214,31 +214,97 @@ const listProduct = async (req, res) => {
     });
   }
 };
-// const listProduct = async (req, res) => {
-//   try {
-//     const isPublish = req.query.isPublish;
-//     const products = await productModel.find(
-//       isPublish ? { isPublished: true } : {}
-//     );
-//     if (!products || products.length === 0) {
-//       return res.status(404).json({
-//         success: false,
-//         message: "No products found",
-//       });
-//     }
 
-//     res.status(200).json({
-//       success: true,
-//       products,
-//     });
-//   } catch (error) {
-//     console.error("Error listing products:", error);
-//     res.status(500).json({
-//       success: false,
-//       message: "Internal Server Error",
-//     });
-//   }
-// };
+//------------sending List product to Trob---------------//
+//------------Includs a function and api-----------------//
+
+function formatProductForTorob(product) {
+  const productUrl = `https://poshkan.ir/product/${product._id}`;
+
+  const imageLinks = product.img.map(
+    (img) => `https://poshkan.ir/uploads/${img}`
+  );
+
+  // قیمت با تخفیف و بدون تخفیف
+  const currentPrice = product.discount || product.price;
+  const oldPrice = product.discount ? product.price : null;
+
+  // وضعیت موجودی (بر اساس warehouseInventory)
+  const availability =
+    product.warehouseInventory > 0 ? "instock" : "outofstock";
+
+  // استخراج رنگ‌ها و سایزهای موجود از features
+  const availableColors = [...new Set(product.features.map((f) => f.color))];
+  const availableSizes = [...new Set(product.features.map((f) => f.size))];
+
+  return {
+    title: product.name?.substring(0, 500) || "پیراهن مردانه",
+    // subtitle: product.description?.substring(0, 500) || "",
+    page_unique: product._id.toString(),
+    current_price: currentPrice,
+    old_price: oldPrice,
+    availability: availability,
+    category_name: product.category || "لباس مردانه",
+    image_link: imageLinks[0] || "",
+    image_links: imageLinks,
+    page_url: productUrl,
+    short_desc: product.description?.substring(0, 500) || "",
+    spec: {
+      رنگ‌ها: availableColors.join("، "),
+      "سایزهای موجود": availableSizes.join("، "),
+      // "نوع محصول": product.productType || "پیراهن",
+      // "وزن": `${product.weight} گرم`,
+      "توضیحات سایز": product.userSizeGuide
+        .map(
+          (guide) =>
+            `سایز ${guide.size}: ${guide.comment.replace(/\n/g, " - ")}`
+        )
+        .join(" | "),
+    },
+  };
+}
+
+const torobProducts = async ({ page_unique, page_url, page = 1 }) => {
+  const perPage = 100;
+
+  // جستجوی تک محصول
+  if (page_unique || page_url) {
+    let query = { isPublish: true };
+    if (page_unique) query._id = page_unique;
+    if (page_url) {
+      const baseUrl = page_url.split("?")[0];
+      query.$or = [
+        { img: { $regex: baseUrl.split("/").pop(), $options: "i" } }, // جستجو در نام فایل تصاویر
+        { _id: baseUrl.split("/").pop() }, // جستجو در ID محصول
+      ];
+    }
+
+    const product = await productModel.findOne(query);
+    if (!product) return { count: 0, max_pages: 0, products: [] };
+
+    return {
+      count: 1,
+      max_pages: 1,
+      products: [formatProductForTorob(product)],
+    };
+  }
+
+  // لیست محصولات (فقط منتشر شده‌ها)
+  const totalProducts = await productModel.countDocuments({ isPublish: true });
+  const products = await productModel
+    .find({ isPublish: true })
+    .sort({ date: -1, _id: -1 }) // جدیدترین اول
+    .skip((page - 1) * perPage)
+    .limit(perPage);
+
+  return {
+    count: totalProducts,
+    max_pages: Math.ceil(totalProducts / perPage),
+    products: products.map(formatProductForTorob),
+  };
+};
+
+//-----------------end of sending product to trub----------------------//
 
 //function for removing product
 const removeProduct = async (req, res) => {
@@ -437,4 +503,11 @@ const updateProduct = async (req, res) => {
   }
 };
 
-export { addProduct, listProduct, removeProduct, singleProduct, updateProduct };
+export {
+  addProduct,
+  listProduct,
+  removeProduct,
+  singleProduct,
+  updateProduct,
+  torobProducts,
+};
