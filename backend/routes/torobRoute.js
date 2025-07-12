@@ -1,14 +1,15 @@
 import express from "express";
+import multer from "multer";
 import { torobProducts } from "../controllers/productController.js";
 
 const torobRouter = express.Router();
 
-torobRouter.use(express.urlencoded({ extended: true }));
+// تعریف یک حافظه ساده برای دریافت فیلدهای form-data
+const upload = multer();
 
-torobRouter.route("/products").post(async (req, res) => {
+// حالا به جای استفاده مستقیم از req.body، از upload.none() برای فرم بدون فایل استفاده کن
+torobRouter.route("/products").post(upload.none(), async (req, res) => {
   try {
-    console.log("دریافت درخواست ترب - Body:", req.body);
-
     if (!req.body || Object.keys(req.body).length === 0) {
       return res.status(400).json({ error: "بدنه درخواست خالی است" });
     }
