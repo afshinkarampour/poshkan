@@ -264,8 +264,9 @@ function formatProductForTorob(product) {
   };
 }
 
-const torobProducts = async ({ page_unique, page_url, page = 1 }) => {
+const torobProducts = async ({ page_unique, page_url, page }) => {
   const perPage = 100;
+  const currentPage = Number(page) > 0 ? Number(page) : 1;
 
   // جستجوی تک محصول
   if (page_unique || page_url) {
@@ -294,7 +295,7 @@ const torobProducts = async ({ page_unique, page_url, page = 1 }) => {
   const products = await productModel
     .find({ isPublish: true })
     .sort({ date: -1, _id: -1 }) // جدیدترین اول
-    .skip((page - 1) * perPage)
+    .skip((currentPage - 1) * perPage)
     .limit(perPage);
 
   return {
