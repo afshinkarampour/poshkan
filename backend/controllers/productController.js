@@ -222,7 +222,7 @@ function formatProductForTorob(product) {
   const productUrl = `https://poshkan.ir/product/${product._id}`;
 
   const imageLinks = product.img.map(
-    (img) => `https://poshkan.ir/uploads/${img}`
+    (img) => `https://api.poshkan.ir/uploads/${img}`
   );
 
   // قیمت با تخفیف و بدون تخفیف
