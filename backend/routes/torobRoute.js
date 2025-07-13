@@ -10,9 +10,7 @@ const upload = multer();
 // حالا به جای استفاده مستقیم از req.body، از upload.none() برای فرم بدون فایل استفاده کن
 torobRouter.route("/products").post(upload.none(), async (req, res) => {
   try {
-    if (!req.body || Object.keys(req.body).length === 0) {
-      return res.status(400).json({ error: "بدنه درخواست خالی است" });
-    }
+    console.log("درخواست ترب - body:", req.body);
 
     const result = await torobProducts(req.body);
     res.json(result);
